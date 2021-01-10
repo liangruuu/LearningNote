@@ -49,6 +49,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n8/TestTimer.java" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -69,6 +72,7 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="1SsACpAtcT03tL4MBY52a3VqxsZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -97,7 +101,6 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.16773017" />
     <property name="project.structure.side.proportion" value="0.31614137" />
-    <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="Debugger_Data_Views_Java" />
   </component>
   <component name="RecentsManager">
@@ -124,13 +127,13 @@
       <recent name="C:\Users\lenovo\IdeaProjects\concurrent\java_concurrent\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.ExerciseSell">
-    <configuration name="ExerciseSell" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.itcast.n4.exercise.ExerciseSell" />
-      <module name="case_java8" />
+  <component name="RunManager" selected="Application.TestConcurrentHashMap">
+    <configuration name="TestConcurrentHashMap" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.TestConcurrentHashMap" />
+      <module name="case_java7" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.itcast.n4.exercise.*" />
+          <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -138,12 +141,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test16" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.itcast.test.Test16" />
-      <module name="case_java8" />
+    <configuration name="TestDeadLink" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="test.TestDeadLink" />
+      <module name="case_java7" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.itcast.test.*" />
+          <option name="PATTERN" value="test.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -151,12 +154,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test17" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.itcast.test.Test17" />
-      <module name="case_java8" />
+    <configuration name="TestV1" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.itcast.n8.concurrentqueue.v1.TestV1" />
+      <module name="java_concurrent" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.itcast.test.*" />
+          <option name="PATTERN" value="cn.itcast.n8.concurrentqueue.v1.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -164,12 +167,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Test8Locks" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.itcast.n4.Test8Locks" />
-      <module name="case_java8" />
+    <configuration name="TestV2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.itcast.n8.concurrentqueue.v2.TestV2" />
+      <module name="java_concurrent" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.itcast.n4.*" />
+          <option name="PATTERN" value="cn.itcast.n8.concurrentqueue.v2.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -177,12 +180,12 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestThreadSafe" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="cn.itcast.n4.TestThreadSafe" />
-      <module name="case_java8" />
+    <configuration name="TestWordCount" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="cn.itcast.n8.TestWordCount" />
+      <module name="java_concurrent" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="cn.itcast.n4.*" />
+          <option name="PATTERN" value="cn.itcast.n8.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -193,13 +196,6 @@
     <configuration name="CaseThirdpartApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="case_thirdpart" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="cn.itcast.concurrent.case_thirdpart.CaseThirdpartApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="MonitorApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="case_monitor" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="cn.itcast.monitor.MonitorApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -351,23 +347,22 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="Application.Test16" />
-      <item itemvalue="Application.Test17" />
-      <item itemvalue="Application.Test8Locks" />
-      <item itemvalue="Application.TestThreadSafe" />
-      <item itemvalue="Application.ExerciseSell" />
+      <item itemvalue="Application.TestV1" />
+      <item itemvalue="Application.TestV2" />
+      <item itemvalue="Application.TestWordCount" />
+      <item itemvalue="Application.TestDeadLink" />
+      <item itemvalue="Application.TestConcurrentHashMap" />
       <item itemvalue="Spring Boot.MonitorApplication" />
       <item itemvalue="Spring Boot.CaseThirdpartApplication" />
       <item itemvalue="Spring Boot.ThirdpartApplication" />
-      <item itemvalue="Spring Boot.MonitorApplication (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.ExerciseSell" />
-        <item itemvalue="Application.TestThreadSafe" />
-        <item itemvalue="Application.Test8Locks" />
-        <item itemvalue="Application.Test17" />
-        <item itemvalue="Application.Test16" />
+        <item itemvalue="Application.TestConcurrentHashMap" />
+        <item itemvalue="Application.TestWordCount" />
+        <item itemvalue="Application.TestDeadLink" />
+        <item itemvalue="Application.TestV2" />
+        <item itemvalue="Application.TestV1" />
       </list>
     </recent_temporary>
   </component>
@@ -430,9 +425,7 @@
       <workItem from="1575896685028" duration="36368000" />
       <workItem from="1576106185764" duration="11552000" />
       <workItem from="1576147147832" duration="359000" />
-      <workItem from="1610087609572" duration="15054000" />
-      <workItem from="1610251330686" duration="7873000" />
-      <workItem from="1610282585464" duration="1365000" />
+      <workItem from="1610288453703" duration="467000" />
     </task>
     <servers />
   </component>
@@ -498,10 +491,25 @@
           <line>25</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestFrames.java</url>
+          <line>12</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
+          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestFrames.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>jar://C:/Program Files/Java/jdk1.8.0_212/src.zip!/java/lang/Thread.java</url>
           <line>1816</line>
           <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestState2.java</url>
+          <line>14</line>
+          <option name="timeStamp" value="68" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n4/TestWaitNotify.java</url>
@@ -572,21 +580,6 @@
           <url>jar://C:/Program Files/Java/jdk1.8.0_212/src.zip!/java/util/concurrent/ConcurrentHashMap.java</url>
           <line>1645</line>
           <option name="timeStamp" value="113" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestFrames.java</url>
-          <line>12</line>
-          <option name="timeStamp" value="116" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestFrames.java</url>
-          <line>7</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
-          <url>file://$PROJECT_DIR$/case_java8/src/main/java/cn/itcast/n3/TestState2.java</url>
-          <line>14</line>
-          <option name="timeStamp" value="119" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-defaults>
