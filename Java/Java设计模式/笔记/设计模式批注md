@@ -1,0 +1,38 @@
+## 2. 设计模式七大原则
+
+### 2.3 单一职责原则
+
+参考代码 com/atguigu/principle/singleresponsibility
+
+方式一违反了单一职责原则，run方法即管公路上跑的，也管天上飞的，这就不合理了
+
+![1610521949047](assets/1610521949047.png)
+
+### 2.4 接口隔离原则 
+
+参考代码 com/atguigu/principle/segregation/Segregation1.java
+
+### 2.5 依赖倒转原则
+
+参考代码 com/atguigu/principle/inversion
+
+### 2.6 里氏替换原则
+
+参考代码 com/atguigu/principle/liskov
+
+极端来说如果B继承了A，但是B修改了从A继承过来的所有方法，那这算什么继承？
+
+4）里氏替换原则告诉我们.....：简而言之就是可以把子类B"地位"提升，让A和B共同继承一个更加基础的类，把基础方法放在Base类中，这就使B无需去修改A的方法
+
+### 2.7 开闭原则
+
+参考代码 com/atguigu/principle/ocp
+
+### 2.8 迪米特法则
+
+参考代码 com/atguigu/principle/demeter
+
+### 2.9 合成复用原则
+
+参考代码 com/atguigu/principle/composite
+
