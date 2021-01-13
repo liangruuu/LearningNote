@@ -18,6 +18,7 @@ public class ChatClient {
 
     private String host;
     private int port;
+    // 作为客户端使用的是SocketChannel而非ServerSocketChannel
     private SocketChannel client;
     private ByteBuffer rBuffer = ByteBuffer.allocate(BUFFER);
     private ByteBuffer wBuffer = ByteBuffer.allocate(BUFFER);
@@ -79,10 +80,15 @@ public class ChatClient {
         if (key.isConnectable()) {
             SocketChannel client = (SocketChannel) key.channel();
             if (client.isConnectionPending()) {
+                // 完成建立连接过程
                 client.finishConnect();
-                // 处理用户的输入
+                /**
+                 * 处理用户的输入
+                 * 这件事情本身就必须是阻塞的，所以需要另外开一个线程避免阻塞主线程
+                 */
                 new Thread(new UserInputHandler(this)).start();
             }
+            // 一旦接收到信息则触发READ事件
             client.register(selector, SelectionKey.OP_READ);
         }
         // READ事件 -  服务器转发消息

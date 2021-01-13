@@ -13,7 +13,7 @@ public class FileCopyDemo {
 
     private static void benchmark(FileCopyRunner test, File source, File target) {
         long elapsed = 0L;
-        for (int i=0; i<ROUNDS; i++) {
+        for (int i = 0; i < ROUNDS; i++) {
             long startTime = System.currentTimeMillis();
             test.copyFile(source, target);
             elapsed += System.currentTimeMillis() - startTime;
@@ -106,9 +106,12 @@ public class FileCopyDemo {
                     fout = new FileOutputStream(target).getChannel();
 
                     ByteBuffer buffer = ByteBuffer.allocate(1024);
+                    // 把文件通道里的数据读入buffer
                     while (fin.read(buffer) != -1) {
                         buffer.flip();
+                        // 只要Buffer里有未读完的数据结果就为true
                         while (buffer.hasRemaining()) {
+                            // 把数据从buffer写到目标文件的Channel里
                             fout.write(buffer);
                         }
                         buffer.clear();
@@ -139,7 +142,10 @@ public class FileCopyDemo {
                     fout = new FileOutputStream(target).getChannel();
                     long transferred = 0L;
                     long size = fin.size();
+                    // fin.transferTo无法保证一次就能将Input管道内的所有数据读取完
                     while (transferred != size) {
+                        // transferTo通道间传参数，第一个参数为数据起始位置
+                        // transferred记录总共传递多少参数
                         transferred += fin.transferTo(0, size, fout);
                     }
                 } catch (FileNotFoundException e) {

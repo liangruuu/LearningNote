@@ -8,7 +8,7 @@
 
 ### 1.2 非阻塞式NIO
 
-1. 使用Channel代替Stream，是双向的，既可以写入也可以读取数据
+1. 使用Channel代替Stream（只有OutputStream和InputStream单向），是双向的，既可以写入也可以读取数据
 2. 使用Selector监控多条Channel(轮询)
 3. 可以在一个线程里处理多个Channel I/O
 
@@ -16,9 +16,18 @@
 
 Channel是基于Buffer实现的，Channel在读写数据过程中，数据都是要经过Buffer的
 
+![1610504364053](assets/1610504364053.png)
+
+有三种指针式的结构：position，limit，capacity
+
+1. capacity表示再往缓冲区写数据的时候最多能写到的数据
+2. position指向目前读写操作所在位置
+
 ![1581743440702](assets/1581743440702.png)
 
 ![1581743297931](assets/1581743297931.png)
+
+往缓冲区写了一定量数据之后打算读数据了。比如想把刚才写进去的数据读出来，但是此时必须进行Buffer读写模式的切换，需要调用flip（翻转）方法。1. 把position指针重新移动回初始位置；2. 把limit指针指向刚才position的位置。两个指针之前的区域就是刚才写操作的数据；3. position最远能读到的数据就是limint所在位置
 
 ![1581743376333](assets/1581743376333.png)
 
@@ -26,7 +35,9 @@ Channel是基于Buffer实现的，Channel在读写数据过程中，数据都是
 
 ![1581743536981](assets/1581743536981.png)
 
-`读取部分数据`
+****
+
+读取部分数据：compact方法实现了把剩余还没读取的数据拷贝到buffer初始位置，然后把position指针指向未读数据接下来的位置，再把limit指针指向capacity所指位置
 
 ![1581743632347](assets/1581743632347.png)
 
@@ -44,172 +55,22 @@ Channel是基于Buffer实现的，Channel在读写数据过程中，数据都是
 
 ## 4. 多方法实现本地文件拷贝
 
+参考代码 nio-file-copy
+
 ```java
-interface FileCopyRunner {
-  void copyFile(File source, File target);
+// 四种不同的文件拷贝方式
+public class FileCopyDemo {
+    public static void main(String[] args) {
+        // 1. 最原始的不使用缓冲区的拷贝方式，从源文件一个一个字节读取写到目标文件里去
+        FileCopyRunner noBufferStreamCopy;
+        // 2. 使用缓冲区方式，先读出一个Buffer大小的数据，再从缓冲区里读数据
+        FileCopyRunner bufferedStreamCopy;
+        // 3. Channel经过Buffer传输数据
+        FileCopyRunner nioBufferCopy;
+        // 4. 使用两个Channel，通过两个Channel之间传递数据
+        FileCopyRunner nioTransferCopy;
+    }
 }
-```
-
-```java
-private static void close(Closeable closeable) {
-  if (closeable != null) {
-    try {
-      closeable.close();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-```java
-private static final int ROUNDS = 5;
-
-private static void benchmark(FileCopyRunner test, File source, File target) {
-  long elapsed = 0L;
-  for (int i = 0; i < ROUNDS; i++) {
-    long startTime = System.currentTimeMillis();
-    test.copyFile(source, target);
-    elapsed += System.currentTimeMillis() - startTime;
-    target.delete();
-  }
-  System.out.println(test + ": " + elapsed / ROUNDS);
-}
-```
-
-```java
-FileCopyRunner noBufferStreamCopy = new FileCopyRunner() {
-  @Override
-  public void copyFile(File source, File target) {
-    InputStream fin = null;
-    OutputStream fout = null;
-    try {
-      fin = new FileInputStream(source);
-      fout = new FileOutputStream(target);
-
-      int result;
-      while ((result = fin.read()) != -1) {
-        fout.write(result);
-      }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      close(fin);
-      close(fout);
-    }
-  }
-
-  @Override
-  public String toString() {
-    return "noBufferStreamCopy";
-  }
-};
-```
-
-```java
-FileCopyRunner bufferedStreamCopy = new FileCopyRunner() {
-  @Override
-  public void copyFile(File source, File target) {
-    InputStream fin = null;
-    OutputStream fout = null;
-    try {
-      fin = new BufferedInputStream(new FileInputStream(source));
-      fout = new BufferedOutputStream(new FileOutputStream(target));
-
-      byte[] buffer = new byte[1024];
-
-      int result;
-      while ((result = fin.read(buffer)) != -1) {
-        fout.write(buffer, 0, result);
-      }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      close(fin);
-      close(fout);
-    }
-  }
-
-  @Override
-  public String toString() {
-    return "bufferedStreamCopy";
-  }
-};
-```
-
-```java
-FileCopyRunner nioBufferCopy = new FileCopyRunner() {
-  @Override
-  public void copyFile(File source, File target) {
-    FileChannel fin = null;
-    FileChannel fout = null;
-
-    try {
-      fin = new FileInputStream(source).getChannel();
-      fout = new FileOutputStream(target).getChannel();
-
-      ByteBuffer buffer = ByteBuffer.allocate(1024);
-      // 把文件通道里的数据读入buffer
-      while (fin.read(buffer) != -1) {
-        buffer.flip();
-        while (buffer.hasRemaining()) {
-          // 把数据从buffer写到目标文件的Channel里
-          fout.write(buffer);
-        }
-        buffer.clear();
-      }
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      close(fin);
-      close(fout);
-    }
-  }
-
-  @Override
-  public String toString() {
-    return "nioBufferCopy";
-  }
-};
-```
-
-```java
-FileCopyRunner nioTransferCopy = new FileCopyRunner() {
-      @Override
-      public void copyFile(File source, File target) {
-        FileChannel fin = null;
-        FileChannel fout = null;
-        try {
-          fin = new FileInputStream(source).getChannel();
-          fout = new FileOutputStream(target).getChannel();
-          long transferred = 0L;
-          long size = fin.size();
-          while (transferred != size) {
-            // transferTo通道间传参数，第一个参数为数据起始位置
-            // transferred记录总共传递多少参数
-            transferred += fin.transferTo(0, size, fout);
-          }
-        } catch (FileNotFoundException e) {
-          e.printStackTrace();
-        } catch (IOException e) {
-          e.printStackTrace();
-        } finally {
-          close(fin);
-          close(fout);
-        }
-      }
-
-      @Override
-      public String toString() {
-        return "nioTransferCopy";
-      }
-    };
 ```
 
 ```java
@@ -226,6 +87,11 @@ benchmark(nioTransferCopy, smallFile, smallFileCopy);
 ![1581749284087](assets/1581749284087.png)
 
 ## 5. Selector和Channel
+
+每个通道都可以选择进行非阻塞性的读写，这就意味着我们需要不停地去询问这个通道是否除以一个可操作的状态上（因为当调用读写函数的时候通道上可能没什么数据可以操作，也就是这个通道处于不可操作状态）
+Selector就是帮我们进行监听多个通道的状态是否处于可操作的状态
+
+1. 需要把Channel注册到Selector上，所以如果想要知道Channel状态，我们只需要询问Selector就可以了
 
 ![1581749523032](assets/1581749523032.png)
 
