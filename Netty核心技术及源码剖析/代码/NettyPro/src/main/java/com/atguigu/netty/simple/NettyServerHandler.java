@@ -85,7 +85,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("server ctx =" + ctx);
         System.out.println("看看channel 和 pipeline的关系");
         Channel channel = ctx.channel();
-        ChannelPipeline pipeline = ctx.pipeline(); //本质是一个双向链接, 出站入站
+        ChannelPipeline pipeline = ctx.pipeline(); //本质是一个双向链表, 出站入站
 
 
         //将 msg 转成一个 ByteBuf
@@ -95,7 +95,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         System.out.println("客户端地址:" + channel.remoteAddress());
     }
 
-    //数据读取完毕
+    //Pipeline里的Handler读取数据完毕，则需要把数据发送回客户端
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 

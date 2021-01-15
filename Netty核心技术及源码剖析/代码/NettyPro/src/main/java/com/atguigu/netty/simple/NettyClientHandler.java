@@ -15,7 +15,7 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         ctx.writeAndFlush(Unpooled.copiedBuffer("hello, server: (>^ω^<)喵", CharsetUtil.UTF_8));
     }
 
-    //当通道有读取事件时，会触发
+    //当通道有读取事件时（收到来自服务端的数据），会触发
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 

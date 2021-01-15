@@ -49,7 +49,7 @@ public class BIOServer {
         try {
             System.out.println("线程信息 id =" + Thread.currentThread().getId() + " 名字=" + Thread.currentThread().getName());
             byte[] bytes = new byte[1024];
-            //通过socket 获取输入流
+            //通过socket 获取输入流，从而读取管道数据
             InputStream inputStream = socket.getInputStream();
 
             //循环的读取客户端发送的数据
