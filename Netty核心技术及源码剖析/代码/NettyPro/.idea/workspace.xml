@@ -8,9 +8,9 @@
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/NettyPro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/NettyPro.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/bio/BIOServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/bio/BIOServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../笔记/Netty核心技术及源码剖析注解.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../笔记/Netty核心技术及源码剖析注解.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -442,6 +442,8 @@
       <workItem from="1572669726673" duration="606000" />
       <workItem from="1610604997460" duration="9041000" />
       <workItem from="1610684607214" duration="6607000" />
+      <workItem from="1610799639389" duration="5518000" />
+      <workItem from="1610966334064" duration="9729000" />
     </task>
     <servers />
   </component>

@@ -138,11 +138,11 @@
 
 ![1610692367594](assets/1610692367594.png)
 
-一个Pipeline其实就是一个双向链表，每个链表的元素都是一个Handler，把所有的Handler链接在了一起
+观察数据结构的Head和Tail可知一个Pipeline其实就是一个双向链表，每个链表的元素都是一个Handler，把所有的Handler链接在了一起
 
 ![1610692400041](assets/1610692400041.png)
 
-next——>handler
+next——>handler（HttpServerCodec—>TestHttpServerHandler）
 
 ![1610692506257](assets/1610692506257.png)
 
@@ -150,5 +150,131 @@ handler——>prev
 
 ![1610692609856](assets/1610692609856.png)
 
+### 6.7 ChannelHandlerContext
 
+![1610801196840](assets/1610801196840.png)
+
+通过Pipeline获得的channel和通过ctx获得的channel是一样的
+
+![1610801218310](assets/1610801218310.png)
+
+### 6.8 Unpooled类
+
+参考代码 com/atguigu/netty/buf
+
+1. 使用`buffer.getByte()`读取buffer的数据，则readindex不变化；如果使用`buffer.readByte()`读取buffer的数据，则readindex变化
+
+![1610802245045](assets/1610802245045.png)
+
+****
+
+![1610802280293](assets/1610802280293.png)
+
+2. 只要进行了一次readByte()，则readableBytes()数值就减少一位；但是进行了一次getByte()，readableBytes()数值不变
+
+### 6.9 Netty应用实例—群聊系统
+
+参考代码 com/atguigu/netty/groupchat
+
+### 6.10Netty心跳检测机制 
+
+参考代码 com/atguigu/netty/heartbeat
+
+### 6.11 Netty通过WebSocket编程实现服务器和客户端的场链接
+
+参考代码 com/atguigu/netty/websocket
+
+### 7.4 Protobuf快速入门实例
+
+参考代码 com/atguigu/netty/codec
+
+![1610966955375](assets/1610966955375.png)
+
+在写.protobuf文件的时候数据类型不能按照语言的类型来写，比如我们在写整型的时候需要用int32定义，写字符串的时候需要用string来定义
+
+![1610967146882](assets/1610967146882.png)
+
+### 7.5 Protobuf快速入门实例2 
+
+针对前一个实例每个protobuf类都需要写一个handler与之对应的从而导致handler过于多的问题
+
+参考代码 com/atguigu/netty/codec2
+
+proto文件里出现的赋值语句都是编号值，比如string name=1；意思并不是给name赋值为1，而是name是编号为1的属性
+
+![1610968485599](assets/1610968485599.png)
+
+****
+
+DataType是编号为1的属性；因为有oneof关键字，所以dataBody里面任选一个作为第二个属性，Student或者Worker是编号为2或者3的属性
+
+![1610968606936](assets/1610968606936.png)
+
+### 8.2 编码解码器
+
+比如说之前在服务器端实现的ProtobufDecoder就是继承了ChannelInboundHandlerAdapter
+
+入栈8个字节，每四个字节组合成一个int型数据，比如124和267放入list中
+
+![1610970693210](assets/1610970693210.png)
+
+### 8.3 Netty的handler链的调用机制
+
+参考代码 com/atguigu/netty/inboundhandlerandoutboundhandler
+
+客户端——>服务端（编码）
+
+服务端——>客户端（解码）
+
+![1610972227530](assets/1610972227530.png)
+
+### 9.2 TCP粘包拆包现象实例
+
+参考代码 com/atguigu/netty/tcp
+
+每次接受数据个数不相同，10条数据总共接受了6次
+
+![1610974350422](assets/1610974398764.png)
+
+第二次测试则接受了7次才接受完10条数据，所以依据这种现象可知代码是不安全的，每次显示的message可能都是不完整的
+
+![1610974466430](assets/1610974466430.png)
+
+### 9.4 TCP粘包拆包解决方案
+
+参考代码 com/atguigu/netty/protocoltcp
+
+### 10.2 Netty启动过程源码剖析
+
+参考代码 com/atguigu/netty/source/echo
+
+本参考代码是源于netty源码的example包下的echo目录
+
+![1610978601255](assets/1610978601255.png)
+
+![1610978618784](assets/1610978618784.png)
+
+****
+
+![1610978699200](assets/1610978699200.png)
+
+![1610978724423](assets/1610978724423.png)
+
+![1610978733071](assets/1610978733071.png)
+
+****
+
+`EventLoopGroup workerGroup = new NioEventLoopGroup();`最终会执行的代码
+
+在创建每个子线程的同时放入了一个执行器executor，也就是说子线程是靠执行器去执行的
+
+![1610978911078](assets/1610978911078.png)
+
+children的真实身份是EventExecutor
+
+![1610979025063](assets/1610979025063.png)
+
+但是children数组的每个元素类型却是NioEventLoop，这是因为NioEventLoop实现了EventExecutor接口，所以能把实现类放在父类数组中
+
+![1610979141464](assets/1610979141464.png)
 

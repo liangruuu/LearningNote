@@ -26,7 +26,7 @@ public class MyClientHandler  extends SimpleChannelInboundHandler<Long> {
 
         //分析
         //1. "abcdabcdabcdabcd" 是 16个字节
-        //2. 该处理器的前一个handler 是  MyLongToByteEncoder
+        //2. 该处理器的前一个handler 是  MyLongToByteEncoder，而如果传进数据为字符串"abcdabcdabcdabcd"则不会调用MyLongToByteEncoder
         //3. MyLongToByteEncoder 父类  MessageToByteEncoder
         //4. 父类  MessageToByteEncoder
         /*
