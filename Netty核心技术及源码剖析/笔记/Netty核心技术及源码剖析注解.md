@@ -278,3 +278,7 @@ children的真实身份是EventExecutor
 
 ![1610979141464](assets/1610979141464.png)
 
+### 11.4 自己实现dubbo RPC（基于Netty）
+
+参考代码 com/atguigu/netty/dubborpc
+
