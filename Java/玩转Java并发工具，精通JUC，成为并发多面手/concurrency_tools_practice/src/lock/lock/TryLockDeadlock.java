@@ -20,7 +20,7 @@ public class TryLockDeadlock implements Runnable {
         TryLockDeadlock r1 = new TryLockDeadlock();
         TryLockDeadlock r2 = new TryLockDeadlock();
         r1.flag = 1;
-        r1.flag = 0;
+        r2.flag = 0;
         new Thread(r1).start();
         new Thread(r2).start();
 
