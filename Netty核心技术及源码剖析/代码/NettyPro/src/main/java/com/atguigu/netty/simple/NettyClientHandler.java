@@ -15,13 +15,29 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
         ctx.writeAndFlush(Unpooled.copiedBuffer("hello, server: (>^ω^<)喵", CharsetUtil.UTF_8));
     }
 
+
+
     //当通道有读取事件时（收到来自服务端的数据），会触发
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 
         ByteBuf buf = (ByteBuf) msg;
         System.out.println("服务器回复的消息:" + buf.toString(CharsetUtil.UTF_8));
-        System.out.println("服务器的地址： "+ ctx.channel().remoteAddress());
+        System.out.println("服务器的地址： " + ctx.channel().remoteAddress());
+
+        /**
+         * 如果加上这句 ctx.close(); 或者 ctx.channel().close();
+         * NettyClient文件就会继续执行接下去的以及finally代码块里的代码
+         *         {
+         *             System.out.println("阻塞后的实现......");
+         *         } finally{
+         *             System.out.println("我进来了......");
+         *             group.shutdownGracefully();
+         *
+         *         }
+         * 因为这行代码的意思是关闭客户端的channel，而如果channel被关闭
+         * channelFuture.channel().closeFuture().sync();就会取消阻塞随即执行接下来的代码
+         */
     }
 
     @Override

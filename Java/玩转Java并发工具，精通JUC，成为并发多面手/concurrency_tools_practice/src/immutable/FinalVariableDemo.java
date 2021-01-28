@@ -7,6 +7,8 @@ public class FinalVariableDemo {
 
     private static final Person person = null;
 
+//    private final int a = 7;
+
 //    void testFinal() {
 //       final int b = 7;
 //        int c =b;

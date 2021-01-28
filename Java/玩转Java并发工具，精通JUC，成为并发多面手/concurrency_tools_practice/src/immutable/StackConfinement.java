@@ -15,7 +15,7 @@ public class StackConfinement implements Runnable {
             }
         }
 
-        System.out.println("栈内保护的数字是线程安全的：" + neverGoOut);
+        System.out.println(Thread.currentThread().getName() + "栈内保护的数字是线程安全的：" + neverGoOut);
     }
 
     @Override
@@ -34,6 +34,6 @@ public class StackConfinement implements Runnable {
         thread2.start();
         thread1.join();
         thread2.join();
-        System.out.println(r1.index);
+        System.out.println("没有被保护的变量:" + r1.index);
     }
 }

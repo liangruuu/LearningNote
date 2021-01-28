@@ -15,13 +15,15 @@ public class TestServer {
         try {
             ServerBootstrap serverBootstrap = new ServerBootstrap();
 
-            serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class).childHandler(new TestServerInitializer());
+            serverBootstrap.group(bossGroup, workerGroup)
+                    .channel(NioServerSocketChannel.class)
+                    .childHandler(new TestServerInitializer());
 
             ChannelFuture channelFuture = serverBootstrap.bind(6668).sync();
-            
+
             channelFuture.channel().closeFuture().sync();
 
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

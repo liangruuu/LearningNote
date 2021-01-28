@@ -30,11 +30,10 @@ public class NewIOServer {
 
                     readcount = socketChannel.read(byteBuffer);
 
-                }catch (Exception ex) {
-                   // ex.printStackTrace();
+                } catch (Exception ex) {
+                    // ex.printStackTrace();
                     break;
                 }
-                //
                 byteBuffer.rewind(); //倒带 position = 0 mark 作废
             }
         }

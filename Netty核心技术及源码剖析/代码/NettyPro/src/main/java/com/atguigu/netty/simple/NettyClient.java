@@ -37,8 +37,10 @@ public class NettyClient {
             ChannelFuture channelFuture = bootstrap.connect("127.0.0.1", 6668).sync();
             //给关闭通道进行监听
             channelFuture.channel().closeFuture().sync();
-        }finally {
 
+            System.out.println("阻塞后的实现......");
+        } finally {
+            System.out.println("我进来了......");
             group.shutdownGracefully();
 
         }

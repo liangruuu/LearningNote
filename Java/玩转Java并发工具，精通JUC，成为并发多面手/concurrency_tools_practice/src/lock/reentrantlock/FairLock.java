@@ -18,6 +18,7 @@ public class FairLock {
         for (int i = 0; i < 10; i++) {
             thread[i].start();
             try {
+                // 这个睡眠是为了让线程启动有顺序性，不然如果启动很密集的话会产生顺序错乱
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -42,9 +43,10 @@ class Job implements Runnable {
     }
 }
 
+// 打印机类，需求是同一份文档打印两次
 class PrintQueue {
 
-    private Lock queueLock = new ReentrantLock(true);
+    private Lock queueLock = new ReentrantLock(false);
 
     public void printJob(Object document) {
         queueLock.lock();

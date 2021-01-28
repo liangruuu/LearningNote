@@ -19,6 +19,7 @@ public class Upgrading {
             System.out.println(Thread.currentThread().getName() + "得到了读锁，正在读取");
             Thread.sleep(1000);
             System.out.println("升级会带来阻塞");
+            // 在获取读锁的前提下尝试去获取写锁，其实就是锁的升级
             writeLock.lock();
             System.out.println(Thread.currentThread().getName() + "获取到了写锁，升级成功");
         } catch (InterruptedException e) {
@@ -34,6 +35,7 @@ public class Upgrading {
         try {
             System.out.println(Thread.currentThread().getName() + "得到了写锁，正在写入");
             Thread.sleep(1000);
+            // 在获取写锁的前提下尝试去获取读锁，其实就是锁的降级
             readLock.lock();
             System.out.println("在不释放写锁的情况下，直接获取读锁，成功降级");
         } catch (InterruptedException e) {

@@ -42,7 +42,7 @@ public class GroupChatClient {
 
         try {
             socketChannel.write(ByteBuffer.wrap(info.getBytes()));
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -53,16 +53,16 @@ public class GroupChatClient {
         try {
 
             int readChannels = selector.select();
-            if(readChannels > 0) {//有可以用的通道
+            if (readChannels > 0) {//有可以用的通道
 
                 Iterator<SelectionKey> iterator = selector.selectedKeys().iterator();
                 while (iterator.hasNext()) {
 
                     SelectionKey key = iterator.next();
-                    if(key.isReadable()) {
+                    if (key.isReadable()) {
                         //得到相关的通道
-                       SocketChannel sc = (SocketChannel) key.channel();
-                       //得到一个Buffer
+                        SocketChannel sc = (SocketChannel) key.channel();
+                        //得到一个Buffer
                         ByteBuffer buffer = ByteBuffer.allocate(1024);
                         //读取
                         sc.read(buffer);
@@ -73,11 +73,11 @@ public class GroupChatClient {
                 }
                 iterator.remove(); //删除当前的selectionKey, 防止重复操作
             } else {
-                //System.out.println("没有可以用的通道...");
 
+                System.out.println("没有可以用的通道...");
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -87,20 +87,18 @@ public class GroupChatClient {
         //启动我们客户端
         GroupChatClient chatClient = new GroupChatClient();
 
-        //启动一个线程, 每个3秒，读取从服务器发送数据
-        new Thread() {
-            public void run() {
+        //启动一个线程, 每隔3秒，读取从服务器发送数据
+        new Thread(() -> {
 
-                while (true) {
-                    chatClient.readInfo();
-                    try {
-                        Thread.currentThread().sleep(3000);
-                    }catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            while (true) {
+                chatClient.readInfo();
+                try {
+                    Thread.currentThread().sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
-        }.start();
+        }).start();
 
         //发送数据给服务器端
         Scanner scanner = new Scanner(System.in);

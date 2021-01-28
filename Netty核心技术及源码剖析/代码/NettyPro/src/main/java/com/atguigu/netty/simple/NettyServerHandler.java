@@ -93,6 +93,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
         ByteBuf buf = (ByteBuf) msg;
         System.out.println("客户端发送消息是:" + buf.toString(CharsetUtil.UTF_8));
         System.out.println("客户端地址:" + channel.remoteAddress());
+
     }
 
     //Pipeline里的Handler读取数据完毕，则需要把数据发送回客户端

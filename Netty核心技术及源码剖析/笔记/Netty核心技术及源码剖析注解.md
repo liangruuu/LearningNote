@@ -69,8 +69,8 @@
 
 #### 3.7.1 Selector类相关方法
 
-1. selector选择器是和线程关联的，一旦关联过后selector调用select方法，这个方法一旦返回就返回一个元素为SelectionKey的集合（Set）。然后就可以通过SelectionKey获知是哪个事件发生了（Read /Write/Accept），然后再根据获取不同的事件Key值取到对应的Channel再操作
-2. selectedKeys()方法是获取所有注册在Selector上的Channel的SelectionKey，而select()方法是获取注册在Selector上且响应了事件的Channel的SelectionKey
+1. selector选择器是和线程关联的，一旦关联过后selector调用select方法，这个方法一旦返回就返回一个元素为SelectionKey的集合（Set）。然后就可以通过SelectionKey获知是哪个事件发生了（Read/Write/Accept），然后再根据获取不同的事件Key值取到对应的Channel再操作select
+2. select()方法是获取所有注册在Selector上的Channel的SelectionKey，而selectedKeys()方法是获取注册在Selector上且响应了事件的Channel的SelectionKey
 
 ### 3.9 NIO非阻塞网络编程入门
 

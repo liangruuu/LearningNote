@@ -11,11 +11,16 @@ import java.net.URI;
 
 /*
 说明
-1. SimpleChannelInboundHandler 是 ChannelInboundHandlerAdapter
+1. SimpleChannelInboundHandler 继承自 ChannelInboundHandlerAdapter
+    channelRead0方法在channelRead方法中被调用
 2. HttpObject 客户端和服务器端相互通讯的数据被封装成 HttpObject
+3. 这里采用继承ChannelInboundHandler而不是继承ChannelOutboundHandler是因为
+    channelRead0方法体里主要做的是将构建好 response返回，即向客户端写数据，如果涉及到向客户端写数据就需要使用Inbound
+    如果是向服务端写数据就需要使用Outbound，典型例子参考MessageToByteEncoder类，该类继承自ChannelOutboundHandlerAdapter
+    虽然名字中不带Handler，但的确是一个Handler，所以之后需要被放入channelPipeLine中
+    该类的作用就是把从客户端传过来的数据转化成字节（Byte）类型数据，是向服务端写数据，所以需要使用Outbound
  */
 public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
-
 
     //channelRead0 读取客户端数据
     @Override
@@ -23,14 +28,14 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 
 
         System.out.println("对应的channel=" + ctx.channel() + " pipeline=" + ctx
-        .pipeline() + " 通过pipeline获取channel" + ctx.pipeline().channel());
+                .pipeline() + " 通过pipeline获取channel" + ctx.pipeline().channel());
 
         System.out.println("当前ctx的handler=" + ctx.handler());
 
         //判断 msg 是不是 httprequest请求
-        if(msg instanceof HttpRequest) {
+        if (msg instanceof HttpRequest) {
 
-            System.out.println("ctx 类型="+ctx.getClass());
+            System.out.println("ctx 类型=" + ctx.getClass());
 
             System.out.println("pipeline hashcode" + ctx.pipeline().hashCode() + " TestHttpServerHandler hash=" + this.hashCode());
 
@@ -41,7 +46,7 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
             HttpRequest httpRequest = (HttpRequest) msg;
             //获取uri, 过滤指定的资源
             URI uri = new URI(httpRequest.uri());
-            if("/favicon.ico".equals(uri.getPath())) {
+            if ("/favicon.ico".equals(uri.getPath())) {
                 System.out.println("请求了 favicon.ico, 不做响应");
                 return;
             }
@@ -60,7 +65,6 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 
         }
     }
-
 
 
 }

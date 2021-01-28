@@ -22,7 +22,6 @@ public class NettyServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup(); //8
 
 
-
         try {
             //创建服务器端的启动对象，配置参数
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -44,8 +43,14 @@ public class NettyServer {
 
             System.out.println(".....服务器 is ready...");
 
-            //绑定一个端口并且同步, 生成了一个 ChannelFuture 对象
-            //启动服务器(并绑定端口)
+            /**
+             * 绑定一个端口并且同步, 生成了一个 ChannelFuture 对象
+             * 启动服务器(并绑定端口)
+             *
+             * bootstrap.bind()方法开启了一个server reactor线程
+             * 一直追溯到AbstractBootstrap类里有一个doBind0方法，在这个方法里调用new Runnable()开启了一个新线程
+             * 即Reactor线程用来监听多个客户端的channel
+             */
             ChannelFuture cf = bootstrap.bind(6668).sync();
 
             //给cf 注册监听器，监控我们关心的事件
@@ -61,10 +66,26 @@ public class NettyServer {
                 }
             });
 
+            System.out.println("这行语句能执行......");
 
-            //对关闭通道进行监听
+            /**
+             * 对关闭通道进行监听
+             * 那这行代码到底有什么作用呢？
+             *
+             * 作用：Netty server启动：绑定端口，开启监听是通过异步开启一个子线程执行的，当前线程不会同步等待；
+             *      closeFuture().sync()就是让当前线程(即主线程)同步等待Netty server的close事件，Netty server的channel close后，主线程才会继续往下执行。
+             *      closeFuture()在channel close的时候会通知当前线程。
+             *      服务端管道关闭的监听器并同步阻塞,直到server channel关闭,线程才会往下执行,结束进程；
+             *      主线程执行到这里就 wait 子线程结束，子线程才是真正监听和接受请求的，子线程就是Netty启动的监听端口的线程；
+             *      即closeFuture()是开启了一个子线程server channel的监听器，负责监听channel是否关闭的状态，sync()让主线程同步等待子线程结果。
+             *      补充：channel.close()才是主动关闭通道的方法。
+             */
             cf.channel().closeFuture().sync();
-        }finally {
+
+            System.out.println("这行语句执行不了......");
+
+
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
