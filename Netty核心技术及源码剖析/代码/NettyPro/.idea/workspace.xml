@@ -5,92 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c6f496c-3589-4c45-b499-f38179fa2faa" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/atomic/AtomicIntegerDemo1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/atomic/AtomicIntegerDemo1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/collections/concurrenthashmap/OptionsNotSafe.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/collections/concurrenthashmap/OptionsNotSafe.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/collections/predecessor/MapDemo.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/collections/predecessor/MapDemo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/immutable/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/immutable/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/immutable/StackConfinement.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/immutable/StackConfinement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/lock/LockInterruptibly.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/lock/LockInterruptibly.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/lock/PessimismOptimismLock.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/lock/PessimismOptimismLock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/readwrite/Upgrading.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/readwrite/Upgrading.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/FairLock.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/FairLock.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/Job.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/Job.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/PrintQueue.class" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/out/production/concurrency_tools_practice/lock/reentrantlock/PrintQueue.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/atomic/AtomicIntegerDemo1.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/atomic/AtomicIntegerDemo1.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/atomic/AtomicIntegerFieldUpdaterDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/atomic/AtomicIntegerFieldUpdaterDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/collections/concurrenthashmap/OptionsNotSafe.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/collections/concurrenthashmap/OptionsNotSafe.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/collections/predecessor/MapDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/collections/predecessor/MapDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/FinalVariableDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/FinalVariableDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/StackConfinement.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/immutable/StackConfinement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/lock/LockInterruptibly.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/lock/LockInterruptibly.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/lock/PessimismOptimismLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/lock/PessimismOptimismLock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/readwrite/Upgrading.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/readwrite/Upgrading.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/reentrantlock/FairLock.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/lock/reentrantlock/FairLock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/index2.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/index2.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/bio/BIOServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/bio/BIOServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/groupchat/GroupChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/groupchat/GroupChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/groupchat/GroupChatServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/groupchat/GroupChatServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/Student.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/Student.proto" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/Student.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/Student.proto" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestHttpServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestHttpServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServerInitializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder2.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyServerHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServerInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/groupchat/GroupChatClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/groupchat/GroupChatClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/groupchat/GroupChatServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/groupchat/GroupChatServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/zerocopy/NewIOServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/nio/zerocopy/NewIOServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/bio/BIOServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/bio/BIOServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/NettyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/StudentPOJO$Student$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/StudentPOJO$Student$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/StudentPOJO$Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec/StudentPOJO$Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$MyMessage$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$MyMessage$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$MyMessage.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$MyMessage.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Student$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Student$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Worker$Builder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Worker$Builder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Worker.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/MyDataInfo$Worker.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/NettyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/codec2/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/dubborpc/netty/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatClient$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatClient$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyTextWebSocketFrameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyTextWebSocketFrameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServerHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServerHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/heartbeat/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/heartbeat/MyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/http/TestServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/http/TestServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/protocoltcp/MyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/protocoltcp/MyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/protocoltcp/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/protocoltcp/MyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyClientHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServerHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/simple/NettyServerHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo/EchoClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo/EchoClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo/EchoServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo/EchoServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo2/EchoClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo2/EchoClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo2/EchoServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/source/echo2/EchoServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/tcp/MyClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/tcp/MyClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/tcp/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/tcp/MyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/websocket/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/websocket/MyServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/GroupChatClient$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/GroupChatClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/GroupChatClient.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/GroupChatServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/GroupChatServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/MyHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/nio/groupchat/MyHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/nio/zerocopy/NewIOServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/nio/zerocopy/NewIOServer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../笔记/Netty核心技术及源码剖析注解.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../笔记/Netty核心技术及源码剖析注解.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -305,7 +245,7 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="preferences.general" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
     <property name="settings.editor.splitter.proportion" value="0.24803922" />
   </component>
   <component name="RecentsManager">
@@ -323,7 +263,7 @@
       <recent name="C:\Users\Administrator\IdeaProjects\NettyPro" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.GroupChatClient">
+  <component name="RunManager" selected="Application.MyServer (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -371,27 +311,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.tcp.MyServer" />
+    <configuration name="MyServer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.websocket.MyServer" />
       <module name="NettyPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.atguigu.netty.tcp.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NettyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.simple.NettyServer" />
-      <module name="NettyPro" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.atguigu.netty.simple.*" />
+          <option name="PATTERN" value="com.atguigu.netty.websocket.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -438,6 +364,9 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="hello.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/NettyPro/com/atguigu/netty/websocket/hello.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -458,19 +387,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.ServerBootstrap" />
-      <item itemvalue="Application.NettyServer" />
-      <item itemvalue="Application.MyServer" />
       <item itemvalue="Application.MyClient" />
       <item itemvalue="Application.GroupChatServer (1)" />
       <item itemvalue="Application.GroupChatClient" />
+      <item itemvalue="JavaScript Debug.hello.html" />
+      <item itemvalue="Application.MyServer (1)" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MyServer (1)" />
+        <item itemvalue="JavaScript Debug.hello.html" />
         <item itemvalue="Application.GroupChatClient" />
         <item itemvalue="Application.GroupChatServer (1)" />
         <item itemvalue="Application.MyClient" />
-        <item itemvalue="Application.MyServer" />
-        <item itemvalue="Application.NettyServer" />
       </list>
     </recent_temporary>
   </component>
@@ -556,7 +485,7 @@
       <workItem from="1611561022467" duration="13158000" />
       <workItem from="1611625564305" duration="6849000" />
       <workItem from="1611722301693" duration="15810000" />
-      <workItem from="1611795305123" duration="12820000" />
+      <workItem from="1611795305123" duration="22450000" />
     </task>
     <servers />
   </component>
@@ -715,7 +644,7 @@
         </line-breakpoint>
         <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServerHandler.java</url>
-          <line>20</line>
+          <line>19</line>
           <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint type="java-line">

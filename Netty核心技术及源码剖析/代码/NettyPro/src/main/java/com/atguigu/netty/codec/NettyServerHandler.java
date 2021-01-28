@@ -5,10 +5,10 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.util.CharsetUtil;
 
-/*
-说明
-1. 我们自定义一个Handler 需要继续netty 规定好的某个HandlerAdapter(规范)
-2. 这时我们自定义一个Handler , 才能称为一个handler
+/**
+ * 从注释掉的ChannelInboundHandlerAdapter可以看出并没有使用泛型使得在channelRead方法里只能通过向下转型把Object类变为指定类
+ * 而SimpleChannelInboundHandler继承自ChannelInboundHandlerAdapter并且使用泛型，这样就免去了数据类型的转换
+ * 而且观察源码即使是使用channelRead，最后也会调用channelRead0方法
  */
 //public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 public class NettyServerHandler extends SimpleChannelInboundHandler<StudentPOJO.Student> {
@@ -24,10 +24,8 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<StudentPOJO.
 
         //读取从客户端发送的StudentPojo.Student
 
-
         System.out.println("客户端发送的数据 id=" + msg.getId() + " 名字=" + msg.getName());
     }
-
 
 
 //    //读取数据实际(这里我们可以读取客户端发送的消息)

@@ -43,9 +43,25 @@ public class MyServer {
 
                     5. 文档说明
                     triggers an {@link IdleStateEvent} when a {@link Channel} has not performed
- * read, write, or both operation for a while.
- *                  6. 当 IdleStateEvent 触发后 , 就会传递给管道 的下一个handler去处理
- *                  通过调用(触发)下一个handler 的 userEventTriggered , 在该方法中去处理 IdleStateEvent(读空闲，写空闲，读写空闲)
+                    read, write, or both operation for a while.
+
+                    6. 当 IdleStateEvent 触发后 , 就会传递给管道 的下一个handler去处理
+                    通过调用(触发)下一个handler 的 userEventTriggered , 在该方法中去处理 IdleStateEvent(读空闲，写空闲，读写空闲)
+
+                    进入IdleStateHandler类搜索userEventTriggered可以看到一个叫channelIdle的方法调用了ctx.fireUserEventTriggered(evt);
+                    protected void channelIdle(ChannelHandlerContext ctx, IdleStateEvent evt) throws Exception {
+                        ctx.fireUserEventTriggered(evt);
+                    }
+                    而ChannelInboundHandlerAdapter类里也有一个叫userEventTriggered的方法调用了ctx.fireUserEventTriggered(evt);
+                    MyServerHandler就是继承自ChannelInboundHandlerAdapter
+                    @Override
+                    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+                        ctx.fireUserEventTriggered(evt);
+                    }
+                    对于ctx.fireUserEventTriggered(evt)的解释是：
+                    Calls ChannelHandlerContext.fireUserEventTriggered(Object)
+                    to forward to the next ChannelInboundHandler in the ChannelPipeline.
+                    也就是说每一个handler都会处理这个事件，并把处理完的事件传递到下一个handler去
                      */
                     pipeline.addLast(new IdleStateHandler(7000,7000,10, TimeUnit.SECONDS));
                     //加入一个对空闲检测进一步处理的handler(自定义)

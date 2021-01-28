@@ -23,7 +23,6 @@ public class NettyServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup(); //8
 
 
-
         try {
             //创建服务器端的启动对象，配置参数
             ServerBootstrap bootstrap = new ServerBootstrap();
@@ -38,7 +37,6 @@ public class NettyServer {
                         //给pipeline 设置处理器
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-
 
                             ChannelPipeline pipeline = ch.pipeline();
                             //在pipeline加入ProtoBufDecoder
@@ -70,7 +68,7 @@ public class NettyServer {
 
             //对关闭通道进行监听
             cf.channel().closeFuture().sync();
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

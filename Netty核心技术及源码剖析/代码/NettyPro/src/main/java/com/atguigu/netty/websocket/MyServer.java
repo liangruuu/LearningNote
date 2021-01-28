@@ -20,7 +20,7 @@ import io.netty.handler.timeout.IdleStateHandler;
 import java.util.concurrent.TimeUnit;
 
 public class MyServer {
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
 
         //创建两个线程组
@@ -47,7 +47,7 @@ public class MyServer {
                     /*
                     说明
                     1. http数据在传输过程中是分段, HttpObjectAggregator ，就是可以将多个段聚合
-                    2. 这就就是为什么，当浏览器发送大量数据时，就会发出多次http请求
+                    2. 这就是为什么，当浏览器发送大量数据时，就会发出多次http请求
                      */
                     pipeline.addLast(new HttpObjectAggregator(8192));
                     /*
@@ -69,7 +69,7 @@ public class MyServer {
             ChannelFuture channelFuture = serverBootstrap.bind(7000).sync();
             channelFuture.channel().closeFuture().sync();
 
-        }finally {
+        } finally {
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }

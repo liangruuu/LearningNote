@@ -23,6 +23,11 @@ public class NettyClient {
             //设置相关参数
             bootstrap.group(group) //设置线程组
                     .channel(NioSocketChannel.class) // 设置客户端通道的实现类(反射)
+                    /**
+                     * 该 handler对应 bossGroup , childHandler 对应 workerGroup
+                     * 在netty中可以简要地看成有三端：Client<——>Server_bossGroup<-->Server_workerGroup
+                     * Client端使用.handler对应bossGroup，Server端使用.childHandler对应workerGroup
+                     */
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
