@@ -56,16 +56,15 @@ public class NettyClient {
         bootstrap.group(group)
                 .channel(NioSocketChannel.class)
                 .option(ChannelOption.TCP_NODELAY, true)
-                .handler(
-                        new ChannelInitializer<SocketChannel>() {
-                            @Override
-                            protected void initChannel(SocketChannel ch) throws Exception {
-                                ChannelPipeline pipeline = ch.pipeline();
-                                pipeline.addLast(new StringDecoder());
-                                pipeline.addLast(new StringEncoder());
-                                pipeline.addLast(client);
-                            }
-                        }
+                .handler(new ChannelInitializer<SocketChannel>() {
+                             @Override
+                             protected void initChannel(SocketChannel ch) throws Exception {
+                                 ChannelPipeline pipeline = ch.pipeline();
+                                 pipeline.addLast(new StringDecoder());
+                                 pipeline.addLast(new StringEncoder());
+                                 pipeline.addLast(client);
+                             }
+                         }
                 );
 
         try {

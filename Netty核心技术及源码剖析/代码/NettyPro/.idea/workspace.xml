@@ -6,31 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="9c6f496c-3589-4c45-b499-f38179fa2faa" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/Student.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec/Student.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/NettyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/Student.proto" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/codec2/Student.proto" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/heartbeat/MyServerHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/http/TestServerInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyByteToLongDecoder2.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/inboundhandlerandoutboundhandler/MyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/simple/NettyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServerInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/tcp/MyServerInitializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyTextWebSocketFrameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/websocket/MyTextWebSocketFrameHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServerHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/groupchat/GroupChatServerHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/atguigu/netty/heartbeat/MyServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/atguigu/netty/heartbeat/MyServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/customer/ClientBootstrap.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/customer/ClientBootstrap.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/netty/NettyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/provider/HelloServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/dubborpc/provider/HelloServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyServerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/protocoltcp/MyServerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoClientHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/atguigu/netty/source/echo/EchoServer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -263,7 +251,7 @@
       <recent name="C:\Users\Administrator\IdeaProjects\NettyPro" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.MyServer (1)">
+  <component name="RunManager" selected="Application.MyClient (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="HTML_USED" value="false" />
       <option name="WIDTH" value="400" />
@@ -271,26 +259,13 @@
       <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
       <module />
     </configuration>
-    <configuration name="GroupChatClient" type="Application" factoryName="Application" singleton="false" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.groupchat.GroupChatClient" />
-      <module name="NettyPro" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.atguigu.netty.groupchat.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GroupChatServer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.groupchat.GroupChatServer" />
+    <configuration name="MyClient (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.protocoltcp.MyClient" />
       <module name="NettyPro" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.atguigu.netty.groupchat.*" />
+          <option name="PATTERN" value="com.atguigu.netty.protocoltcp.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -325,6 +300,34 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="MyServer (2)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.protocoltcp.MyServer" />
+      <module name="NettyPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.atguigu.netty.protocoltcp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MyServer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.tcp.MyServer" />
+      <module name="NettyPro" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.atguigu.netty.tcp.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ServerBootstrap" type="Application" factoryName="Application" singleton="false" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.atguigu.netty.dubborpc.provider.ServerBootstrap" />
       <module name="NettyPro" />
@@ -344,15 +347,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -363,9 +364,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="hello.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/NettyPro/com/atguigu/netty/websocket/hello.html" useBuiltInWebServerPort="true">
-      <method v="2" />
     </configuration>
     <configuration default="true" type="TestNG">
       <option name="TEST_OBJECT" value="CLASS" />
@@ -387,19 +385,19 @@
     </configuration>
     <list>
       <item itemvalue="Application.ServerBootstrap" />
-      <item itemvalue="Application.MyClient" />
-      <item itemvalue="Application.GroupChatServer (1)" />
-      <item itemvalue="Application.GroupChatClient" />
-      <item itemvalue="JavaScript Debug.hello.html" />
       <item itemvalue="Application.MyServer (1)" />
+      <item itemvalue="Application.MyServer" />
+      <item itemvalue="Application.MyClient" />
+      <item itemvalue="Application.MyServer (2)" />
+      <item itemvalue="Application.MyClient (1)" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MyServer (1)" />
-        <item itemvalue="JavaScript Debug.hello.html" />
-        <item itemvalue="Application.GroupChatClient" />
-        <item itemvalue="Application.GroupChatServer (1)" />
+        <item itemvalue="Application.MyClient (1)" />
+        <item itemvalue="Application.MyServer (2)" />
         <item itemvalue="Application.MyClient" />
+        <item itemvalue="Application.MyServer" />
+        <item itemvalue="Application.MyServer (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -486,6 +484,7 @@
       <workItem from="1611625564305" duration="6849000" />
       <workItem from="1611722301693" duration="15810000" />
       <workItem from="1611795305123" duration="22450000" />
+      <workItem from="1611880374428" duration="8354000" />
     </task>
     <servers />
   </component>
