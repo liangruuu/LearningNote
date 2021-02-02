@@ -1,17 +1,17 @@
 package com.paul.mq.entity;
 
 import java.io.Serializable;
+
 /**
  * netty 客户端与服务端之间消息传递的实体类
- *
  */
 public class BaseMessage implements Serializable {
 
-	private static final long serialVersionUID = 1545712808556462228L;
-	
-	//消息 id
-	private String msgId;
-	// 消息类
+    private static final long serialVersionUID = 1545712808556462228L;
+
+    //消息 id
+    private String msgId;
+    // 消息类
     private AbstractMessage message;
     // 消息类型
     private MessageType messageType;
@@ -26,16 +26,16 @@ public class BaseMessage implements Serializable {
         this.msgId = msgId;
     }
 
-    
+
     public AbstractMessage getMessage() {
-		return message;
-	}
+        return message;
+    }
 
-	public void setMessage(AbstractMessage message) {
-		this.message = message;
-	}
+    public void setMessage(AbstractMessage message) {
+        this.message = message;
+    }
 
-	public MessageType getMessageType() {
+    public MessageType getMessageType() {
         return messageType;
     }
 

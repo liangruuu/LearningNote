@@ -15,47 +15,45 @@ import com.paul.mq.entity.RequestMessage;
 
 
 /**
-*
-* 通过管理 NettyClientPool 来获取 netty 连接，并且定义向 broker server 发送消息的方法
-* 生产者，消费者都需要继承这个类
-*
-*/
+ * 通过管理 NettyClientPool 来获取 netty 连接，并且定义向 broker server 发送消息的方法
+ * 生产者，消费者都需要继承这个类
+ */
 public class NettyConnector {
-	
+
     private NettyClient nettyClient;
     private NettyClientPool nettyClientPool;
-    
-    public NettyConnector(String host,Integer port){
-        NettyClientPool.setServerAddress(host,port);
+
+    public NettyConnector(String host, Integer port) {
+        NettyClientPool.setServerAddress(host, port);
         this.nettyClientPool = NettyClientPool.getInstance();
         this.nettyClient = nettyClientPool.borrow();
     }
-    
-    public NettyClient getNettyClient(){
+
+    public NettyClient getNettyClient() {
         return nettyClient;
     }
 
-    public void closeNettyClientPool(){
+    public void closeNettyClientPool() {
         nettyClientPool.restore();
     }
-    
+
     //同步方式发送消息
-    public void sendSyncMessage(RequestMessage message){
+    public void sendSyncMessage(RequestMessage message) {
         Channel channel = nettyClient.getChannel();
-        if(null == channel){
+        if (null == channel) {
             return;
         }
-        Map<String,CallBack<Object>> callBackMap = nettyClient.getCallBackMap();
+        Map<String, CallBack<Object>> callBackMap = nettyClient.getCallBackMap();
         //将当前这个 request 也放到这个 channel 对应的 callbackMap 中
         final CallBack<Object> callBack = new CountDownCallBack<Object>();
         callBack.setRequestId(message.getMsgId());
-        callBackMap.put(message.getMsgId(),callBack);
+        callBackMap.put(message.getMsgId(), callBack);
 
         try {
             ChannelFuture channelFuture = channel.writeAndFlush(message).sync();
             channelFuture.addListener(new ChannelFutureListener() {
                 public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                    if(!channelFuture.isSuccess()){
+                    if (!channelFuture.isSuccess()) {
                         callBack.setReason(channelFuture.cause());
                     }
                 }
@@ -70,21 +68,21 @@ public class NettyConnector {
     }
 
     //异步方式发送消息
-    public Object sendAsyncMessage(RequestMessage message){
+    public Object sendAsyncMessage(RequestMessage message) {
         Channel channel = nettyClient.getChannel();
-        if(null == channel){
+        if (null == channel) {
             return null;
         }
-        Map<String,CallBack<Object>> callBackMap = nettyClient.getCallBackMap();
+        Map<String, CallBack<Object>> callBackMap = nettyClient.getCallBackMap();
         //将当前这个 request 也放到这个 channel 对应的 callbackMap 中
         final CallBack<Object> callBack = new CountDownCallBack<Object>();
         callBack.setRequestId(message.getMsgId());
-        callBackMap.put(message.getMsgId(),callBack);
+        callBackMap.put(message.getMsgId(), callBack);
 
         ChannelFuture channelFuture = channel.writeAndFlush(message);
         channelFuture.addListener(new ChannelFutureListener() {
             public void operationComplete(ChannelFuture channelFuture) throws Exception {
-                if(!channelFuture.isSuccess()){
+                if (!channelFuture.isSuccess()) {
                     callBack.setReason(channelFuture.cause());
                 }
             }

@@ -23,10 +23,10 @@ public class NettyClientPool extends GenericObjectPool<NettyClient> {
     private static Integer port;
 
 
-    public static NettyClientPool getInstance(){
-        if(nettyClientPool == null){
-            synchronized (NettyClientPool.class){
-                if(nettyClientPool == null){
+    public static NettyClientPool getInstance() {
+        if (nettyClientPool == null) {
+            synchronized (NettyClientPool.class) {
+                if (nettyClientPool == null) {
                     nettyClientPool = new NettyClientPool();
                 }
             }
@@ -34,10 +34,10 @@ public class NettyClientPool extends GenericObjectPool<NettyClient> {
         return nettyClientPool;
     }
 
-    private NettyClientPool(){
-    	Properties properties = null;
+    private NettyClientPool() {
+        Properties properties = null;
         try {
-        	properties = new Properties();
+            properties = new Properties();
             InputStream inputStream = NettyClientPool.class.getClassLoader().getResourceAsStream(configProperties);
             properties.load(inputStream);
             inputStream.close();
@@ -62,10 +62,10 @@ public class NettyClientPool extends GenericObjectPool<NettyClient> {
         this.setMinEvictableIdleTimeMillis(30 * 60 * 1000);
         this.setTestWhileIdle(true);
         // 虽然这个函数已经废除，因为我们是单例，不能使用构造函数传入，所以还是使用这个方法传入 PoolableObjectFactory
-        this.setFactory(new NettyClientPoolableObject(host,port));
+        this.setFactory(new NettyClientPoolableObject(host, port));
     }
 
-    public NettyClient borrow(){
+    public NettyClient borrow() {
         assert nettyClientPool != null;
         try {
             return nettyClientPool.borrowObject();
@@ -76,19 +76,19 @@ public class NettyClientPool extends GenericObjectPool<NettyClient> {
         return null;
     }
 
-    public void restore(){
+    public void restore() {
         assert nettyClientPool != null;
         try {
-			nettyClientPool.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            nettyClientPool.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     //单例模式，通过 set 方法给 NettyClient 必要的函数 host 和 port 赋值
-    public static void setServerAddress(String nhost,Integer nport) {
-    	host = nhost;
-    	port = nport;
+    public static void setServerAddress(String nhost, Integer nport) {
+        host = nhost;
+        port = nport;
     }
 }
 

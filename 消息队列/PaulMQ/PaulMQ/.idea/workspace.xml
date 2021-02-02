@@ -1,86 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="83948bfc-8852-4be0-820a-117da84d4e60" name="Default Changelist" comment="" />
-    <ignored path="$PROJECT_DIR$/target/" />
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <list default="true" id="83948bfc-8852-4be0-820a-117da84d4e60" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../Netty核心技术及源码剖析/代码/NettyPro/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Netty核心技术及源码剖析/代码/NettyPro/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/entity/BaseMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/entity/BaseMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClientPool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClientPool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClientPoolableObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyClientPoolableObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyConnector.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/netty/NettyConnector.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/paul/mq/serialize/MessageObjectEncoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/paul/mq/serialize/MessageObjectEncoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/com.paul.framework.mq/PaulMQ/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/com.paul.framework.mq/PaulMQ/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/AckPullMessageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/AckPushMessageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/BrokerNettyHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ConsumerMessageListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ConsumerMessageListenerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/CoreServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/LauncherListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/PaulMQBroker$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/PaulMQBroker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerAckMessageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerMessageListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerMessageListenerImpl$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerMessageListenerImpl$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerMessageListenerImpl$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/ProducerMessageListenerImpl.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/SendMessageController$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/SendMessageController$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/SendMessageController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/SendMessageLauncher.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/BrokerProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/BrokerProcessorContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/ConsumerMessageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/ProducerMessageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/SubscribeMessageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/broker/processor/UnSubscribeMessageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/CallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/CallBackListener.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/CountDownCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/MQServer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/MessageProcessor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/MessageProxy.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/NettyHandlerInterceptor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/common/ReentrantLockCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ClustersRelation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ClustersState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClusters$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClusters$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClusters.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClustersContext$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClustersContext$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerClustersContext.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ConsumerNettyHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/PaulMQConsumer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/consumer/ReceiveMessageCallBack.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/AckMessageCache$AckMessageCacheHolder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/AckMessageCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/AckMessageTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/AckMessageTaskQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/MessageCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/MessageTaskQueue.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/ProducerCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/SemaphoreCache$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/SemaphoreCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/SemaphoreConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/SendMessageCache.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/core/SendMessageTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/AbstractMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/BaseMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/ChannelData.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/ConsumerAckMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/Message.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/MessageDispatchTask.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/MessageType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/ProducerAckMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/RequestMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/ResponseMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/SourceType.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/SubMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/entity/UnSubMessage.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyClient$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyClient$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyClient.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyClientPool.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyClientPoolableObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyConnector$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyConnector$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyConnector.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/NettyHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/netty/mq.connectpool.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/producer/PaulMQProducer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/producer/ProducerNettyHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/KryoCodecUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/KryoPoolFactory$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/KryoPoolFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/KryoSerialize.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/MessageCodecUtil.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/MessageObjectDecoder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/serialize/MessageObjectEncoder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/spring/PaulMQBootstrap.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/spring/PaulMQStarter.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/spring/broker-server.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Consumer1$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Consumer1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Consumer2$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Consumer2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Producer1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Producer2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/test/Producer3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/paul/mq/util/NettyUtil.class" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/serializer/NettyDecoderHandler.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/serializer/NettyEncoderHandler.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/serializer/Serializer.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/serializer/SerializerEngine.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/serializer/SerializeType.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/Util/HeartBeatTask.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/main/java/com/paul/Util/SercretUtil.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/test/java/com/paul/AppTest.java">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/src/test/test.iml">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/../Netty-Procotol/pom.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="14" lean-forward="true" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
     <option name="PUSH_TAGS">
       <GitPushTagMode>
         <option name="argument" value="--follow-tags" />
         <option name="title" value="Current Branch" />
       </GitPushTagMode>
     </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../.." />
   </component>
   <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="804" />
   </component>
+  <component name="ProjectId" id="1njnXLg4lTK8GMDxpRj9DmsQP3k" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -102,26 +157,22 @@
       <pane id="PackagesPane" />
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572265776610" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../AvatarMQ" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -135,6 +186,10 @@
       <workItem from="1572264179359" duration="276000" />
       <workItem from="1572264511775" duration="1068000" />
       <workItem from="1572265656830" duration="244000" />
+      <workItem from="1611912406546" duration="17000" />
+      <workItem from="1611912493792" duration="2393000" />
+      <workItem from="1612180054049" duration="2824000" />
+      <workItem from="1612228209538" duration="158000" />
     </task>
     <task id="LOCAL-00001" summary="first commit">
       <created>1572264387842</created>
@@ -185,7 +240,7 @@
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />

@@ -28,10 +28,11 @@ import com.paul.mq.serialize.KryoCodecUtil;
 import com.paul.mq.serialize.KryoPoolFactory;
 import com.paul.mq.serialize.MessageObjectDecoder;
 import com.paul.mq.serialize.MessageObjectEncoder;
+
 /**
  * netty 客户端，producer 和 consumer 都需要使用这个类连接 netty 服务端
- * @author swang18
  *
+ * @author swang18
  */
 public class NettyClient implements MQServer {
 
@@ -44,19 +45,19 @@ public class NettyClient implements MQServer {
     //是否连接成功
     private boolean connected = false;
     //发送消息的超时时间
-    private int timeout = 10*1000;
+    private int timeout = 10 * 1000;
 
     //每个请求的回调，通过这个保存所有请求，CallBack 将 netty 的异步调用变为同步
-    Map<String,CallBack<Object>> callBackMap = new ConcurrentHashMap<String, CallBack<Object>>();
-    
+    Map<String, CallBack<Object>> callBackMap = new ConcurrentHashMap<>();
+
     private static KryoCodecUtil util = new KryoCodecUtil(KryoPoolFactory.getKryoPoolInstance());
 
 
     private Bootstrap bootstrap;
     private EventLoopGroup eventLoopGroup;
 
-    public NettyClient(String host,Integer port){
-        remoteAddr = new InetSocketAddress(host,port);
+    public NettyClient(String host, Integer port) {
+        remoteAddr = new InetSocketAddress(host, port);
     }
 
 
@@ -65,14 +66,14 @@ public class NettyClient implements MQServer {
 
         //功能描述：检查boolean是否为真。 用作方法中检查参数
         //失败时抛出的异常类型: IllegalArgumentException
-    	if(null == clientHandler){
-    		throw new RuntimeException("Client Handler is Null!");
-    	}
+        if (null == clientHandler) {
+            throw new RuntimeException("Client Handler is Null!");
+        }
 
         bootstrap = new Bootstrap();
         eventLoopGroup = new NioEventLoopGroup();
 
-        try{
+        try {
             bootstrap.group(eventLoopGroup)
                     .channel(NioSocketChannel.class)
                     .handler(new ChannelInitializer<SocketChannel>() {
@@ -83,7 +84,7 @@ public class NettyClient implements MQServer {
                             pipeline.addLast(clientHandler);
                         }
                     });
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -91,7 +92,7 @@ public class NettyClient implements MQServer {
 
     // 客户端（生产者/消费者）连接服务端 broker server
     public void start() {
-    	init();
+        init();
         ChannelFuture channelFuture = null;
         try {
             channelFuture = bootstrap.connect(this.remoteAddr).sync();
@@ -110,7 +111,7 @@ public class NettyClient implements MQServer {
     }
 
     public void stop() {
-        if(null != channel){
+        if (null != channel) {
             try {
                 //关闭 channel
                 channel.close().sync();
@@ -123,31 +124,31 @@ public class NettyClient implements MQServer {
     }
 
     //返回连接成功后的 channel
-    public Channel getChannel(){
+    public Channel getChannel() {
         return channel;
     }
 
     // 返回是否连接成功
-    public boolean isConnected(){
+    public boolean isConnected() {
         return connected;
     }
 
     // 返回当前 channel 的所有 request 的 callbackMap 集合
-    public Map<String,CallBack<Object>> getCallBackMap(){
+    public Map<String, CallBack<Object>> getCallBackMap() {
         return callBackMap;
     }
-    
-    public boolean checkCallBack(String key){
-    	return callBackMap.containsKey(key);
+
+    public boolean checkCallBack(String key) {
+        return callBackMap.containsKey(key);
     }
 
-    public CallBack<Object> removeCallBack(String key){
-        if(null == key){
+    public CallBack<Object> removeCallBack(String key) {
+        if (null == key) {
             return null;
-        }else{
-            if(callBackMap.containsKey(key)){
+        } else {
+            if (callBackMap.containsKey(key)) {
                 return callBackMap.remove(key);
-            }else{
+            } else {
                 return null;
             }
         }
