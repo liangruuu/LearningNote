@@ -148,7 +148,7 @@ public @interface TestAnnotation {
 
 上面代码定义了 TestAnnotation 这个注解中拥有 id 和 msg 两个属性。在使用的时候，我们应该给它们进行赋值。
 
-赋值的方式是在注解的括号内以 value=”” 形式，多个属性之前用 ，隔开。
+赋值的方式是在注解的括号内以 value=""形式，多个属性之前用 ，隔开。
 
 ```java
 @TestAnnotation(id=3,msg="hello annotation")
@@ -450,31 +450,31 @@ public class Test {
 —— 程序员 A : 我写了一个类，它的名字叫做 NoBug，因为它所有的方法都没有错误。
 —— 我：自信是好事，不过为了防止意外，让我测试一下如何？
 —— 程序员 A: 怎么测试？
-—— 我：把你写的代码的方法都加上 @Jiecha 这个注解就好了。
+—— 我：把你写的代码的方法都加上 @Jiancha 这个注解就好了。
 —— 程序员 A: 好的。
 
 ```java
 package ceshi;
-import ceshi.Jiecha;
+import ceshi.Jiancha;
 
 public class NoBug {
-	@Jiecha
+	@Jiancha
 	public void suanShu(){
 		System.out.println("1234567890");
 	}
-	@Jiecha
+	@Jiancha
 	public void jiafa(){
 		System.out.println("1+1="+1+1);
 	}
-	@Jiecha
-	public void jiefa(){
+	@Jiancha
+	public void jianfa(){
 		System.out.println("1-1="+(1-1));
 	}
-	@Jiecha
+	@Jiancha
 	public void chengfa(){
 		System.out.println("3 x 5="+ 3*5);
 	}
-	@Jiecha
+	@Jiancha
 	public void chufa(){
 		System.out.println("6 / 0="+ 6 / 0);
 	}
@@ -486,7 +486,7 @@ public class NoBug {
 }
 ```
 
-上面的代码，有些方法上面运用了 @Jiecha 注解。
+上面的代码，有些方法上面运用了 @Jiancha 注解。
 
 这个注解是我写的测试软件框架中定义的注解。
 
@@ -497,7 +497,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Jiecha {
+public @interface Jiancha {
 
 }
 ```
@@ -526,8 +526,8 @@ public class TestTool {
 		int errornum = 0;
 		
 		for ( Method m: method ) {
-			// 只有被 @Jiecha 标注过的方法才进行测试
-			if ( m.isAnnotationPresent( Jiecha.class )) {
+			// 只有被 @Jiancha 标注过的方法才进行测试
+			if ( m.isAnnotationPresent( Jiancha.class )) {
 				try {
 					m.setAccessible(true);
 					m.invoke(testobj, null);

@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c6f496c-3589-4c45-b499-f38179fa2faa" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/threadpool/EveryTaskOneThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Java/玩转Java并发工具，精通JUC，成为并发多面手/concurrency_tools_practice/src/threadpool/EveryTaskOneThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -216,11 +217,11 @@
     <property name="SearchEverywhereHistoryKey" value="Callable&#9;PSI&#9;JAVA://java.util.concurrent.Callable&#10;SingleThreadEventExecutor&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/util/concurrent/SingleThreadEventExecutor.java&#10;ScheduledExecutorService&#9;FILE&#9;jar://D:/program/jdk8.0/src.zip!/java/util/concurrent/ScheduledExecutorService.java&#10;Executor&#9;PSI&#9;JAVA://java.util.concurrent.Executor&#10;EventLoop&#9;PSI&#9;JAVA://io.netty.channel.EventLoop&#10;Selector&#9;PSI&#9;JAVA://java.nio.channels.Selector&#10;WriteTimeoutHandler&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/timeout/WriteTimeoutHandler.java&#10;ReadTimeoutHandler&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/timeout/ReadTimeoutHandler.java&#10;IdleStateHandler&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/handler/timeout/IdleStateHandler.java&#10;DefaultChannel&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/DefaultChannelPipeline.java&#10;DefaultChannelPipeline&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/DefaultChannelPipeline.java&#10;TailContext&#9;PSI&#9;JAVA://io.netty.channel.DefaultChannelPipeline.TailContext&#10;HeadContext&#9;PSI&#9;JAVA://io.netty.channel.DefaultChannelPipeline.HeadContext&#10;ChannelDuplexHandler &#9;PSI&#9;JAVA://io.netty.channel.ChannelDuplexHandler&#10;ChannelHandler &#9;PSI&#9;JAVA://io.netty.channel.ChannelHandler&#10;ChannelHandlerContext&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/AbstractChannelHandlerContext.java&#10;channelpipel&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/ChannelPipeline.java&#10;ChannelPipeline&#9;PSI&#9;JAVA://io.netty.channel.ChannelPipeline&#10;SelectionKey&#9;FILE&#9;jar://D:/program/jdk8.0/src.zip!/java/nio/channels/SelectionKey.java&#10;Selection&#9;PSI&#9;JAVA://java.nio.channels.SelectionKey&#10;DEFAULT_EVENT_LOOP_THREADS&#9;PSI&#9;JAVA://io.netty.channel.MultithreadEventLoopGroup#DEFAULT_EVENT_LOOP_THREADS&#10;Zlib&#9;PSI&#9;JAVA://io.netty.handler.codec.compression.ZlibEncoder&#10;ByteToMessage&#9;PSI&#9;JAVA://io.netty.handler.codec.ByteToMessageDecoder&#10;WebSocketFr&#9;PSI&#9;JAVA://io.netty.handler.codec.http.websocketx.WebSocketFrame&#10;EventLoopGroup&#9;FILE&#9;jar://C:/Users/Administrator/IdeaProjects/NettyPro/lib/netty-all-4.1.20.Final-sources.jar!/io/netty/channel/EventLoopGroup.java&#10;Channelhandler&#9;PSI&#9;JAVA://io.netty.channel.ChannelHandler&#10;ChannelFuture&#9;PSI&#9;JAVA://io.netty.channel.ChannelFuture&#10;Channel&#9;FILE&#9;jar://D:/program/jdk8.0/src.zip!/java/nio/channels/Channel.java&#10;SocketChannel&#9;FILE&#9;jar://D:/program/jdk8.0/jre/lib/rt.jar!/sun/nio/ch/ServerSocketChannelImpl.class&#10;ServerSocketChanne&#9;FILE&#9;jar://D:/program/jdk8.0/jre/lib/rt.jar!/sun/nio/ch/ServerSocketChannelImpl.class&#10;Selector &#9;PSI&#9;JAVA://java.nio.channels.Selector&#10;MappedByte&#9;PSI&#9;JAVA://java.nio.MappedByteBuffer&#10;Buffer&#9;FILE&#9;file://C:/Users/Administrator/IdeaProjects/NettyPro/src/main/java/com/atguigu/nio/NIOByteBufferPutGet.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../消息队列/PaulMQ" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../../code/netty" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
     <property name="settings.editor.splitter.proportion" value="0.24803922" />
   </component>
   <component name="RecentsManager">
@@ -462,6 +463,7 @@
       <workItem from="1611795305123" duration="22450000" />
       <workItem from="1611880374428" duration="8415000" />
       <workItem from="1611912066518" duration="233000" />
+      <workItem from="1612672025188" duration="414000" />
     </task>
     <servers />
   </component>
