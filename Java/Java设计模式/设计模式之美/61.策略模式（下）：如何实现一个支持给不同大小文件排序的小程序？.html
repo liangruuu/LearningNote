@@ -1,0 +1,538 @@
+
+<!DOCTYPE html>
+<html>
+
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover" />
+                <meta name="format-detection" content="telephone=no" />
+                <title>61 | 策略模式（下）：如何实现一个支持给不同大小文件排序的小程序？</title>
+                <link href="https://static001.geekbang.org/static/time/css/app.05ce99d672894caca1d424d02f4e6216.css" rel="stylesheet" />
+                <style type="text/css">.button-cancel[data-v-a6a58a5e]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-a6a58a5e],.button-primary[data-v-a6a58a5e]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-a6a58a5e]{color:#fff;background-color:#ff5a05;border-radius:3px}.wrapper[data-v-a6a58a5e]{max-width:46.25rem;margin:0 auto;background-color:#f5f5f5}.banner[data-v-a6a58a5e]{width:100%;background-color:#eee}.banner .slider-item[data-v-a6a58a5e]{width:100%;position:relative}.banner .slider-item .slider-item-image[data-v-a6a58a5e]{width:100%}.banner .slider-item .slider-item-info[data-v-a6a58a5e]{position:absolute;width:100%;background-image:-webkit-gradient(linear,left bottom,left top,from(#000),to(transparent));background-image:linear-gradient(0deg,#000,transparent);bottom:0}.banner .slider-item .slider-item-title[data-v-a6a58a5e]{color:#fff;font-size:18px;padding-left:22px}.banner .slider-item .slider-item-desc[data-v-a6a58a5e]{color:#d9d9d9;font-size:12.5px;padding-top:4px;padding-left:21px;margin-bottom:11px}.filter[data-v-a6a58a5e]{padding-left:16px;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;background-color:#f5f5f5}.filter .filter-control .filter-control-order[data-v-a6a58a5e],.filter .filter-control[data-v-a6a58a5e],.filter[data-v-a6a58a5e]{height:29px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.filter .filter-control .filter-control-order[data-v-a6a58a5e]{cursor:pointer}.filter .filter-control .filter-control-order .icon-asc[data-v-a6a58a5e],.filter .filter-control .filter-control-order .icon-desc[data-v-a6a58a5e]{width:12px;height:12px;margin-right:7px}.filter .filter-control .filter-control-order .filter-control-text[data-v-a6a58a5e]{color:#888;font-size:11px}.filter .filter-control .filter-total[data-v-a6a58a5e]{color:#888;font-size:11px;margin-left:8px;padding-left:8px;border-left-width:1px;border-left-color:#d9d9d9;border-left-style:solid}.content-list[data-v-a6a58a5e]{background-color:#f5f5f5}.content-list .contentlistwrap[data-v-a6a58a5e]{padding-bottom:67px}@media (max-width:769px){.page-article-list .breadcrumb[data-v-a6a58a5e]{padding:10px}}</style>
+                <style type="text/css">.empty{height:51px}.mobile-tips{width:100%;height:51px;background:rgba(0,0,0,.8);position:fixed;top:0;left:0;z-index:20;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 12px;-webkit-transition:opacity .35s;transition:opacity .35s;opacity:0;pointer-events:none}.mobile-tips.istop{opacity:1;pointer-events:auto}.mobile-tips .mobile-tips-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.mobile-tips .mobile-tips-info i{width:36px;height:36px;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEQAAABECAYAAAA4E5OyAAAL30lEQVR4Ae2bBXTbStOG/VGZmVJM6lCZmZnplJmZmZkZ/o+Z4TIzM2O5aW+bimWZY8H7jxTnNvax2xQcnnOerHhm351R1rJsO3/+fG2i7uXLlxsGAoE9ABQUETMM42NFUfqZ/Q/qUMtmrqSnpyfquv4Giqb5yRaTDvVMUWxXrlxpRGK8i6JtAa/XO94Uxaaq6mEUm2nczZs3k2wAXLCs2Cg5jttQbNlvsrfDBCk2W96MhA7d54Qm34R662uoNz6z0Jjz0J0sDL/LPKhwC6J7HMi48g7crx6B8qcJkA6kQNzTGNJuk4ZBGkHa0wTSwVQ4/zkH3nd/aQlmBHyFRxCVRt3z1GY49iVB3l0f8kE7lJPtoPyyF5Rf9QnSN5Nf9oXTanvDcaoD5EOJdE4DKEdaw/vWOcoepuAKogppcP1pOqTtcZD3xUM51x3K//WhtncmZ7PoFXk5iMM6pycc+5vSterC/dwu6F5HwRHE0FR4XjgCeUt9KHsT4DxDnTxt0jNID4vgcoRtwfXw4+g6Fvsoa7Y3RMbXz+Z/QTSXSCXRBdK6KlBOdIVyqhe13e9Cj/vfR9d0nuwGeWN1uP+1DIau5k9BAuwViGvqQt6RAMfJ3pCPdoPjoegedbt17RO9IO9KhONQNxgZ3vwlSEb6hUwxdtop4B6QD3cN0iWM0G2OO9vD6BKhDT2OzrV8SXtSIe9tTaJ48ocgqsxAWlELjm2UGUdoVA91zhkHTaJuJ3J4jcPkc1cKHPs7AYaet4LoaoAyIx7i5oaQKXXlA50gRaUjpP0drWPkg7S+pwXE9XEQV9WAsKoWhJXVIa2sCXFdHKTdzcxj6NjOEa9pbdufbdvBrpC22eH808K8FcTxx2UQVlTNDGhfR6JDWEtkrR/oTG178OvqUoc7wP3kHmR8/yY0Pg2ag4Em34aafh7+z56G8pfl4JfVhLCmNsS9bc1zw65tLYdCMYira8L/9Ut5I4jv4kfgZ5eAtJeC23N35P1dIK1vBOXIYAQuvgtDC9w7+9wOeN/+CwneANLaOLpG53v72dcJwtKqMHyu3BVENwxIWztQyjc0R5toH529HSEsqw7f6799wCm/AuXsVKujJP49/NG+zXZ4/rs1dwXxfPIcZUdpKwBxR9sotLNGTVhUDeq1z/Gw5n76JPhZpchnO/PaUf2aMfELK5GQjtwRxDAMiDt7QFhNqbytLdEmBDGr3UlizC0P9frXeFTmevwIhFmlrWuTj6iI6xLge/lc7gjiT78Mfk6FTOdbiK0mrX9sRbPdTiO4tBb8Hz2BR23yyekQF1YlH+2zfGYjGA8NlLw+BdC12Aviev4cxFllIJtibG4dmY2pUE5OQCxM8/vAzakFeZ09un+KTZxfBeqNr2MriK5p4Dd0hLiiEaQNrSKzqQ2ldSVo4i3Eypyv/gXC1NLU+TYRYmhpteLaRLifPBBbQQIiA35mNQjrm0NY1yIya5KgnJiEWJrq94NbYoewKiF6HOtbwHFoeGwF8V36BPyUshDWNo9AC6vl5lSF75NnEEszCPk3KyHMqBA1DrMVlzeFkeGLnSDuj54GN6kUZQE5XN0MPBFsg8vNwU4sCZW/gVib+70nwE8oBX5Nlu9wmlM2V4UmM7ETxPnS78BOLQNuVTNwq7NIvdMS/KLG1qjE2ryXvwQ7uRL5TDb9R4ShDNK467ETRHnqBAlSjgRJjczKJIjr2ltT81ibn7kBblpN8pkYNR5mWnmo6RdjKMiTx8FPLgd+JWXCiuykZLbLswRRkVPTiYDbef+CsDfBTq1JPu2RYyHYqeURSPsqhiXz7C/BTSgNblky+BBSgiSBn98I+n08wZJe+Qe4YVXu+1mGJ+08mIlVyKedSI4IO6kcZcil2AnievNfYMf9AsLS5BB4q02y4Eb9HKqQszmIVxbAjCoJaUZjGOr9lZnrk1fAjSlp+eRD4shaJqZUgSalx04Q75dvgh31U3BLqOOLg4Qts2N+Ad8Xr+NephoGuPX9wJHA0qZu91VmBiH+fT/YkT8L+o8MP7chDL8ndoJkpF8FO7okuEV2IjEyM2rAcXYx7mXyU78F08dG5ZcIaU2n+xIkYADshn5gp1SKHsfiRBK6R2wnZprfC3ZqbXIYTw5DnN9ZX5IIdvjPoDklRDM3z+D2WOrMnLp0nv2+BVG++5RKrTSd2zToP5Iodrj+tDH2H+6kc8vATawAbmFiZBZR2UyoAMeZJVFKBWCWdgZL9c8tSaFzmkK8D0ECBLO6D7ixpiDJUeNgp9ZA4Nt3Yi+I96u3wQy2gTWdLrBHxhwhOsZ34bPw2ofw37NgBtisGmfn28HMj4e4umOOBDEI6aV/gxtE5y+kc7P8zQ/zT7HxMxvAUDNiL4ie4Qc3oTq4eY3BUSARWUCCzIqjwH+KgCwgy1xpF8EM/Bntq2cdYx07Lx7SqpwJolz+HuzQMuCn16LzSdDI/ml7U7j/vCX3HiEqf9sLfvjPIVBQ/Dw7+PlBaFkgeJOFyeAnVabyqmPde1QA7JKO4EaVgLAwhY7JOj4B0sq7C2IQzqsk5mgaiPHlwS9K+dGnkN0/YcbEjSljTtlzTxDV5QAz9GeZWUId4uZHgWqcHV8O3JL24I4uADuhCnXGHnrMvCYkSIeoghiE8u3HYIbQdaz7TnJ0fyYL4qEcnZ77X0Mo/zkGhmqZNVN3bkIm84LMzQZlCju1FtjRpcxUpv32kP3M3CYQV0QXRNMNpE9PBWv6WpRM54T6CPE9PxHMqFLQJSb3BdFVFey4GuCm1qaAqJNzEh4IZnYTCMvv/vlH/Ou+TPHnJYKdHX6+BS1TDNPi4HnseN59c5dx6wqYHjYKMp6g0Z+VQC1BbdTl8G0zG99TkIDPC2Z0FbBT69J54deMJ0xBmkLaMDTvv+x2v/I3MP1JlLmJFFjTsA5HIUQQypBl7e75X0Z+7LQ1s2XnJZnnhkLb+GkNzGl6/ngdwvmPg2D72qwaZufEmx0NtlnL2QUJbs88jmgMMQeCqH4/zW6rm/ej4PXiM9v5SeAmx0Hjf8hfL8y4/ncCXG8bmLnxYOYkEE0yoXsEa7V3YIkf981uRCXTLmfzkFf/DaYn+Zhvz/Rh/oeb0hi6mJ4/X6nymOVDorBT48yaDtY3MdNsw5iZ1VKGLM2ZIFogQFlSmzKiJtjpDei8ztAVIX+/dJdx/TzEGSnghpUAT6LwVOMcddxiZpBZ2ZjRGFIOBTHN+enrYFNKwP3LtQCMgvFapqHrcD/9S3CDK4IbUwHc7AQiKEw4M0mQZff32FGT2IL54q7mkuH+7zGIUxuBHfoLcFPrkTDZxcgURJxtv/8PYgVJkAyfF3r2jFED8H/9NpznlkGcmwJ+WGlwQ0uAG18N3JSakGZRyehazq8f/Fq14AgiceCOrYSbvR2xyjWZQ8b5D+F9/Z/w0H8njb2eYyHEWzehPPUHU+SCVTJe+kCW3t4G/tgCKN9+Ap/bjfsdUyP4uNAtyxA+fRPpR+ZBWj7QFKNg3kMC7A2wCTZw5txhcjzYXZMgvPh3OM5/DiebDo/XB59mwK9q8Psz4KV1t0OGkv4DpG8+Bvf8X3F76zgwU+xgaZbq3LaoEPwawiFAGFsHwogS4EaWBdfPBnZoWTAT4sDObgZmcWcwK/uANVnSFczsFmAmNQAzrLw1++WGlwI7siQ8v9lUeH4vo/k8cGwdDn7YL8CZD3RmNQY3tS74idXBjasEbkx5C95cnlAd/NQ64Gc2Aj8vERw9jPa/+IfC+Ysq13+OgutlAz8tDtwce+R5iclsO9gZDSHOaw017dvC/ROzjFuXoWweDI4+IXOTa5kTthDYyZQdk+rC+6+DgK4Xjd/cWcJc+wauP22BNC8VwuiKEKc1gGPbMPhe+gN0l1xoJmb3b7oOzcFD97nz4Uy12LRiQUKSVX/bRn8+QbFZ5nQ6J9ocDscwAP4iXyua9vj58+fjbeYfr9e7ytxWhEvls7S0tOakRWOb+YeId7vdcw3DEItgZjxx7dq1ZqRBE6KRKUiD4Er89evXWwUCgTMkDFvYdTBvoHTPmEz9TsgSg6j///oXgzKZqkEyAAAAAElFTkSuQmCC);background-position:0 0;background-repeat:no-repeat;background-size:contain;border-radius:7px}.mobile-tips .mobile-tips-info h2{font-size:15px;color:#fff;font-weight:400;margin-left:6px}.mobile-tips .mobile-tips-info h2 span{font-size:11px}.mobile-tips a{width:72px;height:31px;text-align:center;border:1px solid #ff5a05;border-radius:3px;font-size:13px;color:#ff5a05;line-height:31px}</style>
+                <style type="text/css">.bottom{width:100%;background-color:#f5f5f5;position:fixed;bottom:0;left:0;z-index:10}.bottom,.bottom .bottom-wrapper{height:67px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.bottom .bottom-wrapper{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;padding-left:20px;padding-right:20px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.bottom .bottom-wrapper a{height:48px;line-height:51px;-webkit-box-sizing:border-box;box-sizing:border-box}</style>
+                <style type="text/css">.article-item{cursor:pointer;padding-top:15px;padding-left:12px;padding-right:12px;margin-bottom:9px;background-color:#fff;position:relative}.article-item-flag-trial{width:14px;height:31px;position:absolute;top:0;right:12px}.article-item-title{font-size:17px;color:#353535;font-weight:400}.article-item-title.pad-right{padding-right:14px}.article-item-hd{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.article-item-view{font-size:9px;color:#ff5a05;-webkit-transform:scale(.875);transform:scale(.875)}.article-item-viewed{font-size:9px;color:#888}.article-item-time{font-size:11px;color:#888;margin-left:9px}.article-item-cover{width:100%;margin-top:10px;margin-bottom:10px}.article-item-desc{color:#888;font-size:12.5px;line-height:19px;padding-bottom:14px}.article-item-more{padding-top:14px;padding-bottom:15px;border-top-color:#e8e8e8;border-top-width:1px;border-top-style:solid;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.article-item-more-text{color:#353535;font-size:12.5px}</style>
+                <style type="text/css">.breadcrumb{padding:30px 0;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-wrap:wrap;flex-wrap:wrap;background:#fff}.breadcrumb a.title{color:#e57c39;font-size:15px;font-weight:400}.breadcrumb span.title{color:#888;font-size:15px;font-weight:400}.breadcrumb .split{color:#ccc;font-size:10px;margin-right:5px}</style>
+                <style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style>
+                <style type="text/css">#iv-container{position:fixed;background:#0d0d0d;width:100%;height:100%;top:0;left:0;display:none;z-index:1000}.iv-container{overflow:hidden}.iv-close{width:26px;height:26px;position:absolute;right:20px;top:20px;cursor:pointer;text-align:center;overflow:hidden;text-shadow:0 0 3px #6d6d6d;-webkit-transition:all .2s ease;-moz-transition:all ease .2s;-o-transition:all ease .2s;transition:all .2s ease}.iv-close:after,.iv-close:before{content:"";height:2px;width:26px;background:#fff;position:absolute;left:0;top:50%;margin-top:-2px;border-radius:2px}.iv-close:before{-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg)}.iv-close:after{-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-o-transform:rotate(-45deg);transform:rotate(-45deg)}.iv-close:hover{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg)}.iv-image-view{position:absolute;height:100%;width:100%}.iv-image-wrap{display:inline-block}.iv-image-wrap:active{cursor:move}.iv-large-image{cursor:move;max-width:100%;max-height:100%;background-color:#ececec;-moz-transform:translateZ(0);-o-transform:translateZ(0)}.iv-large-image,.iv-loader{position:absolute;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.iv-loader{top:50%;left:50%;border-radius:50%;width:32px;height:32px;z-index:100;margin-top:-16px;margin-left:-16px;font-size:5px;text-indent:-9999em;border-top:1em solid hsla(0,0%,100%,.2);border-right:1em solid hsla(0,0%,100%,.2);border-bottom:1em solid hsla(0,0%,100%,.2);border-left:1em solid #fff;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}.iv-loader:after{width:10em;height:10em;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}</style>
+                <style type="text/css">.vue-pull-to-wrapper[data-v-12abd9fb]{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;flex-direction:column;height:100%}.scroll-container[data-v-12abd9fb]{-webkit-box-flex:1;-webkit-flex:1;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}.vue-pull-to-wrapper .action-block[data-v-12abd9fb]{position:relative;width:100%}.default-text[data-v-12abd9fb]{height:100%;line-height:50px;text-align:center}</style>
+                <style type="text/css">.button-cancel[data-v-87ffcada]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-87ffcada],.button-primary[data-v-87ffcada]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-87ffcada]{color:#fff;background-color:#ff5a05;border-radius:3px}.pd[data-v-87ffcada]{padding-left:1.375rem;padding-right:1.375rem}.article[data-v-87ffcada]{max-width:46.25rem;margin:0 auto}.article .article-unavailable[data-v-87ffcada]{color:#fa8919;font-size:15px;font-weight:600;line-height:24px;border-radius:5px;padding:12px;background-color:#f6f7fb;margin-top:20px}.article .article-unavailable .iconfont[data-v-87ffcada]{font-size:12px}.article .main[data-v-87ffcada]{padding:1.25rem 0;margin-bottom:52px}.article-title[data-v-87ffcada]{color:#353535;font-weight:400;line-height:1.65rem;font-size:1.34375rem}.article-info[data-v-87ffcada]{color:#888;font-size:.9375rem;margin-top:1.0625rem}.article-content[data-v-87ffcada]{margin-top:1.0625rem}.article-content.android video[data-v-87ffcada]::-webkit-media-controls-fullscreen-button{display:none}.copyright[data-v-87ffcada]{color:#b2b2b2;padding-bottom:20px;margin-top:20px;font-size:13px}.audio-player[data-v-87ffcada]{width:100%;margin:20px 0}.to-comment[data-v-87ffcada]{overflow:hidden;padding-top:10px;margin-bottom:-30px}.to-comment a.button-primary[data-v-87ffcada]{float:right;height:20px;font-size:12px;line-height:20px;padding:4px 8px;cursor:pointer}.article-comments[data-v-87ffcada]{margin-top:2rem}.article-comments h2[data-v-87ffcada]{text-align:center;color:#888;position:relative;z-index:1;margin-bottom:1rem}.article-comments h2[data-v-87ffcada]:before{border-top:1px dotted #888;content:"";position:absolute;top:56%;left:0;width:100%;z-index:-1}.article-comments h2 span[data-v-87ffcada]{font-size:15.25px;font-weight:400;padding:0 1rem;background:#fff;display:inline-block}.article-sub-bottom[data-v-87ffcada]{z-index:10;cursor:pointer}.switch-btns[data-v-87ffcada]{height:76px;cursor:pointer;padding-top:24px;padding-bottom:24px;border-bottom:10px solid #f6f7fb;position:relative}.switch-btns[data-v-87ffcada]:before{content:" ";height:1px;background:#e8e8e8;position:absolute;top:0;left:0;-webkit-box-sizing:border-box;box-sizing:border-box;left:1.375rem;right:1.375rem}.switch-btns .btn[data-v-87ffcada]{height:38px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.switch-btns .btn .tag[data-v-87ffcada]{-webkit-box-flex:0;-ms-flex:0 0 62px;flex:0 0 62px;text-align:center;color:#888;font-size:14px;border-radius:10px;height:22px;line-height:22px;background:#f6f7fb;font-weight:400}.switch-btns .btn .txt[data-v-87ffcada]{margin-left:10px;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;color:#888;font-size:15px;height:22px;line-height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}@media (max-width:769px){.article .breadcrumb[data-v-87ffcada]{padding-top:10px;padding-bottom:10px}}</style>
+                <style type="text/css">.share-poster-wrapper{position:fixed;background-color:#fff;left:0;bottom:0;z-index:100;display:-webkit-box;display:-ms-flexbox;display:flex;overflow:hidden;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-moz-user-select:-moz-none;-webkit-user-select:none;-ms-user-select:none;user-select:none}.share-poster-wrapper .poster-bottom,.share-poster-wrapper .poster-middle,.share-poster-wrapper .poster-top{-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle{padding:16px 32px;-webkit-box-sizing:border-box;box-sizing:border-box}.share-poster-wrapper .poster-middle .poster-userinfo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:18px}.share-poster-wrapper .poster-middle .poster-userinfo .poster-avatar{min-width:45px;min-height:45px;width:7vw;height:7vw;border-radius:50%;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle .nickname{font-size:5vw;font-weight:400;margin-left:18px}.share-poster-wrapper .poster-middle .time{font-size:3.2vw}.share-poster-wrapper .poster-middle .poster-middle-content{font-size:4vw;font-weight:400;white-space:normal;word-wrap:break-word;word-break:break-word;letter-spacing:1px}.share-poster-wrapper .poster-middle .poster-middle-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-content{font-size:3.7vw;padding:32px 0}.share-poster-wrapper .poster-middle .quote-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-info{border-left:1px solid #000;padding-left:10px;margin-top:38px}.share-poster-wrapper .poster-middle .quote-info p{font-size:3.2vw;line-height:1.5}.share-poster-wrapper.theme0 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/top.png") no-repeat 15px 1px}.share-poster-wrapper.theme0 .poster-middle{width:100%;padding-left:56px;padding-right:56px;background-image:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/middle.png");background-repeat:repeat-y;background-position:15px 0}.share-poster-wrapper.theme0 .poster-middle .time{margin-bottom:45px}.share-poster-wrapper.theme0 .poster-middle .quote-content{border-top:1px solid #e3e1dc;margin-top:30px}.share-poster-wrapper.theme0 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/bottom.png") no-repeat 15px -10px}.share-poster-wrapper.theme1 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/top.png") no-repeat 38px 1px}.share-poster-wrapper.theme1 .poster-middle{width:100%;padding:0 42px 10px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/middle.png") repeat-y 38px 0}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo{border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo .poster-avatar{margin-left:38px}.share-poster-wrapper.theme1 .poster-middle .poster-middle-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;min-height:260px;border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time{max-width:65px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;text-align:center;vertical-align:middle;border-right:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time span{white-space:nowrap;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.share-poster-wrapper.theme1 .poster-middle .poster-middle-content{padding:30px}.share-poster-wrapper.theme1 .poster-middle .quote-content{font-size:3.7vw;margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .quote-info{margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .footer{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-right:30px}.share-poster-wrapper.theme1 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/bottom.png") no-repeat 38px -10px}.share-poster-wrapper .share-poster{background:#fefdf8;-webkit-box-sizing:border-box;box-sizing:border-box;color:#9b8d73;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;overflow:auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-overflow-scrolling:touch;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.share-poster-wrapper .share-poster.color0{background-color:#fefdf8}.share-poster-wrapper .share-poster.color1{background-color:#4d4d4d}.share-poster-wrapper .share-poster .footer{margin-top:2rem;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.share-poster-wrapper .share-poster .footer p{margin:0;line-height:1.4;margin-left:20px;text-align:right;padding-right:20px}.share-poster-wrapper .controls{background:#fff;border-top:1px solid #f5f5f5;width:100%;padding-top:5px;-webkit-box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);z-index:1;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .controls>div{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 0}.share-poster-wrapper .controls>div span{font-size:.85rem}.share-poster-wrapper .controls>div button{width:100px;height:24px;background:#eee;margin:0 10px;border-radius:5px;border:2px solid #b2b2b2;outline:none}.share-poster-wrapper .controls>div button.on{border:2px solid #ff5a05}.share-poster-wrapper .controls .controls-themes button{color:#b2b2b2;font-size:12px;background:#fff;text-align:center}.share-poster-wrapper .controls .controls-themes button.on{color:#ff5a05}.share-poster-wrapper .buttons{background:#fff;border-top:1px solid #f5f5f5;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .buttons a{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;text-align:center;color:#000;font-weight:400;height:3rem;line-height:3rem}.share-poster-wrapper .buttons a .icon-share-money{width:1rem;height:1rem;margin:3px 0 0 5px}.share-poster-wrapper .buttons a:last-child{border-left:1px solid #f5f5f5}.share-poster-wrapper img{max-width:100%}.share-poster-wrapper.android .poster-middle .nickname{font-size:10vw}.share-poster-wrapper.android .poster-middle .time{font-size:6.4vw}.share-poster-wrapper.android .poster-middle .poster-middle-content{font-size:8vw}.share-poster-wrapper.android .poster-middle .quote-content{font-size:7.4vw}.share-poster-wrapper.android .poster-middle .quote-info p{font-size:6.4vw}</style>
+                <style type="text/css">.mini-audio-player{width:100%;height:5.25rem;border:1px solid #d9d9d9;background:#fafafa;-webkit-box-sizing:border-box;box-sizing:border-box;padding:1rem;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin:1rem 0}.mini-audio-player>a{border:none;-ms-flex-negative:0;flex-shrink:0}.mini-audio-player .btn-play{background-image:url(data:image/png;base64,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)}.mini-audio-player .btn-pause,.mini-audio-player .btn-play{width:2.6875rem;height:2.6875rem;background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none}.mini-audio-player .btn-pause{background-image:url(data:image/png;base64,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)}.mini-audio-player .audio-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin-left:.6875rem;min-width:0}.mini-audio-player .audio-info h3{color:#353535;font-size:15.25px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-audio-player .audio-info p{margin:0;margin-top:.125rem;font-size:11px;line-height:1rem}.mini-audio-player .audio-info p span{color:#888}.mini-audio-player .btn-download{width:1.25rem;height:1.25rem;position:relative;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA+CAYAAACbQR1vAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+IEmuOgAAA4hJREFUaIHtm8lOFFEUhr9qCWGHGxcaY1joK2h0YRzAtYmsWbAGGidEXOACbAYRxfgAPoEPoInGxJgg86gsJTHMw86EhS7O7TDk3uqq6qo6HahvQ7pOce7//1U0feve9vr6+lAiD3QC/4AC8FZDRJXGoMB14PWB1yPANPA1bSG5tAc0XLEcu5y6CvQCOGU5pnI3agVQMWQBaAvQJgtAW4A2WQDaArTJAtAWoE0WgLYAbbIAtAVokwWgLUCbLABtAdpkAfjU6oC7wKV0pCTCRcRDnesEVwDNwC/gg/nZHbeyFOgGltj30Gw7yRZALfAOqDavPeA50BO7xOToQTR75nU14qn26Im2AM4DNZbjz4DeePQlSi+i9Sg1iLdD2AJYApYdzbuo7BBeIBptLCPeDmELYA9oBHYdjbqQpaxKowA8ddR2gXuIt0O43gRHgTu4Q+ikskIoIJps7AINwA9b0e/fYJAQ1FZWD9CP2/wOUI/DPJT+IDRqGrhCeGIEaNEPdDhqO8iVH/NrEOST4BgSwo6j3gEMBOgTNwP4m6+nhHkI/lG4VAiPgcGAveJg0IxpYxvROh6kUZi5wLhpvO2oPyKdEF6asWyEMg/hJ0PjyN+VXwhDIXuGYQh46KhtIeYnwjSMMhss3glbjvoDkglhyPS2Eck8RJ8OTyB3gl8IryL2tjGM2/wmYn4ySuNyngdMmIE3HfX7iHDPUQ+CZ3q0O+qbyIWIZB7KfyAyaQS4QmhH7oQoIZQyv0EZV75IHE+EJvG/E9oJfyd4yC6yvKO+gQQ/FaKnlbgeiU0hIWw46nnEUJAQiubbHPV1M1bZ5iHeZ4KlQmgD3uAfgofsGfQz34DsKYyFuLemTSMhfATOWOqtiMk/llrRfIuj9zpwG5gtX+Y+SezNK4bwCXsILdgDaAXOOnomYh6Seyw+gwhed9TPWY75mb9FAuYh2XWBWUS4K4QgrAE3gblYFFlIemFkDjEQJYQ1JMD5WBUdIY2VoXkkhLUQv7NqfidR85De0liYEFaRK7+QqCJDmmuDC0gIqz7nrJhzUjEP6S+O+oWwglz5xTQFaawOLwI3gO8Hjo2ZY6maB72vzPwErgEXkO8MuVaiEkcrgCK/lcfPNkhkAWgL0KYKmZiMIG9Ktn0Bx5G/wDcgXwW8R6avJ41G4HQOufInlas5ZO5+UpnJAU3AFyy7J44xe8BnoOk/JruwYo92bigAAAAASUVORK5CYII=);background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none;padding-right:.25rem}.mini-audio-player .btn-download .icon-download-done{width:.45rem;height:.45rem;position:absolute;bottom:0;right:0;display:inline-block;background-image:url(data:image/png;base64,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);background-repeat:no-repeat;background-position:0 0;background-size:contain}</style>
+                <style type="text/css">.MathJax_Display{overflow:auto}.poster{position:fixed;left:-10000px;top:-10000px;overflow:hidden;padding:1rem;background:#ececec}.richcontent-pre-copy{font-size:13px;color:#888;position:absolute;right:1em;top:.2em;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.richcontent-pre-copy .iconfont{font-size:12px;margin-right:.2em}</style>
+                <style type="text/css">.comment-item{list-style-position:inside;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-bottom:1rem}.comment-item a{border-bottom:none}.comment-item .avatar{width:2.625rem;height:2.625rem;-ms-flex-negative:0;flex-shrink:0;border-radius:50%}.comment-item .info{margin-left:.5rem;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.comment-item .info .hd{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .username{color:#888;font-size:15.25px;font-weight:400;line-height:1.2}.comment-item .info .hd .control{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .control .btn-share{color:#888;font-size:.75rem;margin-right:1rem}.comment-item .info .hd .control .btn-praise{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;font-size:15.25px;text-decoration:none}.comment-item .info .hd .control .btn-praise i{color:#888;display:inline-block;font-size:.75rem;margin-right:.3rem;margin-top:-.01rem}.comment-item .info .hd .control .btn-praise i.on,.comment-item .info .hd .control .btn-praise span{color:#ff5a05}.comment-item .info .bd{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6}.comment-item .info .time{color:#888;font-size:9px;line-height:1}.comment-item .info .reply .reply-hd{font-size:15.25px}.comment-item .info .reply .reply-hd span{margin-left:-12px;color:#888;font-weight:400}.comment-item .info .reply .reply-hd i{color:#ff5a05;font-size:15.25px}.comment-item .info .reply .reply-content{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all}.comment-item .info .reply .reply-time{color:#888;font-size:9px}</style>
+               </head>
+  <body>
+      <div id=app>
+                     <div data-v-87ffcada="" class="article"> 
+                      <div data-v-87ffcada="" class="main main-app"> 
+                       <div data-v-87ffcada="" class="breadcrumb breadcrumb pd"> 
+                       </div> 
+                       <h1 data-v-87ffcada="" class="article-title pd"> 61 | 策略模式（下）：如何实现一个支持给不同大小文件排序的小程序？ </h1> 
+                       <div data-v-87ffcada="" class="article-info pd"> 
+                        <span data-v-87ffcada="">2020-03-23</span> 
+                        <span data-v-87ffcada="">王争</span>
+                       </div> 
+                       <div data-v-87ffcada="" class="article-content typo common-content pd"> 
+                        <img data-v-87ffcada="" src="https://static001.geekbang.org/resource/image/b7/db/b73dbaba3a7d88c5111cd52617f956db.jpg" /> 
+                        <div data-v-87ffcada="" id="article-content" class="">
+                         <div class="text"> 
+                             <p>上一节课，我们主要介绍了策略模式的原理和实现，以及如何利用策略模式来移除if-else或者switch-case分支判断逻辑。今天，我们结合“给文件排序”这样一个具体的例子，来详细讲一讲策略模式的设计意图和应用场景。</p><p>除此之外，在今天的讲解中，我还会通过一步一步地分析、重构，给你展示一个设计模式是如何“创造”出来的。通过今天的学习，你会发现，<strong>设计原则和思想其实比设计模式更加普适和重要，掌握了代码的设计原则和思想，我们甚至可以自己创造出来新的设计模式</strong>。</p><p>话不多说，让我们正式开始今天的学习吧！</p><h2>问题与解决思路</h2><p>假设有这样一个需求，希望写一个小程序，实现对一个文件进行排序的功能。文件中只包含整型数，并且，相邻的数字通过逗号来区隔。如果由你来编写这样一个小程序，你会如何来实现呢？你可以把它当作面试题，先自己思考一下，再来看我下面的讲解。</p><p>你可能会说，这不是很简单嘛，只需要将文件中的内容读取出来，并且通过逗号分割成一个一个的数字，放到内存数组中，然后编写某种排序算法（比如快排），或者直接使用编程语言提供的排序函数，对数组进行排序，最后再将数组中的数据写入文件就可以了。</p><p>但是，如果文件很大呢？比如有10GB大小，因为内存有限（比如只有8GB大小），我们没办法一次性加载文件中的所有数据到内存中，这个时候，我们就要利用外部排序算法（具体怎么做，可以参看我的另一个专栏《数据结构与算法之美》中的“排序”相关章节）了。</p><!-- [[[read_end]]] --><p>如果文件更大，比如有100GB大小，我们为了利用CPU多核的优势，可以在外部排序的基础之上进行优化，加入多线程并发排序的功能，这就有点类似“单机版”的MapReduce。</p><p>如果文件非常大，比如有1TB大小，即便是单机多线程排序，这也算很慢了。这个时候，我们可以使用真正的MapReduce框架，利用多机的处理能力，提高排序的效率。</p><h2>代码实现与分析</h2><p>解决思路讲完了，不难理解。接下来，我们看一下，如何将解决思路翻译成代码实现。</p><p>我先用最简单直接的方式将它实现出来。具体代码我贴在下面了，你可以先看一下。因为我们是在讲设计模式，不是讲算法，所以，在下面的代码实现中，我只给出了跟设计模式相关的骨架代码，并没有给出每种排序算法的具体代码实现。感兴趣的话，你可以自行实现一下。</p><pre><code>public class Sorter {
+  private static final long GB = 1000 * 1000 * 1000;
+
+  public void sortFile(String filePath) {
+    // 省略校验逻辑
+    File file = new File(filePath);
+    long fileSize = file.length();
+    if (fileSize &lt; 6 * GB) { // [0, 6GB)
+      quickSort(filePath);
+    } else if (fileSize &lt; 10 * GB) { // [6GB, 10GB)
+      externalSort(filePath);
+    } else if (fileSize &lt; 100 * GB) { // [10GB, 100GB)
+      concurrentExternalSort(filePath);
+    } else { // [100GB, ~)
+      mapreduceSort(filePath);
+    }
+  }
+
+  private void quickSort(String filePath) {
+    // 快速排序
+  }
+
+  private void externalSort(String filePath) {
+    // 外部排序
+  }
+
+  private void concurrentExternalSort(String filePath) {
+    // 多线程外部排序
+  }
+
+  private void mapreduceSort(String filePath) {
+    // 利用MapReduce多机排序
+  }
+}
+
+public class SortingTool {
+  public static void main(String[] args) {
+    Sorter sorter = new Sorter();
+    sorter.sortFile(args[0]);
+  }
+}
+</code></pre><p>在“编码规范”那一部分我们讲过，函数的行数不能过多，最好不要超过一屏的大小。所以，为了避免sortFile()函数过长，我们把每种排序算法从sortFile()函数中抽离出来，拆分成4个独立的排序函数。</p><p>如果只是开发一个简单的工具，那上面的代码实现就足够了。毕竟，代码不多，后续修改、扩展的需求也不多，怎么写都不会导致代码不可维护。但是，如果我们是在开发一个大型项目，排序文件只是其中的一个功能模块，那我们就要在代码设计、代码质量上下点儿功夫了。只有每个小的功能模块都写好，整个项目的代码才能不差。</p><p>在刚刚的代码中，我们并没有给出每种排序算法的代码实现。实际上，如果自己实现一下的话，你会发现，每种排序算法的实现逻辑都比较复杂，代码行数都比较多。所有排序算法的代码实现都堆在Sorter一个类中，这就会导致这个类的代码很多。而在“编码规范”那一部分中，我们也讲到，一个类的代码太多也会影响到可读性、可维护性。除此之外，所有的排序算法都设计成Sorter的私有函数，也会影响代码的可复用性。</p><h2>代码优化与重构</h2><p>只要掌握了我们之前讲过的设计原则和思想，针对上面的问题，即便我们想不到该用什么设计模式来重构，也应该能知道该如何解决，那就是将Sorter类中的某些代码拆分出来，独立成职责更加单一的小类。实际上，拆分是应对类或者函数代码过多、应对代码复杂性的一个常用手段。按照这个解决思路，我们对代码进行重构。重构之后的代码如下所示：</p><pre><code>public interface ISortAlg {
+  void sort(String filePath);
+}
+
+public class QuickSort implements ISortAlg {
+  @Override
+  public void sort(String filePath) {
+    //...
+  }
+}
+
+public class ExternalSort implements ISortAlg {
+  @Override
+  public void sort(String filePath) {
+    //...
+  }
+}
+
+public class ConcurrentExternalSort implements ISortAlg {
+  @Override
+  public void sort(String filePath) {
+    //...
+  }
+}
+
+public class MapReduceSort implements ISortAlg {
+  @Override
+  public void sort(String filePath) {
+    //...
+  }
+}
+
+public class Sorter {
+  private static final long GB = 1000 * 1000 * 1000;
+
+  public void sortFile(String filePath) {
+    // 省略校验逻辑
+    File file = new File(filePath);
+    long fileSize = file.length();
+    ISortAlg sortAlg;
+    if (fileSize &lt; 6 * GB) { // [0, 6GB)
+      sortAlg = new QuickSort();
+    } else if (fileSize &lt; 10 * GB) { // [6GB, 10GB)
+      sortAlg = new ExternalSort();
+    } else if (fileSize &lt; 100 * GB) { // [10GB, 100GB)
+      sortAlg = new ConcurrentExternalSort();
+    } else { // [100GB, ~)
+      sortAlg = new MapReduceSort();
+    }
+    sortAlg.sort(filePath);
+  }
+}
+</code></pre><p>经过拆分之后，每个类的代码都不会太多，每个类的逻辑都不会太复杂，代码的可读性、可维护性提高了。除此之外，我们将排序算法设计成独立的类，跟具体的业务逻辑（代码中的if-else那部分逻辑）解耦，也让排序算法能够复用。这一步实际上就是策略模式的第一步，也就是将策略的定义分离出来。</p><p>实际上，上面的代码还可以继续优化。每种排序类都是无状态的，我们没必要在每次使用的时候，都重新创建一个新的对象。所以，我们可以使用工厂模式对对象的创建进行封装。按照这个思路，我们对代码进行重构。重构之后的代码如下所示：</p><pre><code>public class SortAlgFactory {
+  private static final Map&lt;String, ISortAlg&gt; algs = new HashMap&lt;&gt;();
+
+  static {
+    algs.put(&quot;QuickSort&quot;, new QuickSort());
+    algs.put(&quot;ExternalSort&quot;, new ExternalSort());
+    algs.put(&quot;ConcurrentExternalSort&quot;, new ConcurrentExternalSort());
+    algs.put(&quot;MapReduceSort&quot;, new MapReduceSort());
+  }
+
+  public static ISortAlg getSortAlg(String type) {
+    if (type == null || type.isEmpty()) {
+      throw new IllegalArgumentException(&quot;type should not be empty.&quot;);
+    }
+    return algs.get(type);
+  }
+}
+
+public class Sorter {
+  private static final long GB = 1000 * 1000 * 1000;
+
+  public void sortFile(String filePath) {
+    // 省略校验逻辑
+    File file = new File(filePath);
+    long fileSize = file.length();
+    ISortAlg sortAlg;
+    if (fileSize &lt; 6 * GB) { // [0, 6GB)
+      sortAlg = SortAlgFactory.getSortAlg(&quot;QuickSort&quot;);
+    } else if (fileSize &lt; 10 * GB) { // [6GB, 10GB)
+      sortAlg = SortAlgFactory.getSortAlg(&quot;ExternalSort&quot;);
+    } else if (fileSize &lt; 100 * GB) { // [10GB, 100GB)
+      sortAlg = SortAlgFactory.getSortAlg(&quot;ConcurrentExternalSort&quot;);
+    } else { // [100GB, ~)
+      sortAlg = SortAlgFactory.getSortAlg(&quot;MapReduceSort&quot;);
+    }
+    sortAlg.sort(filePath);
+  }
+}
+</code></pre><p>经过上面两次重构之后，现在的代码实际上已经符合策略模式的代码结构了。我们通过策略模式将策略的定义、创建、使用解耦，让每一部分都不至于太复杂。不过，Sorter类中的sortFile()函数还是有一堆if-else逻辑。这里的if-else逻辑分支不多、也不复杂，这样写完全没问题。但如果你特别想将if-else分支判断移除掉，那也是有办法的。我直接给出代码，你一看就能明白。实际上，这也是基于查表法来解决的，其中的“algs”就是“表”。</p><pre><code>public class Sorter {
+  private static final long GB = 1000 * 1000 * 1000;
+  private static final List&lt;AlgRange&gt; algs = new ArrayList&lt;&gt;();
+  static {
+    algs.add(new AlgRange(0, 6*GB, SortAlgFactory.getSortAlg(&quot;QuickSort&quot;)));
+    algs.add(new AlgRange(6*GB, 10*GB, SortAlgFactory.getSortAlg(&quot;ExternalSort&quot;)));
+    algs.add(new AlgRange(10*GB, 100*GB, SortAlgFactory.getSortAlg(&quot;ConcurrentExternalSort&quot;)));
+    algs.add(new AlgRange(100*GB, Long.MAX_VALUE, SortAlgFactory.getSortAlg(&quot;MapReduceSort&quot;)));
+  }
+
+  public void sortFile(String filePath) {
+    // 省略校验逻辑
+    File file = new File(filePath);
+    long fileSize = file.length();
+    ISortAlg sortAlg = null;
+    for (AlgRange algRange : algs) {
+      if (algRange.inRange(fileSize)) {
+        sortAlg = algRange.getAlg();
+        break;
+      }
+    }
+    sortAlg.sort(filePath);
+  }
+
+  private static class AlgRange {
+    private long start;
+    private long end;
+    private ISortAlg alg;
+
+    public AlgRange(long start, long end, ISortAlg alg) {
+      this.start = start;
+      this.end = end;
+      this.alg = alg;
+    }
+
+    public ISortAlg getAlg() {
+      return alg;
+    }
+
+    public boolean inRange(long size) {
+      return size &gt;= start &amp;&amp; size &lt; end;
+    }
+  }
+}
+</code></pre><p>现在的代码实现就更加优美了。我们把可变的部分隔离到了策略工厂类和Sorter类中的静态代码段中。当要添加一个新的排序算法时，我们只需要修改策略工厂类和Sort类中的静态代码段，其他代码都不需要修改，这样就将代码改动最小化、集中化了。</p><p>你可能会说，即便这样，当我们添加新的排序算法的时候，还是需要修改代码，并不完全符合开闭原则。有什么办法让我们完全满足开闭原则呢？</p><p>对于Java语言来说，我们可以通过反射来避免对策略工厂类的修改。具体是这么做的：我们通过一个配置文件或者自定义的annotation来标注都有哪些策略类；策略工厂类读取配置文件或者搜索被annotation标注的策略类，然后通过反射动态地加载这些策略类、创建策略对象；当我们新添加一个策略的时候，只需要将这个新添加的策略类添加到配置文件或者用annotation标注即可。还记得上一节课的课堂讨论题吗？我们也可以用这种方法来解决。</p><p>对于Sorter来说，我们可以通过同样的方法来避免修改。我们通过将文件大小区间和算法之间的对应关系放到配置文件中。当添加新的排序算法时，我们只需要改动配置文件即可，不需要改动代码。</p><h2>重点回顾</h2><p>好了，今天的内容到此就讲完了。我们一块来总结回顾一下，你需要重点掌握的内容。</p><p>一提到if-else分支判断，有人就觉得它是烂代码。如果if-else分支判断不复杂、代码不多，这并没有任何问题，毕竟if-else分支判断几乎是所有编程语言都会提供的语法，存在即有理由。遵循KISS原则，怎么简单怎么来，就是最好的设计。非得用策略模式，搞出n多类，反倒是一种过度设计。</p><p>一提到策略模式，有人就觉得，它的作用是避免if-else分支判断逻辑。实际上，这种认识是很片面的。策略模式主要的作用还是解耦策略的定义、创建和使用，控制代码的复杂度，让每个部分都不至于过于复杂、代码量过多。除此之外，对于复杂代码来说，策略模式还能让其满足开闭原则，添加新策略的时候，最小化、集中化代码改动，减少引入bug的风险。</p><p>实际上，设计原则和思想比设计模式更加普适和重要。掌握了代码的设计原则和思想，我们能更清楚的了解，为什么要用某种设计模式，就能更恰到好处地应用设计模式。</p><h2>课堂讨论</h2><ol>
+<li>在过去的项目开发中，你有没有用过策略模式，都是为了解决什么问题才使用的？</li>
+<li>你可以说一说，在什么情况下，我们才有必要去掉代码中的if-else或者switch-case分支逻辑呢？</li>
+</ol><p>欢迎留言和我分享你的想法。如果有收获，也欢迎你把这篇文章分享给你的朋友。</p>
+                         </div>
+                        </div> 
+                       </div> 
+                       <!----> 
+                       <!---->
+                      </div>
+                      
+                      <div data-v-87ffcada="" class="article-comments pd">
+                            <h2 data-v-87ffcada="">
+                                <span data-v-87ffcada="">精选留言</span>
+                              </h2> 
+                              <ul data-v-87ffcada=""> 
+                                    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/00/4e/082a14b9.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">唔多志</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>36</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        &quot;设计原则和思想比设计模式更加普适和重要&quot;，被这句话一下子点醒了。可以这样说，设计原则和思想是更高层次的理论和指导原则，设计模式只是这些理论和指导原则下，根据经验和场景，总结出来的编程范式。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/16/a0/a3/8da99bb0.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">业余爱好者</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>10</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        策略集合的信息也可以定义成枚举，可以放在数据库，可以放kv配置中心，等等。都是一样的道理。<br><br>策略模式是对策略的定义，创建和使用解藕。定义和创建的过程与业务逻辑关系不大，写在一起会影响可读性。<br><br>创建型模式是对创建和使用的解藕。<br><br>做什么和怎么做是应该解藕的，使用者并不关心具体的细节。<br><br>在业务逻辑中，与业务逻辑不大的代码应该放在外部。就像mvc的三层架构是业界的最佳实践。在service层调用dao层，而不是直接jdbc,因为如何操作数据库是个复杂的过程，却又与业务逻辑无关，所以单独抽出一层，代码结构变得更加清晰。<br><br>声明式编程很火。它就是把使用和内部实现原理解藕。java,spring的各种注解，声明式事务等等。使用者一个注解解决所有问题，无需关心底层。<br><br>业务逻辑无关的放在一起影响可读性，即使自己过一段时间看自己的代码也会迷惑。写代码要有用户思维，不光是提供的api满足kiss原则，内部的实现也是一样。能放在外面单位代码尽量怎么放在外面。只要能表达逻辑即可。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/03/01/62b32acf.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">王飞洋</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>4</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        GB = 1024 * 1024 * 1024吧
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/15/e0/d7/744bd8c3.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">空白昵称</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        很早前使用了类似策略模式的代码做了一个从各种渠道上传下载文件。（当时大学毕业，没看过策略模式，但是学过C++的多态）其实也就是基于接口而非实现编程思想。<br><br>if-else使用，如果判断较少，且未来几乎不会有新需求要再加一个else时，保持if-else即可。其他的都可以使用策略模式。不过本节demo的实例，使用range来匹配，目前看是没问题。但是如果需求变化，需要增加一个根据数据特征的动态分配排序算法，那么这里实现就麻烦了。所以需要根据具体需求来看使用什么模式... <br><br>
+        </div> 
+        <span class="time">2020-03-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/13/17/27/ec30d30a.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Jxin</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1.为了让调度的代码更优雅时使用。（就调度策略的代码而言，可读性高。理解结构后，阅读的心智负担低，因为调度的原理已经抽象成了共同的type查表，无需逐行检阅分支判断。像一些与持久数据相关的策略，有时为了兼容老数据或则平滑过度，无法全采用type查表，这时就需要结合if来 实现。所以采用if会让我误以为是这种场景，进而逐行检阅）。<br><br>2.感觉问反了，应该是什么场景下采用ifelse和witch。毕竟这两个的场景少些。答案是，在逻辑不复杂又不好用卫语句时采用。能用卫语句就不要ifelse。因为个人而言，看到retuern或conti能很明确跳出逻辑，else脑袋得转一下，当然这可能是个人习惯影响。但ifelse还是只在逻辑简单，没啥嵌套（一个函数内部不宜嵌套过多），且语义符合的场景用好些。<br><br>3.原则和思想毕竟是指导核心，是地图和尺子，自然是最重要的。但是不等于设计模式就比其不重要了。硬要说的话，我认为两个其实一样重要。设计模式是场景的积累，拉近了普通人与天才的差距，对我这种菜鸡来说可能比设计原则还重要。毕竟从设计原则到设计模式的出现，需要丰富经验，扎实知识和妙手偶得。如果没有设计模式的铺垫，普通人拿着设计模式的知识点要一路走上高质量代码的层级，实属不易。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/14/ee/d72a8222.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">攻城拔寨</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1. 奖励系统，奖励用户不同奖励是通过后台配置，从多个奖励中选择一种或者多种。<br>后端代码根据不同的奖励类型找到对应的奖励策略类，执行对应的代码。<br>2. 我觉得在 if-else 每个分支代码比较多的时候就应该拆分了。但是拆分不一定就能通过设计模式拆分，很多时候把分支逻辑抽成另一个方法就就够了，代码简洁，方便维护。<br>我相当同意老师 “设计原则和思想比设计模式更加普适和重要。” 这句话。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/13/1d/cd/3819726f.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">韵呀</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        最近在做公司的告警模块，对接收方式用了策略模式，以前也不知道这就是策略模式，只是觉得模块和思想解藕了。<br>还有接收方式的选择策略和升级策略都用了策略模式。<br><br>非要去掉if-else，我觉得如果分支不多，简单，以后可扩展性不强可以不去掉。否则就换成map缓存策略对象或者class。找到if-else条件和策略的对应关系。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/3b/47/f6c772a1.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Jackey</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        想想以前都没用过策略模式，一会到公司看看我的if-else有没有必要优化
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/ca/c7/08a5618f.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">黄林晴</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        设计原则和思想比设计模式更加普适和重要，就像掌握算法思想比死扣每种算法的实现更重要！<br>虽说实践是检验真理的唯一标准，但没有理论何来实践呢
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/82/3d/356fc3d6.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">忆水寒</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1、用过策略模式。我们在自研的rpc框架中为了灵活的设置线程数量（类似于netty里面的策略模式，默认情况下线程数量为CPU两倍，也可以指定）。<br>2、在每个if else里面的代码都有相似功能，可以抽取出来。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/15/69/187b9968.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">南山</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1:随处可见，比如根据不同的配置选择不同的分配或者负载均衡策略。<br>2:策略可预期的经常变更或者选择策略的条件判定方式比较复杂时可以考虑不使用if else 方式实现，反过来则if else 没什么毛病
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/68/fe/1353168d.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">岁月</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        看到这里我感觉好多设计模式都很类似, 都是先针对接口编程, 然后再加个查表法😂
+        </div> 
+        <span class="time">2020-04-02</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/1b/b1/16/dd11930c.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">徐旭</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        要是不知道为什么，也是读不懂精心设计的代码
+        </div> 
+        <span class="time">2020-03-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/7e/1f/b1d458a9.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">iamjohnnyzhuang</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        策略模式平时开发用的比较多，主要目的还是解耦策略的定义和使用。在Java中，比较喜欢用枚举策略模式。可以定义一个枚举类，提供静态方法根据传入的Type动态返回对应的枚举类。然后在枚举类中定义执行策略的抽象方法，这样迫使每个枚举都得去实现。对于策略不是非常复杂的情况下，这样可以集中管理这一批策略，新增策略的时候也只要在这个枚举类中添加。但是如果策略很复杂会导致这个类非常庞大，还是用传统的方法不同类对应不同逻辑更加优雅。总之，遵循KISS原则，怎么简单怎么来；同时尽量遵循开闭原则，添加策略的时候尽量少去改动代码。其实对于什么时候去掉IF&#47;ELSE这个问题原理也是一样的。
+        </div> 
+        <span class="time">2020-03-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/3a/f8/c1a939e7.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">朱晋君</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1.策略模式的使用还是挺多的，比如贷款系统中，业务系统需要查询不同渠道的征信报告，但是各渠道查询方式是不一样的，就用策略模式做了处理，客户端传入渠道编号来获取查询的渠道策略实现征信查询<br>2.if-else或switch中每个分支的实现业务上是由共性的，可以抽象出来，这样可以用策略模式来取代分支。但是没有必要所有的都去掉<br><br>注解方式的策略模式没有用过，动手实现了一下，同时总结了这2节内容：https:&#47;&#47;blog.csdn.net&#47;zjj2006&#47;article&#47;details&#47;105064557
+        </div> 
+        <span class="time">2020-03-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/15/50/d7/f82ed283.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">辣么大</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        思考题1：很久没写工程代码，但接触的科研算法对比性能时一般采用策略模式。通过输入不同的参数调用不同的算法。<br>思考题2：通过策略模式的学习，可以看出实现简单的话一开始是不用使用策略模式的。if else中实现的逻辑都差不多，就是差不多都是干一件事（上节课例子中的购物，本节的文件排序）短的 if else相对易读，代码好理解。使用了策略模式要小心过度设计和影响了代码易读性。（对于不熟悉的项目刚看到或许会懵逼或者不好调试）
+        </div> 
+        <span class="time">2020-03-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/70/9e/5095f881.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">jaryoung</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        在过去的项目开发中，你有没有用过策略模式，都是为了解决什么问题才使用的？<br>答：业务类型过多，未来还可能继续扩展<br>你可以说一说，在什么情况下，我们才有必要去掉代码中的 if-else 或者 switch-case 分支逻辑呢？<br>答：业务逻辑过于复杂（大部分都是条件判断），后期需求不断来。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/13/18/65/35361f02.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">潇潇雨歇</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        设计原则和思想是道
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/15/a8/0c/82ba8ef9.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Frank</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1，最近在做规则引擎，前端用户通过页面设置出业务执行的流程图，而流程图中包含数据源节点、条件判断节点、业务分发节点、业务事件执行节点。每一种节点执行的业务校验规则都不同，这个时候适合策略模式。使用策略模式的好处是：以后随着业务的发展很有可能出现其他类型的节点，所以这个时候采用策略模式非常合适，易扩展易维护。另外在整个流程流转的规则上采用了模板方法。<br>2，当出现比较多的等值匹配的时候，这个时候使用switch case 更合适，结构清晰，可读性强，其他则使用if-else，当然if-else也可以进行等值比较。
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/19/d9/ff/b23018a6.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Heaven</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1.在之前,有一个用户拥有不同的用户组,对不同的用户组拥有这不同的处理逻辑,这就是一种策略模式,通过用户中的不同用户组名,来获取不同的用户组实例,执行其中的处理方式<br>2.如果对于判断逻辑中,需要执行的逻辑较为复杂,可以抽取出相同的接口的话,就使用策略模式,将其抽取出接口,并利用策略工厂进行获取策略实例,从而执行对应处理<br>
+        </div> 
+        <span class="time">2020-03-23</span> 
+        </div></li>
+
+                              
+                              </ul>
+                       </div>
+                     </div>
+      </div>
+   </body>
+   </html>

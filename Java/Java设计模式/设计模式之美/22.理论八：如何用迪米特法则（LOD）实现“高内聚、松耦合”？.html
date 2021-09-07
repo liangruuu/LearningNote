@@ -1,0 +1,540 @@
+
+<!DOCTYPE html>
+<html>
+
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover" />
+                <meta name="format-detection" content="telephone=no" />
+                <title>22 | 理论八：如何用迪米特法则（LOD）实现“高内聚、松耦合”？</title>
+                <link href="https://static001.geekbang.org/static/time/css/app.05ce99d672894caca1d424d02f4e6216.css" rel="stylesheet" />
+                <style type="text/css">.button-cancel[data-v-a6a58a5e]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-a6a58a5e],.button-primary[data-v-a6a58a5e]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-a6a58a5e]{color:#fff;background-color:#ff5a05;border-radius:3px}.wrapper[data-v-a6a58a5e]{max-width:46.25rem;margin:0 auto;background-color:#f5f5f5}.banner[data-v-a6a58a5e]{width:100%;background-color:#eee}.banner .slider-item[data-v-a6a58a5e]{width:100%;position:relative}.banner .slider-item .slider-item-image[data-v-a6a58a5e]{width:100%}.banner .slider-item .slider-item-info[data-v-a6a58a5e]{position:absolute;width:100%;background-image:-webkit-gradient(linear,left bottom,left top,from(#000),to(transparent));background-image:linear-gradient(0deg,#000,transparent);bottom:0}.banner .slider-item .slider-item-title[data-v-a6a58a5e]{color:#fff;font-size:18px;padding-left:22px}.banner .slider-item .slider-item-desc[data-v-a6a58a5e]{color:#d9d9d9;font-size:12.5px;padding-top:4px;padding-left:21px;margin-bottom:11px}.filter[data-v-a6a58a5e]{padding-left:16px;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;background-color:#f5f5f5}.filter .filter-control .filter-control-order[data-v-a6a58a5e],.filter .filter-control[data-v-a6a58a5e],.filter[data-v-a6a58a5e]{height:29px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.filter .filter-control .filter-control-order[data-v-a6a58a5e]{cursor:pointer}.filter .filter-control .filter-control-order .icon-asc[data-v-a6a58a5e],.filter .filter-control .filter-control-order .icon-desc[data-v-a6a58a5e]{width:12px;height:12px;margin-right:7px}.filter .filter-control .filter-control-order .filter-control-text[data-v-a6a58a5e]{color:#888;font-size:11px}.filter .filter-control .filter-total[data-v-a6a58a5e]{color:#888;font-size:11px;margin-left:8px;padding-left:8px;border-left-width:1px;border-left-color:#d9d9d9;border-left-style:solid}.content-list[data-v-a6a58a5e]{background-color:#f5f5f5}.content-list .contentlistwrap[data-v-a6a58a5e]{padding-bottom:67px}@media (max-width:769px){.page-article-list .breadcrumb[data-v-a6a58a5e]{padding:10px}}</style>
+                <style type="text/css">.empty{height:51px}.mobile-tips{width:100%;height:51px;background:rgba(0,0,0,.8);position:fixed;top:0;left:0;z-index:20;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 12px;-webkit-transition:opacity .35s;transition:opacity .35s;opacity:0;pointer-events:none}.mobile-tips.istop{opacity:1;pointer-events:auto}.mobile-tips .mobile-tips-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.mobile-tips .mobile-tips-info i{width:36px;height:36px;background-image:url(data:image/png;base64,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);background-position:0 0;background-repeat:no-repeat;background-size:contain;border-radius:7px}.mobile-tips .mobile-tips-info h2{font-size:15px;color:#fff;font-weight:400;margin-left:6px}.mobile-tips .mobile-tips-info h2 span{font-size:11px}.mobile-tips a{width:72px;height:31px;text-align:center;border:1px solid #ff5a05;border-radius:3px;font-size:13px;color:#ff5a05;line-height:31px}</style>
+                <style type="text/css">.bottom{width:100%;background-color:#f5f5f5;position:fixed;bottom:0;left:0;z-index:10}.bottom,.bottom .bottom-wrapper{height:67px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.bottom .bottom-wrapper{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;padding-left:20px;padding-right:20px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.bottom .bottom-wrapper a{height:48px;line-height:51px;-webkit-box-sizing:border-box;box-sizing:border-box}</style>
+                <style type="text/css">.article-item{cursor:pointer;padding-top:15px;padding-left:12px;padding-right:12px;margin-bottom:9px;background-color:#fff;position:relative}.article-item-flag-trial{width:14px;height:31px;position:absolute;top:0;right:12px}.article-item-title{font-size:17px;color:#353535;font-weight:400}.article-item-title.pad-right{padding-right:14px}.article-item-hd{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.article-item-view{font-size:9px;color:#ff5a05;-webkit-transform:scale(.875);transform:scale(.875)}.article-item-viewed{font-size:9px;color:#888}.article-item-time{font-size:11px;color:#888;margin-left:9px}.article-item-cover{width:100%;margin-top:10px;margin-bottom:10px}.article-item-desc{color:#888;font-size:12.5px;line-height:19px;padding-bottom:14px}.article-item-more{padding-top:14px;padding-bottom:15px;border-top-color:#e8e8e8;border-top-width:1px;border-top-style:solid;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.article-item-more-text{color:#353535;font-size:12.5px}</style>
+                <style type="text/css">.breadcrumb{padding:30px 0;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-wrap:wrap;flex-wrap:wrap;background:#fff}.breadcrumb a.title{color:#e57c39;font-size:15px;font-weight:400}.breadcrumb span.title{color:#888;font-size:15px;font-weight:400}.breadcrumb .split{color:#ccc;font-size:10px;margin-right:5px}</style>
+                <style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style>
+                <style type="text/css">#iv-container{position:fixed;background:#0d0d0d;width:100%;height:100%;top:0;left:0;display:none;z-index:1000}.iv-container{overflow:hidden}.iv-close{width:26px;height:26px;position:absolute;right:20px;top:20px;cursor:pointer;text-align:center;overflow:hidden;text-shadow:0 0 3px #6d6d6d;-webkit-transition:all .2s ease;-moz-transition:all ease .2s;-o-transition:all ease .2s;transition:all .2s ease}.iv-close:after,.iv-close:before{content:"";height:2px;width:26px;background:#fff;position:absolute;left:0;top:50%;margin-top:-2px;border-radius:2px}.iv-close:before{-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg)}.iv-close:after{-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-o-transform:rotate(-45deg);transform:rotate(-45deg)}.iv-close:hover{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg)}.iv-image-view{position:absolute;height:100%;width:100%}.iv-image-wrap{display:inline-block}.iv-image-wrap:active{cursor:move}.iv-large-image{cursor:move;max-width:100%;max-height:100%;background-color:#ececec;-moz-transform:translateZ(0);-o-transform:translateZ(0)}.iv-large-image,.iv-loader{position:absolute;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.iv-loader{top:50%;left:50%;border-radius:50%;width:32px;height:32px;z-index:100;margin-top:-16px;margin-left:-16px;font-size:5px;text-indent:-9999em;border-top:1em solid hsla(0,0%,100%,.2);border-right:1em solid hsla(0,0%,100%,.2);border-bottom:1em solid hsla(0,0%,100%,.2);border-left:1em solid #fff;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}.iv-loader:after{width:10em;height:10em;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}</style>
+                <style type="text/css">.vue-pull-to-wrapper[data-v-12abd9fb]{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;flex-direction:column;height:100%}.scroll-container[data-v-12abd9fb]{-webkit-box-flex:1;-webkit-flex:1;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}.vue-pull-to-wrapper .action-block[data-v-12abd9fb]{position:relative;width:100%}.default-text[data-v-12abd9fb]{height:100%;line-height:50px;text-align:center}</style>
+                <style type="text/css">.button-cancel[data-v-87ffcada]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-87ffcada],.button-primary[data-v-87ffcada]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-87ffcada]{color:#fff;background-color:#ff5a05;border-radius:3px}.pd[data-v-87ffcada]{padding-left:1.375rem;padding-right:1.375rem}.article[data-v-87ffcada]{max-width:46.25rem;margin:0 auto}.article .article-unavailable[data-v-87ffcada]{color:#fa8919;font-size:15px;font-weight:600;line-height:24px;border-radius:5px;padding:12px;background-color:#f6f7fb;margin-top:20px}.article .article-unavailable .iconfont[data-v-87ffcada]{font-size:12px}.article .main[data-v-87ffcada]{padding:1.25rem 0;margin-bottom:52px}.article-title[data-v-87ffcada]{color:#353535;font-weight:400;line-height:1.65rem;font-size:1.34375rem}.article-info[data-v-87ffcada]{color:#888;font-size:.9375rem;margin-top:1.0625rem}.article-content[data-v-87ffcada]{margin-top:1.0625rem}.article-content.android video[data-v-87ffcada]::-webkit-media-controls-fullscreen-button{display:none}.copyright[data-v-87ffcada]{color:#b2b2b2;padding-bottom:20px;margin-top:20px;font-size:13px}.audio-player[data-v-87ffcada]{width:100%;margin:20px 0}.to-comment[data-v-87ffcada]{overflow:hidden;padding-top:10px;margin-bottom:-30px}.to-comment a.button-primary[data-v-87ffcada]{float:right;height:20px;font-size:12px;line-height:20px;padding:4px 8px;cursor:pointer}.article-comments[data-v-87ffcada]{margin-top:2rem}.article-comments h2[data-v-87ffcada]{text-align:center;color:#888;position:relative;z-index:1;margin-bottom:1rem}.article-comments h2[data-v-87ffcada]:before{border-top:1px dotted #888;content:"";position:absolute;top:56%;left:0;width:100%;z-index:-1}.article-comments h2 span[data-v-87ffcada]{font-size:15.25px;font-weight:400;padding:0 1rem;background:#fff;display:inline-block}.article-sub-bottom[data-v-87ffcada]{z-index:10;cursor:pointer}.switch-btns[data-v-87ffcada]{height:76px;cursor:pointer;padding-top:24px;padding-bottom:24px;border-bottom:10px solid #f6f7fb;position:relative}.switch-btns[data-v-87ffcada]:before{content:" ";height:1px;background:#e8e8e8;position:absolute;top:0;left:0;-webkit-box-sizing:border-box;box-sizing:border-box;left:1.375rem;right:1.375rem}.switch-btns .btn[data-v-87ffcada]{height:38px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.switch-btns .btn .tag[data-v-87ffcada]{-webkit-box-flex:0;-ms-flex:0 0 62px;flex:0 0 62px;text-align:center;color:#888;font-size:14px;border-radius:10px;height:22px;line-height:22px;background:#f6f7fb;font-weight:400}.switch-btns .btn .txt[data-v-87ffcada]{margin-left:10px;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;color:#888;font-size:15px;height:22px;line-height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}@media (max-width:769px){.article .breadcrumb[data-v-87ffcada]{padding-top:10px;padding-bottom:10px}}</style>
+                <style type="text/css">.share-poster-wrapper{position:fixed;background-color:#fff;left:0;bottom:0;z-index:100;display:-webkit-box;display:-ms-flexbox;display:flex;overflow:hidden;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-moz-user-select:-moz-none;-webkit-user-select:none;-ms-user-select:none;user-select:none}.share-poster-wrapper .poster-bottom,.share-poster-wrapper .poster-middle,.share-poster-wrapper .poster-top{-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle{padding:16px 32px;-webkit-box-sizing:border-box;box-sizing:border-box}.share-poster-wrapper .poster-middle .poster-userinfo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:18px}.share-poster-wrapper .poster-middle .poster-userinfo .poster-avatar{min-width:45px;min-height:45px;width:7vw;height:7vw;border-radius:50%;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle .nickname{font-size:5vw;font-weight:400;margin-left:18px}.share-poster-wrapper .poster-middle .time{font-size:3.2vw}.share-poster-wrapper .poster-middle .poster-middle-content{font-size:4vw;font-weight:400;white-space:normal;word-wrap:break-word;word-break:break-word;letter-spacing:1px}.share-poster-wrapper .poster-middle .poster-middle-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-content{font-size:3.7vw;padding:32px 0}.share-poster-wrapper .poster-middle .quote-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-info{border-left:1px solid #000;padding-left:10px;margin-top:38px}.share-poster-wrapper .poster-middle .quote-info p{font-size:3.2vw;line-height:1.5}.share-poster-wrapper.theme0 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/top.png") no-repeat 15px 1px}.share-poster-wrapper.theme0 .poster-middle{width:100%;padding-left:56px;padding-right:56px;background-image:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/middle.png");background-repeat:repeat-y;background-position:15px 0}.share-poster-wrapper.theme0 .poster-middle .time{margin-bottom:45px}.share-poster-wrapper.theme0 .poster-middle .quote-content{border-top:1px solid #e3e1dc;margin-top:30px}.share-poster-wrapper.theme0 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/bottom.png") no-repeat 15px -10px}.share-poster-wrapper.theme1 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/top.png") no-repeat 38px 1px}.share-poster-wrapper.theme1 .poster-middle{width:100%;padding:0 42px 10px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/middle.png") repeat-y 38px 0}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo{border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo .poster-avatar{margin-left:38px}.share-poster-wrapper.theme1 .poster-middle .poster-middle-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;min-height:260px;border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time{max-width:65px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;text-align:center;vertical-align:middle;border-right:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time span{white-space:nowrap;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.share-poster-wrapper.theme1 .poster-middle .poster-middle-content{padding:30px}.share-poster-wrapper.theme1 .poster-middle .quote-content{font-size:3.7vw;margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .quote-info{margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .footer{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-right:30px}.share-poster-wrapper.theme1 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/bottom.png") no-repeat 38px -10px}.share-poster-wrapper .share-poster{background:#fefdf8;-webkit-box-sizing:border-box;box-sizing:border-box;color:#9b8d73;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;overflow:auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-overflow-scrolling:touch;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.share-poster-wrapper .share-poster.color0{background-color:#fefdf8}.share-poster-wrapper .share-poster.color1{background-color:#4d4d4d}.share-poster-wrapper .share-poster .footer{margin-top:2rem;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.share-poster-wrapper .share-poster .footer p{margin:0;line-height:1.4;margin-left:20px;text-align:right;padding-right:20px}.share-poster-wrapper .controls{background:#fff;border-top:1px solid #f5f5f5;width:100%;padding-top:5px;-webkit-box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);z-index:1;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .controls>div{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 0}.share-poster-wrapper .controls>div span{font-size:.85rem}.share-poster-wrapper .controls>div button{width:100px;height:24px;background:#eee;margin:0 10px;border-radius:5px;border:2px solid #b2b2b2;outline:none}.share-poster-wrapper .controls>div button.on{border:2px solid #ff5a05}.share-poster-wrapper .controls .controls-themes button{color:#b2b2b2;font-size:12px;background:#fff;text-align:center}.share-poster-wrapper .controls .controls-themes button.on{color:#ff5a05}.share-poster-wrapper .buttons{background:#fff;border-top:1px solid #f5f5f5;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .buttons a{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;text-align:center;color:#000;font-weight:400;height:3rem;line-height:3rem}.share-poster-wrapper .buttons a .icon-share-money{width:1rem;height:1rem;margin:3px 0 0 5px}.share-poster-wrapper .buttons a:last-child{border-left:1px solid #f5f5f5}.share-poster-wrapper img{max-width:100%}.share-poster-wrapper.android .poster-middle .nickname{font-size:10vw}.share-poster-wrapper.android .poster-middle .time{font-size:6.4vw}.share-poster-wrapper.android .poster-middle .poster-middle-content{font-size:8vw}.share-poster-wrapper.android .poster-middle .quote-content{font-size:7.4vw}.share-poster-wrapper.android .poster-middle .quote-info p{font-size:6.4vw}</style>
+                <style type="text/css">.mini-audio-player{width:100%;height:5.25rem;border:1px solid #d9d9d9;background:#fafafa;-webkit-box-sizing:border-box;box-sizing:border-box;padding:1rem;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin:1rem 0}.mini-audio-player>a{border:none;-ms-flex-negative:0;flex-shrink:0}.mini-audio-player .btn-play{background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAI0AAACNCAYAAACKXvmlAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+IEmuOgAAEsVJREFUeJztnXuQVNWdxz9zHUeR9yuYLBgIvhAZIAiIkhRCwqprUGNiTNRskl2T3U0gPjayibJWCbEGTNCsuJXEqCnjMyYYJRrzWDCKKCrKgAoCAqIVxUFGQSSMOLN/fO/xnDt0T79u3763+36quurcV/e55/z6PH7nd36/uqamJmqEOuATwFHAUP8zBBgADAT6Az39e3sC9cB+YLd/bjfwFtAC7ABeBbb6n43AZqCjzO8QC+ornYEycjQwGTgRGAUcD/Qo8Dvqgb5+ui9wRBf3vgu8AKwBngSWAxsK/L1EUE1CMxg41f98GrUeUdIDmOh/LvLPtQCPAg/7n9cizlNZSLrQDAe+BHwRGJPH/W8CL2K7lc2oq3nLv/aOf99u1DXVY7us3sBHUDc2AHV1Q/3Pcf61zgwEzvE/AKuBe4F7gJfzyG8sSaLQ9AYuAP4ZGN/FfTuBJ4AVwNPAWuCNAn9rP9Dqp1uRoGVjENDo5+kkYBLQr9M9Y/zPD/083Qb8CiusiaAuQQPhccBM4FygW4brbWgcYbqC56nswLQOjaNMlzkZaMhw317U+vwPsCqy3JVA3IWmDjgduAw4JcP1NuBPqNDvJ97/2F7AmUjop5NZgJYB1wG/J8YzMa/SGchCHTADeA4VYGeBWQvMAj4KfA4183EWGIBdqCv6HMr3LPQeLqcAD6CxzwxUDrEjjkIzBXgKtRyjnfP7gbvRWKERuAGNW5LITpT/RqQSuBu9n6ERvf9TqDxiRZyE5khgMWqiT3DO7wWu969/GelAqomV6L2ORO+517l2AiqPxf71WBAHoekGXI0UY2c75/ehf+Nw4BLgleizFimvoPccjgbF+5xrZ6PyuZrMk4BIqbTQTEb99xzswLADuAtpdGcBr1cmaxXjdeC76P3vwg6IG1A5rQY+VZmsiUoJzaHAj4C/osIxPId0HF8BtlUgX3FiGyqHk4BnnfNHA48AP0blGDmVEJrjUD9+mfP7e/zj8VTfmKVUngQmoPLZ45/zgEvRQPm4qDMUtdBcgDShjc65pWhBcSHwQcT5SQofoPIZhcrLMAqV54VRZiYqoTkYWIT0FIf559qA2cBngS0R5SPpbEHlNRuVH6g8b0Ple3AUmYhCaPoCfwC+7ZzbjPrqBUB7BHmoJtpRuU1C5Wj4NirnvpkeCpNyC81Q4DFgmnPuIaR/SMQ6S4x5FpXjQ865aai8h5bzh8spNKPRKvNI/7gDmIfU6K3ZHkopiFZUnvOccyNRuY/O+EQIlEtoJqAB2+H+cRsyZZhD2h2FTTsq168D7/vnDkflP6EcP1gOofkU8BesLclu4DQ0CE4pH79E5WxsmvuheghdERi20EwElmCt3VqRGcDSrE+khMn/odmV6f57ovqYGOaPhCk0o9CgrLd/3IKW+lNlXbSsBKai8gfVx0OofkIhLKEZTLBLehtJfHNI359SGKtR+b/tH/dDrdCQML48DKExkmwMq3ch88ZUYCpLM6qHXf7xQOBBbE9QNKUKzcHI1sM0fW1oGX9lid+bEg4rUX0Y7fEoVF8laY5LFZoFqP80/CvpoDduLAX+xTmeiuqtaEoRmvOAi53jJtJpdVy5HdWP4WJUf0VRrNAcC9zsHP8BuKLYTKREwhWongw3o3osmGKEpgG4A7tavRk4n1TTG3faUT2ZnZ2HAXeSeStNlxQjNPOAT/rpNrSPJ11LSgataBuzGRiPJbhulReFCs3JyILMMId0tTpprAKudI4vQ/WaN4UIzSHATc4zy5Cdb0ry+DF2luuhej0k34cLEZorgBF+eg+aXqfjmGTSjurP2ByPoICJTL5CMxy43Dn+b4JWYynJYwsaXhguJ88NefkKzY+wzdcq4Cd5Zy0lzrieKg4Brs3noXyEZhpwlp/uQBu50l0D1cEHaEOi2ZB3FkENf0ZyCU0dQU3i3cDjxeQuJbasQDs5DU3k8FaRS2hmYDfj7wP+q+ispcSZ72P3jo9H9Z6Vrtyn1aEN54afE9OtsrPXzMl9U8KY3zg3yp/bhup3pn98NfKTk9GxUlctzQzsTsj3gGtCymBKPLkG1TOo3rO2Nl0JjbuCfROFOzmsNIPQWstsNHg/Fehe0RzFmzeAnznHF2e7MVv3dALWA9N+tI84KdQDVwHf40At5160SDeH2nNhkg/Xoy6qHtX/BORkIEC2lmamk15MTMcyGTCWhFeSWS3eDRkkbUBCVfAKb5WzDfitc/ydTDdlEpo+yJmzIUmtzKVox2EueiDrNWOAnWK5zkl/AclDgExCcz7WRddakmXvOzP3LQFGIJeyv6HruAe1xEoU3wEkB1/pfEMmofm6k/55GTJVLnoA/1Dks+cA69GiXUW8S8WMm5z0Nzpf7Cw0RyLP4CBDnTvLlKlycFCJz3dDBklrgX8qPTuJ5g6sodY4Oi1kdhaac530n0iun95SOBI5vF5CjNywRkwrqn+DKxddCs095cpRQjgD9e1ziYEb1grg1n9WofkYVgP8PlIj1zrd0PR9PUEfx7XAA9guajSSDyAoNKdhVzeXY7dzpmhmtRj4I3BMhfMSFbsIWjScbhKu0Pyjk3ZdcqVYpqMuaz6FhzZMIg866ekm4QrNFCftDoJSgjQg08iXUEyDasaVgyn4PZERmmOwMR93cmBImWojjH1aH0MqiWUoGFg18jx2Bj0Q37u8ERp338sKYhygKiRORbOifbluzIMpyD3/dWRQuSecDoLjmpPBCo3rXqsWzDn3oh0Vx6PBbanUI1OCdcghZSyDexXJCic9EazQuJFma2nH5CbU6nyBcFbyD0cOEx9HW16rAVceRoOExsP6+oXqH89k4reoDOZjdROlMAl4BriRAyPmJg1XHo4HPA8YhrVo207yLPTC4l1kOD8G+acrFQ/4DzTL+iaVj61VLG9gZaI7MMwjuL6yLvIsxY91wGeQ05+/hfB9A5AZ5UoUrzKJrHfSR3kE/ehvjTQr8eYepIpYSDAoabGcgMY6NyNBShLuFuxhHvAJ58TLpLi8i1xxjAUeDeH7PGSfshGZUna1hShOuKGVhnrIB7Dh1YgzkxSeR/qYrxLOmK8PCur6NBWOR5kn7sxyiIfVBEPtDoLzoQM5ohyBNs6H0WWNQXE8f0oB/mEqwHYnPcAjOCWsRaOrQnkb7aMaT1DxVSx1wLeQ0Vdcu6u3nHR/D+if5WJK16xGIaK/AewI4fs+i3ZTxBG3MennEVwvSR0uFkYHcCtayPsppXsGm0k8lyDcxqSvRzCTqTu04mgF/h2tzTxdwvcMRsrWWONh/QGDFvJSiucZpMD7N4rv6gfnviVy9jjp7h7B4AphrLvUOu3AfYSj14kL7kyx3sPGPYSI4jpXMR4KdfwSxRuix1Ht4c7q9ntYnyQQ7KpSCsOMZxZRvDHWTuKplXddtOzxCFrpJXUltpIMQNtYV2Dd/xfLXSTACaaHDVkHEUSPryI8ZPKwHjlyLvUP1wL8sNRMlQlXl9fqERzlJ91gKCrGoYDpPyNYoMXyJto/HldHS4FVA4+gti+MAqhm+gD/i7xDhREovQO4BVnElaLfKTeBVYN6bChekJ+6lAOpQwbjCwgu8JbCKmQekYQQ1K5c7PCA15wTqWOfAxkNPIaWC8IQmB1I+TeBZAgMBOXiVY+ggc3wiDMTZ3ojx4XPUGA8pCy0o/WpY9FYKElLNu7SxtZ6OlllRZuXWFKHXIZdC3w0pO98EhmZPxfS90WNa9251UN7fwwjqG1GouBZtxOOwGxHphMnkVyBgWCA1A2mezILUoPQhq9aowdqWVYTdIRQLPtReKNj0VgoyducXZnYA2zxUN/6gnPTqKhzVWHORQq6/yQcy7lHkGb4YoKK06TS6KRfANqNFrPZuTCO2uAY4M9oq0qxXkFdXkdjoalU1y5Vd2lkNVjVt+srOIyZQtz5PnJO9JkQvqsNdW1Ho7WjJHdFmXDl4SmwzfFy58JJaAZRbS/vEpYzoj8jI/Nq3ZlaR1BoloNtaTZgNcP9qF4nPWGxDXmamE71CgxoNmnWnVqQnHwoNB1oAGeYTkom/o5Woo8lGHiiWnH9MP4Vv/dxl/Nd/2q17rE7Ew+imeWV1I4ttSsHHzp/coXG9eh5MtCr3DlKCJtQZJczCCpCq51eaHxr+FA+XKH5G3bq3UCO4Jc1wF4UTKwRub2vNWZgtwo347hd6Wxt9msn/aUyZyrO3IfGLfOona6oM279u3JxgNDc66SnU3vmny+hwd/nSU40vXLQl+BkqEuh2Qg866cbUMCwpFCKqcG7KEBqI6njbZBm24RqfJZOY7lMxtC3OumLypSpcrCb4lqHu9CSwgLSzYKGbzrpWztfzCQ0t2P78UaCPobjzrUF3Ps8cAr6V4XhW69amIBdpNyL5CFAJqF5G8V0NFwSfr7KxiJgFmp1stGK3mksQYVminDr+zdkWKnPZgqwCLjQT5+DbESTMjC8AbgNOZWehLVvfQU5SnyQ2p0R5eIItDxiuDHTTdmE5in0L5yCdeEeV4c7mXgHmTzUenS8QvkuViYeIUuk5K52BV7vpL9FbVr01RKD0C4Jw/XZbuzKUm0JsjlpRI4BfoDGC7FjfuPcSmehGvgB1gHEGlT/GemqpWkHrnKOLwKGlJy1lDgyhOA0+yq60Hvl2rR+PzYKx6FAU0lZS4krTdgg9qtQvWcll9B0oCAThi8TXPlMST6TCFoyziaH1WY+7jH+AvzOT9chx8sHFZO7lNhxEFJRGGedvyOPCDT5+lS5HBu6bxwxHRCnFMws7O6Tfaiec5Kv0GwkqKKfSwJcl6Z0yTBUj4ZrUT3npBDvTfOwcX+6A78o8PmU+OAhl2/Gl956VL95P5wv+5CbMDMVm4rC2qQkj8uAaX66A6lT8o4cXGhL8TgKmmWYR/UE+KwVxhJsVRYS3PeWk2K6lyvwt2ciQ517qb541NVKH2SFZwysViNNcEEUIzRtyAbF+B8eDtxR5HelREcdqicTs/Q9ZJlZsOFZsRW9jqBV3+nE151pipiH6slwEfBiMV9USutwJ/LBYphNsmyKa4nzkdMDw09Q/RVFqV3K95DnKFDzdwuaVaXEh6moXozWdyl5KvGyUarQvI+2exh/LA1oz1CS7IqrmYnAYuzAdy2qr5IM6MMYvL6Dtq0arxO9gIcJelBKiZ7RqB56+8ctwJmovkoirBnPK8hBkAln2ActdI4O6ftTCmMM8p1jVCGtqH62ZH2iAMKcJq8BTgN2+ccDgWWkXVXUTETjFuMoexeqlzVh/UDYupWVqKsyW0j6Iok/JeTfScnMNFTeZjv1blQfGQ3Ei6UcCrlHUbhg01X1RH3rBWX4rRTL15A7kJ7+cSuqh9DDIpZLi7sStS4mtF4D2os0t4y/Wat4qFxvwc6StqPyD7WFcX+wXDQj01CjdaxDXqSWUHveKMpFH+ABVK5GD/MiMuFszvZQqZT7X78FmIwGxIbTUWyjUkP31TqfRME+XBdny1B5hzJLykYUXUUr8vnibvEcjiKzXR5RHqoJD2ninyAYNedGVM6tmR4KOwNR8D4KiPVV7Op4AzAfjfZT09H8GIbKawF2/PIeCmD2HYLhsstG1P/yXwHjCbqBN27hLyHd5ZCNg1D5rCW4trcWledtUWamEl3Di8gHykKs6Wh3//gJ4MQK5CnOnIjKZSHWprcduA6VY1HmDaVQqfHE35Gd6hR8L9g+41F86ztJQyMegcphBSoXwwY0nb4UlWPkVHoQ+hhaJ5mHXXmtQzv+NiC7j1rzVnE4eu+XUDmYqXQbKqcxlEFhVwiVFhqw/npHIrMKwyFoM9dm1BR/PPqsRcrH0Xu+jN77UOfafah85hADh0xxEBrDJmTrMQ3pHwzdkFOlTcipYhjxsOPEBPRem9B7HuZcewatTn+eGHlLj5PQGJaigjyL4MpsPXAeUo03oylmUjXLfVH+m9H7nEfQV9Aa4GxUDjn3VkdNHIUGtIHrfrRH50w09nFpRBvX30DLEhcS/1gOvVA+l6AodDdwoKHaY+h9x6LN+LGMuRVGzMZy0o7WVh5AM4iZyJFgN/96Awp0cQYaKC5HK+oPI5evlSz0OhQ361T/MxmrkHPZi7xoLsKP3BZ36pqaEuenqA8ys/gaXcfb3Immq8uRo541wJtlzNdHUMsxDkWxORkbYCsTq4BfIj+9iQqQmkShcTkK+KL/GZPH/dtRxNetzqcFeAsJlLE6fAe1ch7WxrYXEoz+yCpuqPMZiRwd5mI1alV+TZ4eGuJI3LunXGwErvE/g7Fdwaex5o4ug8ivcsOiBelUTJf5WoS/XTaSLjQuryH3J7/wj0cgu5ITkYH7SKwavhzsQa1YM/AkUv1XZXzLahKazqzzP7f4xx5aJT4K260MAQagVqk/1lSyt39/O3bLx27UjbUAO4BXsV3cJqSELCUSTGL4fyx+lt5bqgReAAAAAElFTkSuQmCC)}.mini-audio-player .btn-pause,.mini-audio-player .btn-play{width:2.6875rem;height:2.6875rem;background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none}.mini-audio-player .btn-pause{background-image:url(data:image/png;base64,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)}.mini-audio-player .audio-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin-left:.6875rem;min-width:0}.mini-audio-player .audio-info h3{color:#353535;font-size:15.25px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-audio-player .audio-info p{margin:0;margin-top:.125rem;font-size:11px;line-height:1rem}.mini-audio-player .audio-info p span{color:#888}.mini-audio-player .btn-download{width:1.25rem;height:1.25rem;position:relative;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA+CAYAAACbQR1vAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+IEmuOgAAA4hJREFUaIHtm8lOFFEUhr9qCWGHGxcaY1joK2h0YRzAtYmsWbAGGidEXOACbAYRxfgAPoEPoInGxJgg86gsJTHMw86EhS7O7TDk3uqq6qo6HahvQ7pOce7//1U0feve9vr6+lAiD3QC/4AC8FZDRJXGoMB14PWB1yPANPA1bSG5tAc0XLEcu5y6CvQCOGU5pnI3agVQMWQBaAvQJgtAW4A2WQDaArTJAtAWoE0WgLYAbbIAtAVokwWgLUCbLABtAdpkAfjU6oC7wKV0pCTCRcRDnesEVwDNwC/gg/nZHbeyFOgGltj30Gw7yRZALfAOqDavPeA50BO7xOToQTR75nU14qn26Im2AM4DNZbjz4DeePQlSi+i9Sg1iLdD2AJYApYdzbuo7BBeIBptLCPeDmELYA9oBHYdjbqQpaxKowA8ddR2gXuIt0O43gRHgTu4Q+ikskIoIJps7AINwA9b0e/fYJAQ1FZWD9CP2/wOUI/DPJT+IDRqGrhCeGIEaNEPdDhqO8iVH/NrEOST4BgSwo6j3gEMBOgTNwP4m6+nhHkI/lG4VAiPgcGAveJg0IxpYxvROh6kUZi5wLhpvO2oPyKdEF6asWyEMg/hJ0PjyN+VXwhDIXuGYQh46KhtIeYnwjSMMhss3glbjvoDkglhyPS2Eck8RJ8OTyB3gl8IryL2tjGM2/wmYn4ySuNyngdMmIE3HfX7iHDPUQ+CZ3q0O+qbyIWIZB7KfyAyaQS4QmhH7oQoIZQyv0EZV75IHE+EJvG/E9oJfyd4yC6yvKO+gQQ/FaKnlbgeiU0hIWw46nnEUJAQiubbHPV1M1bZ5iHeZ4KlQmgD3uAfgofsGfQz34DsKYyFuLemTSMhfATOWOqtiMk/llrRfIuj9zpwG5gtX+Y+SezNK4bwCXsILdgDaAXOOnomYh6Seyw+gwhed9TPWY75mb9FAuYh2XWBWUS4K4QgrAE3gblYFFlIemFkDjEQJYQ1JMD5WBUdIY2VoXkkhLUQv7NqfidR85De0liYEFaRK7+QqCJDmmuDC0gIqz7nrJhzUjEP6S+O+oWwglz5xTQFaawOLwI3gO8Hjo2ZY6maB72vzPwErgEXkO8MuVaiEkcrgCK/lcfPNkhkAWgL0KYKmZiMIG9Ktn0Bx5G/wDcgXwW8R6avJ41G4HQOufInlas5ZO5+UpnJAU3AFyy7J44xe8BnoOk/JruwYo92bigAAAAASUVORK5CYII=);background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none;padding-right:.25rem}.mini-audio-player .btn-download .icon-download-done{width:.45rem;height:.45rem;position:absolute;bottom:0;right:0;display:inline-block;background-image:url(data:image/png;base64,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);background-repeat:no-repeat;background-position:0 0;background-size:contain}</style>
+                <style type="text/css">.MathJax_Display{overflow:auto}.poster{position:fixed;left:-10000px;top:-10000px;overflow:hidden;padding:1rem;background:#ececec}.richcontent-pre-copy{font-size:13px;color:#888;position:absolute;right:1em;top:.2em;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.richcontent-pre-copy .iconfont{font-size:12px;margin-right:.2em}</style>
+                <style type="text/css">.comment-item{list-style-position:inside;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-bottom:1rem}.comment-item a{border-bottom:none}.comment-item .avatar{width:2.625rem;height:2.625rem;-ms-flex-negative:0;flex-shrink:0;border-radius:50%}.comment-item .info{margin-left:.5rem;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.comment-item .info .hd{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .username{color:#888;font-size:15.25px;font-weight:400;line-height:1.2}.comment-item .info .hd .control{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .control .btn-share{color:#888;font-size:.75rem;margin-right:1rem}.comment-item .info .hd .control .btn-praise{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;font-size:15.25px;text-decoration:none}.comment-item .info .hd .control .btn-praise i{color:#888;display:inline-block;font-size:.75rem;margin-right:.3rem;margin-top:-.01rem}.comment-item .info .hd .control .btn-praise i.on,.comment-item .info .hd .control .btn-praise span{color:#ff5a05}.comment-item .info .bd{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6}.comment-item .info .time{color:#888;font-size:9px;line-height:1}.comment-item .info .reply .reply-hd{font-size:15.25px}.comment-item .info .reply .reply-hd span{margin-left:-12px;color:#888;font-weight:400}.comment-item .info .reply .reply-hd i{color:#ff5a05;font-size:15.25px}.comment-item .info .reply .reply-content{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all}.comment-item .info .reply .reply-time{color:#888;font-size:9px}</style>
+               </head>
+  <body>
+      <div id=app>
+                     <div data-v-87ffcada="" class="article"> 
+                      <div data-v-87ffcada="" class="main main-app"> 
+                       <div data-v-87ffcada="" class="breadcrumb breadcrumb pd"> 
+                       </div> 
+                       <h1 data-v-87ffcada="" class="article-title pd"> 22 | 理论八：如何用迪米特法则（LOD）实现“高内聚、松耦合”？ </h1> 
+                       <div data-v-87ffcada="" class="article-info pd"> 
+                        <span data-v-87ffcada="">2019-12-23</span> 
+                        <span data-v-87ffcada="">王争</span>
+                       </div> 
+                       <div data-v-87ffcada="" class="article-content typo common-content pd"> 
+                        <img data-v-87ffcada="" src="https://static001.geekbang.org/resource/image/dc/05/dc27c320139ee3e70513b8496a26c305.jpg" /> 
+                        <div data-v-87ffcada="" id="article-content" class="">
+                         <div class="text"> 
+                             <p>今天，我们讲最后一个设计原则：迪米特法则。尽管它不像SOLID、KISS、DRY原则那样，人尽皆知，但它却非常实用。利用这个原则，能够帮我们实现代码的“高内聚、松耦合”。今天，我们就围绕下面几个问题，并结合两个代码实战案例，来深入地学习这个法则。</p><ul>
+<li>什么是“高内聚、松耦合”？</li>
+<li>如何利用迪米特法则来实现“高内聚、松耦合”？</li>
+<li>有哪些代码设计是明显违背迪米特法则的？对此又该如何重构？</li>
+</ul><p>话不多说，让我们开始今天的学习吧！</p><h2>何为“高内聚、松耦合”？</h2><p>“高内聚、松耦合”是一个非常重要的设计思想，能够有效地提高代码的可读性和可维护性，缩小功能改动导致的代码改动范围。实际上，在前面的章节中，我们已经多次提到过这个设计思想。很多设计原则都以实现代码的“高内聚、松耦合”为目的，比如单一职责原则、基于接口而非实现编程等。</p><p>实际上，“高内聚、松耦合”是一个比较通用的设计思想，可以用来指导不同粒度代码的设计与开发，比如系统、模块、类，甚至是函数，也可以应用到不同的开发场景中，比如微服务、框架、组件、类库等。为了方便我讲解，接下来我以“类”作为这个设计思想的应用对象来展开讲解，其他应用场景你可以自行类比。</p><p>在这个设计思想中，“高内聚”用来指导类本身的设计，“松耦合”用来指导类与类之间依赖关系的设计。不过，这两者并非完全独立不相干。高内聚有助于松耦合，松耦合又需要高内聚的支持。</p><!-- [[[read_end]]] --><p><strong>那到底什么是“高内聚”呢？</strong></p><p>所谓高内聚，就是指相近的功能应该放到同一个类中，不相近的功能不要放到同一个类中。相近的功能往往会被同时修改，放到同一个类中，修改会比较集中，代码容易维护。实际上，我们前面讲过的单一职责原则是实现代码高内聚非常有效的设计原则。对于这一点，你可以回过头再去看下专栏的<a href="https://time.geekbang.org/column/article/171771?utm_source=PC&amp;utm_medium=geektime&amp;utm_term=pc_interstitial_5">第15讲</a>。</p><p><strong>我们再来看一下，什么是“松耦合”？</strong></p><p>所谓松耦合是说，在代码中，类与类之间的依赖关系简单清晰。即使两个类有依赖关系，一个类的代码改动不会或者很少导致依赖类的代码改动。实际上，我们前面讲的依赖注入、接口隔离、基于接口而非实现编程，以及今天讲的迪米特法则，都是为了实现代码的松耦合。</p><p><strong>最后，我们来看一下，“内聚”和“耦合”之间的关系。</strong></p><p>前面也提到，“高内聚”有助于“松耦合”，同理，“低内聚”也会导致“紧耦合”。关于这一点，我画了一张对比图来解释。图中左边部分的代码结构是“高内聚、松耦合”；右边部分正好相反，是“低内聚、紧耦合”。</p><p><img src="https://static001.geekbang.org/resource/image/62/3c/62275095f1f5817cad8a9ca129a6ec3c.jpg" alt=""></p><p>图中左边部分的代码设计中，类的粒度比较小，每个类的职责都比较单一。相近的功能都放到了一个类中，不相近的功能被分割到了多个类中。这样类更加独立，代码的内聚性更好。因为职责单一，所以每个类被依赖的类就会比较少，代码低耦合。一个类的修改，只会影响到一个依赖类的代码改动。我们只需要测试这一个依赖类是否还能正常工作就行了。</p><p>图中右边部分的代码设计中，类粒度比较大，低内聚，功能大而全，不相近的功能放到了一个类中。这就导致很多其他类都依赖这个类。当我们修改这个类的某一个功能代码的时候，会影响依赖它的多个类。我们需要测试这三个依赖类，是否还能正常工作。这也就是所谓的“牵一发而动全身”。</p><p>除此之外，从图中我们也可以看出，高内聚、低耦合的代码结构更加简单、清晰，相应地，在可维护性和可读性上确实要好很多。</p><h2>“迪米特法则”理论描述</h2><p>迪米特法则的英文翻译是：Law of Demeter，缩写是LOD。单从这个名字上来看，我们完全猜不出这个原则讲的是什么。不过，它还有另外一个更加达意的名字，叫作最小知识原则，英文翻译为：The Least Knowledge Principle。</p><p>关于这个设计原则，我们先来看一下它最原汁原味的英文定义：</p><blockquote>
+<p>Each unit should have only limited knowledge about other units: only units “closely” related to the current unit. Or: Each unit should only talk to its friends; Don’t talk to strangers.</p>
+</blockquote><p>我们把它直译成中文，就是下面这个样子：</p><blockquote>
+<p>每个模块（unit）只应该了解那些与它关系密切的模块（units: only units “closely” related to the current unit）的有限知识（knowledge）。或者说，每个模块只和自己的朋友“说话”（talk），不和陌生人“说话”（talk）。</p>
+</blockquote><p>我们之前讲过，大部分设计原则和思想都非常抽象，有各种各样的解读，要想灵活地应用到实际的开发中，需要有实战经验的积累。迪米特法则也不例外。所以，我结合我自己的理解和经验，对刚刚的定义重新描述一下。注意，为了统一讲解，我把定义描述中的“模块”替换成了“类”。</p><blockquote>
+<p>不该有直接依赖关系的类之间，不要有依赖；有依赖关系的类之间，尽量只依赖必要的接口（也就是定义中的“有限知识”）。</p>
+</blockquote><p>从上面的描述中，我们可以看出，迪米特法则包含前后两部分，这两部分讲的是两件事情，我用两个实战案例分别来解读一下。</p><h2>理论解读与代码实战一</h2><p>我们先来看这条原则中的前半部分，<strong>“不该有直接依赖关系的类之间，不要有依赖”。</strong>我举个例子解释一下。</p><p>这个例子实现了简化版的搜索引擎爬取网页的功能。代码中包含三个主要的类。其中，NetworkTransporter类负责底层网络通信，根据请求获取数据；HtmlDownloader类用来通过URL获取网页；Document表示网页文档，后续的网页内容抽取、分词、索引都是以此为处理对象。具体的代码实现如下所示：</p><pre><code>public class NetworkTransporter {
+    // 省略属性和其他方法...
+    public Byte[] send(HtmlRequest htmlRequest) {
+      //...
+    }
+}
+
+public class HtmlDownloader {
+  private NetworkTransporter transporter;//通过构造函数或IOC注入
+  
+  public Html downloadHtml(String url) {
+    Byte[] rawHtml = transporter.send(new HtmlRequest(url));
+    return new Html(rawHtml);
+  }
+}
+
+public class Document {
+  private Html html;
+  private String url;
+  
+  public Document(String url) {
+    this.url = url;
+    HtmlDownloader downloader = new HtmlDownloader();
+    this.html = downloader.downloadHtml(url);
+  }
+  //...
+}
+</code></pre><p>这段代码虽然“能用”，能实现我们想要的功能，但是它不够“好用”，有比较多的设计缺陷。你可以先试着思考一下，看看都有哪些缺陷，然后再来看我下面的讲解。</p><p><strong>首先，我们来看NetworkTransporter类。</strong>作为一个底层网络通信类，我们希望它的功能尽可能通用，而不只是服务于下载HTML，所以，我们不应该直接依赖太具体的发送对象HtmlRequest。从这一点上讲，NetworkTransporter类的设计违背迪米特法则，依赖了不该有直接依赖关系的HtmlRequest类。</p><p>我们应该如何进行重构，让NetworkTransporter类满足迪米特法则呢？我这里有个形象的比喻。假如你现在要去商店买东西，你肯定不会直接把钱包给收银员，让收银员自己从里面拿钱，而是你从钱包里把钱拿出来交给收银员。这里的HtmlRequest对象就相当于钱包，HtmlRequest里的address和content对象就相当于钱。我们应该把address和content交给NetworkTransporter，而非是直接把HtmlRequest交给NetworkTransporter。根据这个思路，NetworkTransporter重构之后的代码如下所示：</p><pre><code>public class NetworkTransporter {
+    // 省略属性和其他方法...
+    public Byte[] send(String address, Byte[] data) {
+      //...
+    }
+}
+</code></pre><p><strong>我们再来看HtmlDownloader类。</strong>这个类的设计没有问题。不过，我们修改了NetworkTransporter的send()函数的定义，而这个类用到了send()函数，所以我们需要对它做相应的修改，修改后的代码如下所示：</p><pre><code>public class HtmlDownloader {
+  private NetworkTransporter transporter;//通过构造函数或IOC注入
+  
+  // HtmlDownloader这里也要有相应的修改
+  public Html downloadHtml(String url) {
+    HtmlRequest htmlRequest = new HtmlRequest(url);
+    Byte[] rawHtml = transporter.send(
+      htmlRequest.getAddress(), htmlRequest.getContent().getBytes());
+    return new Html(rawHtml);
+  }
+}
+</code></pre><p><strong>最后，我们来看下Document类。</strong>这个类的问题比较多，主要有三点。第一，构造函数中的downloader.downloadHtml()逻辑复杂，耗时长，不应该放到构造函数中，会影响代码的可测试性。代码的可测试性我们后面会讲到，这里你先知道有这回事就可以了。第二，HtmlDownloader对象在构造函数中通过new来创建，违反了基于接口而非实现编程的设计思想，也会影响到代码的可测试性。第三，从业务含义上来讲，Document网页文档没必要依赖HtmlDownloader类，违背了迪米特法则。</p><p>虽然Document类的问题很多，但修改起来比较简单，只要一处改动就可以解决所有问题。修改之后的代码如下所示：</p><pre><code>public class Document {
+  private Html html;
+  private String url;
+  
+  public Document(String url, Html html) {
+    this.html = html;
+    this.url = url;
+  }
+  //...
+}
+
+// 通过一个工厂方法来创建Document
+public class DocumentFactory {
+  private HtmlDownloader downloader;
+  
+  public DocumentFactory(HtmlDownloader downloader) {
+    this.downloader = downloader;
+  }
+  
+  public Document createDocument(String url) {
+    Html html = downloader.downloadHtml(url);
+    return new Document(url, html);
+  }
+}
+</code></pre><h2>理论解读与代码实战二</h2><p>现在，我们再来看一下这条原则中的后半部分：“有依赖关系的类之间，尽量只依赖必要的接口”。我们还是结合一个例子来讲解。下面这段代码非常简单，Serialization类负责对象的序列化和反序列化。提醒你一下，有个类似的例子在之前的第15节课中讲过，你可以结合着一块儿看一下。</p><pre><code>public class Serialization {
+  public String serialize(Object object) {
+    String serializedResult = ...;
+    //...
+    return serializedResult;
+  }
+  
+  public Object deserialize(String str) {
+    Object deserializedResult = ...;
+    //...
+    return deserializedResult;
+  }
+}
+</code></pre><p>单看这个类的设计，没有一点问题。不过，如果我们把它放到一定的应用场景里，那就还有继续优化的空间。假设在我们的项目中，有些类只用到了序列化操作，而另一些类只用到反序列化操作。那基于迪米特法则后半部分“有依赖关系的类之间，尽量只依赖必要的接口”，只用到序列化操作的那部分类不应该依赖反序列化接口。同理，只用到反序列化操作的那部分类不应该依赖序列化接口。</p><p>根据这个思路，我们应该将Serialization类拆分为两个更小粒度的类，一个只负责序列化（Serializer类），一个只负责反序列化（Deserializer类）。拆分之后，使用序列化操作的类只需要依赖Serializer类，使用反序列化操作的类只需要依赖Deserializer类。拆分之后的代码如下所示：</p><pre><code>public class Serializer {
+  public String serialize(Object object) {
+    String serializedResult = ...;
+    ...
+    return serializedResult;
+  }
+}
+
+public class Deserializer {
+  public Object deserialize(String str) {
+    Object deserializedResult = ...;
+    ...
+    return deserializedResult;
+  }
+}
+</code></pre><p>不知道你有没有看出来，尽管拆分之后的代码更能满足迪米特法则，但却违背了高内聚的设计思想。高内聚要求相近的功能要放到同一个类中，这样可以方便功能修改的时候，修改的地方不至于过于分散。对于刚刚这个例子来说，如果我们修改了序列化的实现方式，比如从JSON换成了XML，那反序列化的实现逻辑也需要一并修改。在未拆分的情况下，我们只需要修改一个类即可。在拆分之后，我们需要修改两个类。显然，这种设计思路的代码改动范围变大了。</p><p>如果我们既不想违背高内聚的设计思想，也不想违背迪米特法则，那我们该如何解决这个问题呢？实际上，通过引入两个接口就能轻松解决这个问题，具体的代码如下所示。实际上，我们在<a href="https://time.geekbang.org/column/article/177442">第18节课</a>中讲到“接口隔离原则”的时候，第三个例子就使用了类似的实现思路，你可以结合着一块儿来看。</p><pre><code>public interface Serializable {
+  String serialize(Object object);
+}
+
+public interface Deserializable {
+  Object deserialize(String text);
+}
+
+public class Serialization implements Serializable, Deserializable {
+  @Override
+  public String serialize(Object object) {
+    String serializedResult = ...;
+    ...
+    return serializedResult;
+  }
+  
+  @Override
+  public Object deserialize(String str) {
+    Object deserializedResult = ...;
+    ...
+    return deserializedResult;
+  }
+}
+
+public class DemoClass_1 {
+  private Serializable serializer;
+  
+  public Demo(Serializable serializer) {
+    this.serializer = serializer;
+  }
+  //...
+}
+
+public class DemoClass_2 {
+  private Deserializable deserializer;
+  
+  public Demo(Deserializable deserializer) {
+    this.deserializer = deserializer;
+  }
+  //...
+}
+</code></pre><p>尽管我们还是要往DemoClass_1的构造函数中，传入包含序列化和反序列化的Serialization实现类，但是，我们依赖的Serializable接口只包含序列化操作，DemoClass_1无法使用Serialization类中的反序列化接口，对反序列化操作无感知，这也就符合了迪米特法则后半部分所说的“依赖有限接口”的要求。</p><p>实际上，上面的的代码实现思路，也体现了“基于接口而非实现编程”的设计原则，结合迪米特法则，我们可以总结出一条新的设计原则，那就是“基于最小接口而非最大实现编程”。有些同学之前问，新的设计模式和设计原则是怎么创造出来的，实际上，就是在大量的实践中，针对开发痛点总结归纳出来的套路。</p><h2>辩证思考与灵活应用</h2><p>对于实战二最终的设计思路，你有没有什么不同的观点呢？</p><p>整个类只包含序列化和反序列化两个操作，只用到序列化操作的使用者，即便能够感知到仅有的一个反序列化函数，问题也不大。那为了满足迪米特法则，我们将一个非常简单的类，拆分出两个接口，是否有点过度设计的意思呢？</p><p>设计原则本身没有对错，只有能否用对之说。不要为了应用设计原则而应用设计原则，我们在应用设计原则的时候，一定要具体问题具体分析。</p><p>对于刚刚这个Serialization类来说，只包含两个操作，确实没有太大必要拆分成两个接口。但是，如果我们对Serialization类添加更多的功能，实现更多更好用的序列化、反序列化函数，我们来重新考虑一下这个问题。修改之后的具体的代码如下：</p><pre><code>public class Serializer { // 参看JSON的接口定义
+  public String serialize(Object object) { //... }
+  public String serializeMap(Map map) { //... }
+  public String serializeList(List list) { //... }
+  
+  public Object deserialize(String objectString) { //... }
+  public Map deserializeMap(String mapString) { //... }
+  public List deserializeList(String listString) { //... }
+}
+</code></pre><p>在这种场景下，第二种设计思路要更好些。因为基于之前的应用场景来说，大部分代码只需要用到序列化的功能。对于这部分使用者，没必要了解反序列化的“知识”，而修改之后的Serialization类，反序列化的“知识”，从一个函数变成了三个。一旦任一反序列化操作有代码改动，我们都需要检查、测试所有依赖Serialization类的代码是否还能正常工作。为了减少耦合和测试工作量，我们应该按照迪米特法则，将反序列化和序列化的功能隔离开来。</p><h2>重点回顾</h2><p>好了，今天的内容到此就讲完了。我们一块来总结回顾一下，你需要掌握的重点内容。</p><p><strong>1.如何理解“高内聚、松耦合”？</strong></p><p>“高内聚、松耦合”是一个非常重要的设计思想，能够有效提高代码的可读性和可维护性，缩小功能改动导致的代码改动范围。“高内聚”用来指导类本身的设计，“松耦合”用来指导类与类之间依赖关系的设计。</p><p>所谓高内聚，就是指相近的功能应该放到同一个类中，不相近的功能不要放到同一类中。相近的功能往往会被同时修改，放到同一个类中，修改会比较集中。所谓松耦合指的是，在代码中，类与类之间的依赖关系简单清晰。即使两个类有依赖关系，一个类的代码改动也不会或者很少导致依赖类的代码改动。</p><p><strong>2.如何理解“迪米特法则”？</strong></p><p>不该有直接依赖关系的类之间，不要有依赖；有依赖关系的类之间，尽量只依赖必要的接口。迪米特法则是希望减少类之间的耦合，让类越独立越好。每个类都应该少了解系统的其他部分。一旦发生变化，需要了解这一变化的类就会比较少。</p><h2>课堂讨论</h2><p>在今天的讲解中，我们提到了“高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，你能总结一下它们之间的区别和联系吗？</p><p>欢迎在留言区写下你的答案，和同学一起交流和分享。如果有收获，也欢迎你把这篇文章分享给你的朋友。</p>
+                         </div>
+                        </div> 
+                       </div> 
+                       <!----> 
+                       <!---->
+                      </div>
+                      
+                      <div data-v-87ffcada="" class="article-comments pd">
+                            <h2 data-v-87ffcada="">
+                                <span data-v-87ffcada="">精选留言</span>
+                              </h2> 
+                              <ul data-v-87ffcada=""> 
+                                    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/17/37/4e/5c3153b2.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">知行合一</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>47</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        目的都是实现高内聚低耦合，但是出发的角度不一样，单一职责是从自身提供的功能出发，迪米特法则是从关系出发，针对接口而非实现编程是使用者的角度，殊途同归。
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/4e/d0/d8a5f720.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Ken张云忠</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>16</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        “高内聚、松耦合”“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”，它们之间的区别和联系吗？<br>区别:<br>高内聚、松耦合:是一个重要的设计思想,能够有效地提高代码的可读性和可维护性,缩小功能改动导致的代码改动范围.<br>单一职责原则:A class or module should have a single reponsibility.提供的功能上要单一.<br>接口隔离原则:Clients should not be forced to depend upon interfaces that they do not use.与外部关系上只依赖需要的抽象.<br>基于接口而非实现编程:Program to an interface, not an implementation.是一条比较抽象、泛化的设计思想,为了提高代码的灵活性&#47;扩展性&#47;可维护性.<br>迪米特法则:Each unit should have only limited knowledge about other units: only units “closely” related to the current unit. Or: Each unit should only talk to its friends; Don’t talk to strangers.每个单元只该依赖与它关系密切的单元,最少知道,只与关系密切的单一交互.<br>联系:<br>职责越单一越容易做到接口隔离,也越容易做到最少知道的迪米特法则.<br>基于抽象编程抽象的知识越顶层越脱离具体实现,相对知道的内容就越少,也容易实现迪米特法则.<br>接口隔离原则与迪米特法则都强调只依赖需要的部分,接口隔离原则是相对偏上层来说的,迪米特法则是相对偏具体实现来说的.<br>单一职责原则&#47;接口隔离原则&#47;基于接口而非实现编程&#47;迪米特法则都以实现代码的&quot;高内聚、松耦合&quot;为目的,提高代码的可读性和可维护性,缩小功能改动导致的代码改动范围,降低风险.
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/62/bb/323a3133.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">下雨天</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>11</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1.单一职责原则	<br>适用对象:模块，类，接口 <br>侧重点:高内聚，低耦合	<br>思考角度:自身<br><br>2.接口隔离原则<br>适用对象:接口，函数	<br>侧重点:低耦合	<br>思考角度:调用者<br><br>3.基于接口而非实现编程 <br>适用对象:接口，抽象类	<br>侧重点:低耦合 <br>思考角度:调用者<br><br>4.迪米特法则	<br>适用对象:模块，类	<br>侧重点:低耦合	<br>思考角度:类关系
+        </div> 
+        <span class="time">2019-12-25</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/15/50/d7/f82ed283.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">辣么大</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>11</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        关于LoD，请记住一条：方法中不要使用ChainMethods。<br><br>坏的实践：<br>Amount = customer.orders().last().totals().amount()<br>和<br>orders = customer.orders()<br>lastOders = orders.last()<br>totals = lastOders.totals()<br>amount = totals.amount()<br><br>上面的例子中，chain中的方法改变会影响很多地方。这里注意区别建造者模式和pipeline管道，这两种的chain中的方法不易改变。<br><br>出现这样的代码，需要考虑可能是设计或实现出了问题。<br><br>LoD如何使用：<br>一个类C中的方法只能调用：<br>1、C中其他实例方法<br>2、它自己的参数方法<br>3、它创建对象的方法<br>4、不要调用全局变量（包括可变对象、可变单例）<br>例如：<br>class HtmlDownloader{<br>  Html html;<br>  public void downloadHtml(Transporter trans, String url){<br>    if(checkUrl(url)){&#47;&#47; ok 自己的实例方法<br>      &#47;&#47; return<br>    }<br>    rawData = trans.send(uri);&#47;&#47; ok 参数对象的方法<br>    Html html = createHtml(rawData); &#47;&#47; ok 它创建的对象<br>    html.save();&#47;&#47; ok  它创建对象的方法<br>  )<br>  private boolean checkUrl(String url){<br>    &#47;&#47; check<br>  }<br>}<br><br>参考：<br>The Pragmatic Programmer 1st edition and 2nd edition<br>
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/dd/98/883c42b4.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">刘浒</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        “高内聚、松耦合” 是衡量好代码的标准之一，为了实现这样的目标，我们需要遵循如下原则：<br>“基于接口而非实现编程”，接口本身就是一层抽象，接口是稳定的，实现是易变的，强调的是基于契约编程，这样能够隔离变化。实现细节代码的变化，不影依赖该接口的对象，到从而达到松耦合的目的。<br>“迪米特法则”，定义的是发布的接口（类、模块等）能不能依赖，如何依赖的问题。使用者去除不必要的依赖，只依赖必要的接口。这样即使接口一旦发生变化，需要了解这一变化的类就会比较少，达到松耦合的目的。<br>“接口隔离原则”，从使用者的角度考虑如何设计接口，让使用者只依赖必要的接口，不会被迫依赖不用的接口。这样即使接口一旦发生变化，需要了解这一变化的类就会比较少，这样就能符合 “迪米特法则” 。<br>“单一职责原则”，针对模块、类、接口的设计，将功能相关性很强的代码抽取到一起，达到高内聚的目标。
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/f7/9d/be04b331.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">落叶飞逝的恋</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        课后讨论：代码的最终目的是高内聚、松耦合的。而为了达到这个目的，就需要利用到迪米特法则。而迪米特法则的实现，又需要利用单一职责将单个类定义职责单一化，并且为了解决多个类之间的关系，又需要用到基于接口编程而非实现编程。这样类与类之间就相当于契约化，也就是不关心类的具体实现。
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/ca/c7/08a5618f.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">黄林晴</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        打卡<br>所有的设计原则都相辅相成
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/60/16/d1dd4972.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">ismind</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        前几天没抽出时间，今天补上。<br>1，感觉还是要做笔记，现在才知道要做一下笔记，不然前面学的基本上只是留个大概的印象，效率低<br>2，感觉开始有难度了，综合性更高了，开始加速了么？哈哈<br>课后思考：<br>1，这五个原则与思想，联系就是：都是为了提高代码的可读性、扩展性、灵活性等，这也是这些原则产生的原因之一，我觉得应该把握这个主要的目的，再去应用这些原则或者设计模式，否则单纯为了使用这些原则，那很可能适得其反，我又想起那句话：“不忘初心方得始终”，学习设计模式也要这样吧。<br>老师的代码实战二，简单的序列化使用LOD原则，感觉过度设计了，不过一看后面功能变复杂了，觉得设计才合理。<br>2，区别：应该是关注点不同吧，“高内聚、低耦合”关注的是类，也就是考虑类与类之间的关系；单一职责则是关注前几天没抽出时间，今天补上。<br>1，感觉还是要做笔记，现在才知道要做一下笔记，不然前面学的基本上只是留个大概的印象，效率低<br>2，感觉开始有难度了，综合性更高了，开始加速了么？哈哈<br>课后思考：<br>1，这五个原则与思想，联系就是：都是为了提高代码的可读性、扩展性、灵活性等，这也是这些原则产生的原因之一，我觉得应该把握这个主要的目的，再去应用这些原则或者设计模式，否则单纯为了使用这些原则，那很可能适得其反，我又想起那句话：“不忘初心方得始终”，学习设计模式也要这样吧。<br>老师的代码实战二，简单的序列化使用LOD原则，感觉过度设计了，不过一看后面功能变复杂了，觉得设计才合理。<br>2，区别：应该是关注点不同吧，“高内聚、低耦合”关注的是类，也就是考虑类与类之间的关系；单一职责则是关注某一个类或者函数的功能是否单一；接口隔离则关注不要依赖不需要的接口；基于接口而非实现编程就考虑将实现替换为接口。<br>自己感觉这些还没有彻底理解，只是大概知道，感觉离掌握与熟悉还有一段距离。
+        </div> 
+        <span class="time">2019-12-27</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/12/7b/57/a9b04544.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">QQ怪</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        老师讲的真棒👍
+        </div> 
+        <span class="time">2019-12-24</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/68/fe/1353168d.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">岁月</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        如果说高内聚、松耦合等价于&quot;中国特色社会主义&quot;, 那么“单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”这几个原则就像是在说如何才能做到做到这样的社会?  答案就是我们要&quot;倡导富强、民主、文明、和谐, 自由、平等、公正、法治，爱国、敬业、诚信、友善&quot;
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/15/ac/c2/aec60ae2.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">逆风星痕</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        感觉所有设计原则和模式，都是为了代码的可读性，复用和扩展而总结出来的。好多原则可能是针对某个场景下提高代码的复用和扩展，这样有时也会辅助其他原则。迪米特原则描述类之间的关系，尽量减少依赖，但也需要类遵循单一职责原则。设计代码的时候，可以根据自己的目的，从参考相应原则的设计
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/a5/ee/853874cd.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">再见孙悟空</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        “单一职责原则”“接口隔离原则”“基于接口而非实现编程”“迪米特法则”都是为了实现 “高内聚、低耦合”的手段。做到了接口隔离，一般情况下职责也比较单一，基于接口而非实现编程，往往也会降低耦合性。有的时候使用了迪米特法则或者单一职责原则，可能会破坏高内聚原则，这种情况就要具体分析场景，以及使用接口来实现。
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/12/f2/aa/32fc0d54.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">失火的夏天</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>1</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        接口隔离感觉就是为了迪米特法则的应用，接口隔离开不需要依赖的类，只引入需要的接口和方法。<br><br>高内聚低耦合，是针对具体的实现类的，实现类实现多个接口，相似的功能都在同一个实现类中完成。<br><br>接口的隔离又保证对外只暴露了调用方需要的方法，外部也不能直接看到不需要的方法。代码结构也更加整洁，逻辑更清晰
+        </div> 
+        <span class="time">2019-12-23</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/2f/7a/ab6c811c.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">相逢是缘</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        打卡<br>高内聚:指导类本身设计，相同功能放到同一个类中，不同功能，放到不同类中。<br>松耦合:指导类与类之间的设计，类与类之间的依赖关系简单，清晰。<br>迪米特法则:不该有直接依赖关系的类之间，不要有依赖，有依赖关系的类，尽量只依赖必要的接口。
+        </div> 
+        <span class="time">2020-01-05</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/12/df/1e/cea897e8.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">传说中的成大大</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        高内聚: 相同的功能尽量放到同一个类中 用于指导类的设计<br>松耦合:  类与类之间的依赖关系 简单而清晰，不会因为改动一个类而影响另外一个类 用于指导类与类之间的设计<br>单一职责原则: 不光是类 可以是模块，函数 甚至是框架 让功能尽量单一 指导范围更广<br>基于接口而非实现编程: 两个方面 1. 扩展性 2. 隔离职责<br>迪米特法则: 不该有直接依赖关系的类之间，不要有依赖关系，就算是要依赖也要依赖与必要的接口 减少代码的耦合性<br>他们之间的联系在于都是为了 高内聚 低耦合，区别如以上整理
+        </div> 
+        <span class="time">2019-12-30</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/16/56/c6/0b449bc6.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">斐波那契</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        老师 我有一个问题：在项目开发中，我写了一个类A 里面定义了一个方法，后来又写了一个类B 发现在B里面要用到A里面定义的那个方法(基本上一模一样)，但是A跟B本身是两个不相关的类 这个时候要怎么解决? PS:这个方法不能算作是工具类，只是一段数据集的处理逻辑 那是否是搞一个抽象类 然后让A和B继承这个抽象类 把那个方法写进抽象类里?
+        </div> 
+        <span class="time">2019-12-29</span> 
+                <div class="reply">
+                        <div class="reply-hd">
+                        <i class="iconfont"></i> 
+                        <span>作者回复</span>
+                        </div> 
+                        <p class="reply-content">使用组合能不能解决复用问题呢</p> 
+                        <p class="reply-time">2019-12-30</p>
+                    </div>
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/12/e2/78/9241b7b2.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">志振爱咋滴咋滴</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        单一职责原则体现在高内聚的部分，一个类只做一件事，修改时也只需修改一个地方，避免影响<br>接口隔离也是基于单一职责，针对让接口更加独立而互不影响<br>基于接口而非实现编程，则是针对调用者的方便程度，避免修改底层代码的时候影响到了上层的调用者<br>迪米特法则则更像是利用接口隔离原则的下层实现部分的使用，减少依赖接口的数量来实现<br>彼此直接都是针对一个部分的具体操作，有上层和下层的考量，有调用者和实现者的考量<br>但其目的，都是为了实现高内聚，低耦合的设计目标。
+        </div> 
+        <span class="time">2019-12-28</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/iaByN5IfYbE9jMtWrtTDXtPEIHeV77KW1p7ZkiasiaGgA50VXaibo4fbp5ib2JkFP3iaIe4AUudLibufkEIofu5euCNHg/132" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">小刀</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        高内聚-低耦合<br>单一职责-自身功能出发<br>迪米特法则  类与类之间关系<br>接口而非实现编程-依赖必要的抽象
+        </div> 
+        <span class="time">2019-12-28</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTILteP4MRaeFZtiaKjyW7t4rY9nZrfNibeE67BOicvHoDHU9FicSWYyEUickctugRVvA9aXW0Jmx42690A/132" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">prowu</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        一直有一个消息结构与程序内部数据结构取舍的问题：程序内部是否直接复用消息协议的结构？比如：通讯消息使用的是protobuf协议，那程序内部的逻辑是直接使用protobuf的数据结构，还是自己在定义一套结构体？如果直接使用protobuf协议，那程序就紧耦合于协议了（这边就是与protobuf绑在一起了），如果自己在定义一套结构体，那就要多一层协议与内部结构的转换。
+        </div> 
+        <span class="time">2019-12-28</span> 
+                <div class="reply">
+                        <div class="reply-hd">
+                        <i class="iconfont"></i> 
+                        <span>作者回复</span>
+                        </div> 
+                        <p class="reply-content">这个也要具体问题具体分析 跟我们讲的vo bo很像</p> 
+                        <p class="reply-time">2020-01-02</p>
+                    </div>
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/16/30/91/5f770e29.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">戒惜舍得</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>0</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        相近的功能。 怎么算相近啊。学晕了。
+        </div> 
+        <span class="time">2019-12-27</span> 
+                <div class="reply">
+                        <div class="reply-hd">
+                        <i class="iconfont"></i> 
+                        <span>作者回复</span>
+                        </div> 
+                        <p class="reply-content">咋这么能抬杠呢 你说我问你怎么相近 你能回答上来吗 这个也没法量化 设计模式不是算法 什么都能定量 更多的是教你思想 你自己去感受</p> 
+                        <p class="reply-time">2019-12-30</p>
+                    </div>
+        </div></li>
+
+                              
+                              </ul>
+                       </div>
+                     </div>
+      </div>
+   </body>
+   </html>

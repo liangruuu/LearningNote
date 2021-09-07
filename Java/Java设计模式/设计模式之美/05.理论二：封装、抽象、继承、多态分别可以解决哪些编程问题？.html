@@ -1,0 +1,554 @@
+
+<!DOCTYPE html>
+<html>
+
+        <head>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no,viewport-fit=cover" />
+                <meta name="format-detection" content="telephone=no" />
+                <title>05 | 理论二：封装、抽象、继承、多态分别可以解决哪些编程问题？</title>
+                <link href="https://static001.geekbang.org/static/time/css/app.05ce99d672894caca1d424d02f4e6216.css" rel="stylesheet" />
+                <style type="text/css">.button-cancel[data-v-a6a58a5e]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-a6a58a5e],.button-primary[data-v-a6a58a5e]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-a6a58a5e]{color:#fff;background-color:#ff5a05;border-radius:3px}.wrapper[data-v-a6a58a5e]{max-width:46.25rem;margin:0 auto;background-color:#f5f5f5}.banner[data-v-a6a58a5e]{width:100%;background-color:#eee}.banner .slider-item[data-v-a6a58a5e]{width:100%;position:relative}.banner .slider-item .slider-item-image[data-v-a6a58a5e]{width:100%}.banner .slider-item .slider-item-info[data-v-a6a58a5e]{position:absolute;width:100%;background-image:-webkit-gradient(linear,left bottom,left top,from(#000),to(transparent));background-image:linear-gradient(0deg,#000,transparent);bottom:0}.banner .slider-item .slider-item-title[data-v-a6a58a5e]{color:#fff;font-size:18px;padding-left:22px}.banner .slider-item .slider-item-desc[data-v-a6a58a5e]{color:#d9d9d9;font-size:12.5px;padding-top:4px;padding-left:21px;margin-bottom:11px}.filter[data-v-a6a58a5e]{padding-left:16px;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;background-color:#f5f5f5}.filter .filter-control .filter-control-order[data-v-a6a58a5e],.filter .filter-control[data-v-a6a58a5e],.filter[data-v-a6a58a5e]{height:29px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.filter .filter-control .filter-control-order[data-v-a6a58a5e]{cursor:pointer}.filter .filter-control .filter-control-order .icon-asc[data-v-a6a58a5e],.filter .filter-control .filter-control-order .icon-desc[data-v-a6a58a5e]{width:12px;height:12px;margin-right:7px}.filter .filter-control .filter-control-order .filter-control-text[data-v-a6a58a5e]{color:#888;font-size:11px}.filter .filter-control .filter-total[data-v-a6a58a5e]{color:#888;font-size:11px;margin-left:8px;padding-left:8px;border-left-width:1px;border-left-color:#d9d9d9;border-left-style:solid}.content-list[data-v-a6a58a5e]{background-color:#f5f5f5}.content-list .contentlistwrap[data-v-a6a58a5e]{padding-bottom:67px}@media (max-width:769px){.page-article-list .breadcrumb[data-v-a6a58a5e]{padding:10px}}</style>
+                <style type="text/css">.empty{height:51px}.mobile-tips{width:100%;height:51px;background:rgba(0,0,0,.8);position:fixed;top:0;left:0;z-index:20;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-sizing:border-box;box-sizing:border-box;padding:0 12px;-webkit-transition:opacity .35s;transition:opacity .35s;opacity:0;pointer-events:none}.mobile-tips.istop{opacity:1;pointer-events:auto}.mobile-tips .mobile-tips-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.mobile-tips .mobile-tips-info i{width:36px;height:36px;background-image:url(data:image/png;base64,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);background-position:0 0;background-repeat:no-repeat;background-size:contain;border-radius:7px}.mobile-tips .mobile-tips-info h2{font-size:15px;color:#fff;font-weight:400;margin-left:6px}.mobile-tips .mobile-tips-info h2 span{font-size:11px}.mobile-tips a{width:72px;height:31px;text-align:center;border:1px solid #ff5a05;border-radius:3px;font-size:13px;color:#ff5a05;line-height:31px}</style>
+                <style type="text/css">.bottom{width:100%;background-color:#f5f5f5;position:fixed;bottom:0;left:0;z-index:10}.bottom,.bottom .bottom-wrapper{height:67px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}.bottom .bottom-wrapper{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;padding-left:20px;padding-right:20px;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.bottom .bottom-wrapper a{height:48px;line-height:51px;-webkit-box-sizing:border-box;box-sizing:border-box}</style>
+                <style type="text/css">.article-item{cursor:pointer;padding-top:15px;padding-left:12px;padding-right:12px;margin-bottom:9px;background-color:#fff;position:relative}.article-item-flag-trial{width:14px;height:31px;position:absolute;top:0;right:12px}.article-item-title{font-size:17px;color:#353535;font-weight:400}.article-item-title.pad-right{padding-right:14px}.article-item-hd{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}.article-item-view{font-size:9px;color:#ff5a05;-webkit-transform:scale(.875);transform:scale(.875)}.article-item-viewed{font-size:9px;color:#888}.article-item-time{font-size:11px;color:#888;margin-left:9px}.article-item-cover{width:100%;margin-top:10px;margin-bottom:10px}.article-item-desc{color:#888;font-size:12.5px;line-height:19px;padding-bottom:14px}.article-item-more{padding-top:14px;padding-bottom:15px;border-top-color:#e8e8e8;border-top-width:1px;border-top-style:solid;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.article-item-more-text{color:#353535;font-size:12.5px}</style>
+                <style type="text/css">.breadcrumb{padding:30px 0;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-ms-flex-wrap:wrap;flex-wrap:wrap;background:#fff}.breadcrumb a.title{color:#e57c39;font-size:15px;font-weight:400}.breadcrumb span.title{color:#888;font-size:15px;font-weight:400}.breadcrumb .split{color:#ccc;font-size:10px;margin-right:5px}</style>
+                <style type="text/css">.hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}</style>
+                <style type="text/css">#iv-container{position:fixed;background:#0d0d0d;width:100%;height:100%;top:0;left:0;display:none;z-index:1000}.iv-container{overflow:hidden}.iv-close{width:26px;height:26px;position:absolute;right:20px;top:20px;cursor:pointer;text-align:center;overflow:hidden;text-shadow:0 0 3px #6d6d6d;-webkit-transition:all .2s ease;-moz-transition:all ease .2s;-o-transition:all ease .2s;transition:all .2s ease}.iv-close:after,.iv-close:before{content:"";height:2px;width:26px;background:#fff;position:absolute;left:0;top:50%;margin-top:-2px;border-radius:2px}.iv-close:before{-webkit-transform:rotate(45deg);-moz-transform:rotate(45deg);-ms-transform:rotate(45deg);-o-transform:rotate(45deg);transform:rotate(45deg)}.iv-close:after{-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-ms-transform:rotate(-45deg);-o-transform:rotate(-45deg);transform:rotate(-45deg)}.iv-close:hover{-webkit-transform:rotate(90deg);-moz-transform:rotate(90deg);-ms-transform:rotate(90deg);-o-transform:rotate(90deg);transform:rotate(90deg)}.iv-image-view{position:absolute;height:100%;width:100%}.iv-image-wrap{display:inline-block}.iv-image-wrap:active{cursor:move}.iv-large-image{cursor:move;max-width:100%;max-height:100%;background-color:#ececec;-moz-transform:translateZ(0);-o-transform:translateZ(0)}.iv-large-image,.iv-loader{position:absolute;-webkit-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0)}.iv-loader{top:50%;left:50%;border-radius:50%;width:32px;height:32px;z-index:100;margin-top:-16px;margin-left:-16px;font-size:5px;text-indent:-9999em;border-top:1em solid hsla(0,0%,100%,.2);border-right:1em solid hsla(0,0%,100%,.2);border-bottom:1em solid hsla(0,0%,100%,.2);border-left:1em solid #fff;-webkit-animation:load8 1.1s infinite linear;animation:load8 1.1s infinite linear}.iv-loader:after{width:10em;height:10em;border-radius:50%}@-webkit-keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes load8{0%{-webkit-transform:rotate(0deg);transform:rotate(0deg)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}</style>
+                <style type="text/css">.vue-pull-to-wrapper[data-v-12abd9fb]{display:-webkit-box;display:-webkit-flex;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-webkit-flex-direction:column;flex-direction:column;height:100%}.scroll-container[data-v-12abd9fb]{-webkit-box-flex:1;-webkit-flex:1;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}.vue-pull-to-wrapper .action-block[data-v-12abd9fb]{position:relative;width:100%}.default-text[data-v-12abd9fb]{height:100%;line-height:50px;text-align:center}</style>
+                <style type="text/css">.button-cancel[data-v-87ffcada]{color:#888;border:1px solid #888;border-radius:3px;margin-right:12px}.button-cancel[data-v-87ffcada],.button-primary[data-v-87ffcada]{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;height:35px;display:inline-block;font-size:15px;text-align:center;line-height:36px}.button-primary[data-v-87ffcada]{color:#fff;background-color:#ff5a05;border-radius:3px}.pd[data-v-87ffcada]{padding-left:1.375rem;padding-right:1.375rem}.article[data-v-87ffcada]{max-width:46.25rem;margin:0 auto}.article .article-unavailable[data-v-87ffcada]{color:#fa8919;font-size:15px;font-weight:600;line-height:24px;border-radius:5px;padding:12px;background-color:#f6f7fb;margin-top:20px}.article .article-unavailable .iconfont[data-v-87ffcada]{font-size:12px}.article .main[data-v-87ffcada]{padding:1.25rem 0;margin-bottom:52px}.article-title[data-v-87ffcada]{color:#353535;font-weight:400;line-height:1.65rem;font-size:1.34375rem}.article-info[data-v-87ffcada]{color:#888;font-size:.9375rem;margin-top:1.0625rem}.article-content[data-v-87ffcada]{margin-top:1.0625rem}.article-content.android video[data-v-87ffcada]::-webkit-media-controls-fullscreen-button{display:none}.copyright[data-v-87ffcada]{color:#b2b2b2;padding-bottom:20px;margin-top:20px;font-size:13px}.audio-player[data-v-87ffcada]{width:100%;margin:20px 0}.to-comment[data-v-87ffcada]{overflow:hidden;padding-top:10px;margin-bottom:-30px}.to-comment a.button-primary[data-v-87ffcada]{float:right;height:20px;font-size:12px;line-height:20px;padding:4px 8px;cursor:pointer}.article-comments[data-v-87ffcada]{margin-top:2rem}.article-comments h2[data-v-87ffcada]{text-align:center;color:#888;position:relative;z-index:1;margin-bottom:1rem}.article-comments h2[data-v-87ffcada]:before{border-top:1px dotted #888;content:"";position:absolute;top:56%;left:0;width:100%;z-index:-1}.article-comments h2 span[data-v-87ffcada]{font-size:15.25px;font-weight:400;padding:0 1rem;background:#fff;display:inline-block}.article-sub-bottom[data-v-87ffcada]{z-index:10;cursor:pointer}.switch-btns[data-v-87ffcada]{height:76px;cursor:pointer;padding-top:24px;padding-bottom:24px;border-bottom:10px solid #f6f7fb;position:relative}.switch-btns[data-v-87ffcada]:before{content:" ";height:1px;background:#e8e8e8;position:absolute;top:0;left:0;-webkit-box-sizing:border-box;box-sizing:border-box;left:1.375rem;right:1.375rem}.switch-btns .btn[data-v-87ffcada]{height:38px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.switch-btns .btn .tag[data-v-87ffcada]{-webkit-box-flex:0;-ms-flex:0 0 62px;flex:0 0 62px;text-align:center;color:#888;font-size:14px;border-radius:10px;height:22px;line-height:22px;background:#f6f7fb;font-weight:400}.switch-btns .btn .txt[data-v-87ffcada]{margin-left:10px;-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;color:#888;font-size:15px;height:22px;line-height:22px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400}@media (max-width:769px){.article .breadcrumb[data-v-87ffcada]{padding-top:10px;padding-bottom:10px}}</style>
+                <style type="text/css">.share-poster-wrapper{position:fixed;background-color:#fff;left:0;bottom:0;z-index:100;display:-webkit-box;display:-ms-flexbox;display:flex;overflow:hidden;width:100%;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-moz-user-select:-moz-none;-webkit-user-select:none;-ms-user-select:none;user-select:none}.share-poster-wrapper .poster-bottom,.share-poster-wrapper .poster-middle,.share-poster-wrapper .poster-top{-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle{padding:16px 32px;-webkit-box-sizing:border-box;box-sizing:border-box}.share-poster-wrapper .poster-middle .poster-userinfo{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding-bottom:18px}.share-poster-wrapper .poster-middle .poster-userinfo .poster-avatar{min-width:45px;min-height:45px;width:7vw;height:7vw;border-radius:50%;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .poster-middle .nickname{font-size:5vw;font-weight:400;margin-left:18px}.share-poster-wrapper .poster-middle .time{font-size:3.2vw}.share-poster-wrapper .poster-middle .poster-middle-content{font-size:4vw;font-weight:400;white-space:normal;word-wrap:break-word;word-break:break-word;letter-spacing:1px}.share-poster-wrapper .poster-middle .poster-middle-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-content{font-size:3.7vw;padding:32px 0}.share-poster-wrapper .poster-middle .quote-content p{margin-bottom:22px}.share-poster-wrapper .poster-middle .quote-info{border-left:1px solid #000;padding-left:10px;margin-top:38px}.share-poster-wrapper .poster-middle .quote-info p{font-size:3.2vw;line-height:1.5}.share-poster-wrapper.theme0 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/top.png") no-repeat 15px 1px}.share-poster-wrapper.theme0 .poster-middle{width:100%;padding-left:56px;padding-right:56px;background-image:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/middle.png");background-repeat:repeat-y;background-position:15px 0}.share-poster-wrapper.theme0 .poster-middle .time{margin-bottom:45px}.share-poster-wrapper.theme0 .poster-middle .quote-content{border-top:1px solid #e3e1dc;margin-top:30px}.share-poster-wrapper.theme0 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme1/bottom.png") no-repeat 15px -10px}.share-poster-wrapper.theme1 .poster-top{width:100%;height:25px;margin-top:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/top.png") no-repeat 38px 1px}.share-poster-wrapper.theme1 .poster-middle{width:100%;padding:0 42px 10px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/middle.png") repeat-y 38px 0}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo{border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .poster-userinfo .poster-avatar{margin-left:38px}.share-poster-wrapper.theme1 .poster-middle .poster-middle-wrapper{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;min-height:260px;border-bottom:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time{max-width:65px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;text-align:center;vertical-align:middle;border-right:1px solid #b5a899}.share-poster-wrapper.theme1 .poster-middle .time span{white-space:nowrap;-webkit-transform:rotate(90deg);transform:rotate(90deg)}.share-poster-wrapper.theme1 .poster-middle .poster-middle-content{padding:30px}.share-poster-wrapper.theme1 .poster-middle .quote-content{font-size:3.7vw;margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .quote-info{margin-left:36px;margin-right:36px}.share-poster-wrapper.theme1 .poster-middle .footer{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-right:30px}.share-poster-wrapper.theme1 .poster-bottom{width:100%;height:25px;margin-bottom:27px;background:url("https://static001.geekbang.org/static/time/page/img/sharePoster/theme0/bottom.png") no-repeat 38px -10px}.share-poster-wrapper .share-poster{background:#fefdf8;-webkit-box-sizing:border-box;box-sizing:border-box;color:#9b8d73;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;overflow:auto;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-overflow-scrolling:touch;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.share-poster-wrapper .share-poster.color0{background-color:#fefdf8}.share-poster-wrapper .share-poster.color1{background-color:#4d4d4d}.share-poster-wrapper .share-poster .footer{margin-top:2rem;position:relative;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:end;-ms-flex-pack:end;justify-content:flex-end;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}.share-poster-wrapper .share-poster .footer p{margin:0;line-height:1.4;margin-left:20px;text-align:right;padding-right:20px}.share-poster-wrapper .controls{background:#fff;border-top:1px solid #f5f5f5;width:100%;padding-top:5px;-webkit-box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);box-shadow:0 -4px 10px 0 rgba(0,0,0,.1);z-index:1;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .controls>div{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;padding:10px 0}.share-poster-wrapper .controls>div span{font-size:.85rem}.share-poster-wrapper .controls>div button{width:100px;height:24px;background:#eee;margin:0 10px;border-radius:5px;border:2px solid #b2b2b2;outline:none}.share-poster-wrapper .controls>div button.on{border:2px solid #ff5a05}.share-poster-wrapper .controls .controls-themes button{color:#b2b2b2;font-size:12px;background:#fff;text-align:center}.share-poster-wrapper .controls .controls-themes button.on{color:#ff5a05}.share-poster-wrapper .buttons{background:#fff;border-top:1px solid #f5f5f5;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-ms-flex-negative:0;flex-shrink:0}.share-poster-wrapper .buttons a{-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;text-align:center;color:#000;font-weight:400;height:3rem;line-height:3rem}.share-poster-wrapper .buttons a .icon-share-money{width:1rem;height:1rem;margin:3px 0 0 5px}.share-poster-wrapper .buttons a:last-child{border-left:1px solid #f5f5f5}.share-poster-wrapper img{max-width:100%}.share-poster-wrapper.android .poster-middle .nickname{font-size:10vw}.share-poster-wrapper.android .poster-middle .time{font-size:6.4vw}.share-poster-wrapper.android .poster-middle .poster-middle-content{font-size:8vw}.share-poster-wrapper.android .poster-middle .quote-content{font-size:7.4vw}.share-poster-wrapper.android .poster-middle .quote-info p{font-size:6.4vw}</style>
+                <style type="text/css">.mini-audio-player{width:100%;height:5.25rem;border:1px solid #d9d9d9;background:#fafafa;-webkit-box-sizing:border-box;box-sizing:border-box;padding:1rem;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;margin:1rem 0}.mini-audio-player>a{border:none;-ms-flex-negative:0;flex-shrink:0}.mini-audio-player .btn-play{background-image:url(data:image/png;base64,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)}.mini-audio-player .btn-pause,.mini-audio-player .btn-play{width:2.6875rem;height:2.6875rem;background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none}.mini-audio-player .btn-pause{background-image:url(data:image/png;base64,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)}.mini-audio-player .audio-info{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;margin-left:.6875rem;min-width:0}.mini-audio-player .audio-info h3{color:#353535;font-size:15.25px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.mini-audio-player .audio-info p{margin:0;margin-top:.125rem;font-size:11px;line-height:1rem}.mini-audio-player .audio-info p span{color:#888}.mini-audio-player .btn-download{width:1.25rem;height:1.25rem;position:relative;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAAA+CAYAAACbQR1vAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+IEmuOgAAA4hJREFUaIHtm8lOFFEUhr9qCWGHGxcaY1joK2h0YRzAtYmsWbAGGidEXOACbAYRxfgAPoEPoInGxJgg86gsJTHMw86EhS7O7TDk3uqq6qo6HahvQ7pOce7//1U0feve9vr6+lAiD3QC/4AC8FZDRJXGoMB14PWB1yPANPA1bSG5tAc0XLEcu5y6CvQCOGU5pnI3agVQMWQBaAvQJgtAW4A2WQDaArTJAtAWoE0WgLYAbbIAtAVokwWgLUCbLABtAdpkAfjU6oC7wKV0pCTCRcRDnesEVwDNwC/gg/nZHbeyFOgGltj30Gw7yRZALfAOqDavPeA50BO7xOToQTR75nU14qn26Im2AM4DNZbjz4DeePQlSi+i9Sg1iLdD2AJYApYdzbuo7BBeIBptLCPeDmELYA9oBHYdjbqQpaxKowA8ddR2gXuIt0O43gRHgTu4Q+ikskIoIJps7AINwA9b0e/fYJAQ1FZWD9CP2/wOUI/DPJT+IDRqGrhCeGIEaNEPdDhqO8iVH/NrEOST4BgSwo6j3gEMBOgTNwP4m6+nhHkI/lG4VAiPgcGAveJg0IxpYxvROh6kUZi5wLhpvO2oPyKdEF6asWyEMg/hJ0PjyN+VXwhDIXuGYQh46KhtIeYnwjSMMhss3glbjvoDkglhyPS2Eck8RJ8OTyB3gl8IryL2tjGM2/wmYn4ySuNyngdMmIE3HfX7iHDPUQ+CZ3q0O+qbyIWIZB7KfyAyaQS4QmhH7oQoIZQyv0EZV75IHE+EJvG/E9oJfyd4yC6yvKO+gQQ/FaKnlbgeiU0hIWw46nnEUJAQiubbHPV1M1bZ5iHeZ4KlQmgD3uAfgofsGfQz34DsKYyFuLemTSMhfATOWOqtiMk/llrRfIuj9zpwG5gtX+Y+SezNK4bwCXsILdgDaAXOOnomYh6Seyw+gwhed9TPWY75mb9FAuYh2XWBWUS4K4QgrAE3gblYFFlIemFkDjEQJYQ1JMD5WBUdIY2VoXkkhLUQv7NqfidR85De0liYEFaRK7+QqCJDmmuDC0gIqz7nrJhzUjEP6S+O+oWwglz5xTQFaawOLwI3gO8Hjo2ZY6maB72vzPwErgEXkO8MuVaiEkcrgCK/lcfPNkhkAWgL0KYKmZiMIG9Ktn0Bx5G/wDcgXwW8R6avJ41G4HQOufInlas5ZO5+UpnJAU3AFyy7J44xe8BnoOk/JruwYo92bigAAAAASUVORK5CYII=);background-repeat:no-repeat;background-position:0 0;background-size:contain;text-decoration:none;padding-right:.25rem}.mini-audio-player .btn-download .icon-download-done{width:.45rem;height:.45rem;position:absolute;bottom:0;right:0;display:inline-block;background-image:url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAYnUlEQVR4Xu2dCbQcVZnH///qqiDIw6CIAm4ZNAFmEJfEBWUIixwIi4ThkdcdwAUEFXVkEUGWiRtxOYgoggKymuoXw4iy6ogsAQnKMooICSicAQ0jI5LwIEaqur45Vf3yyEveUtW13er++hwO0dz7Lf97f9y63be+S+gnVwWkH5vCwvaw7K1BmQpBH2j1AbJF+8/SB4n+dx+IPgABBEMghyDB8L8xBOEQrGAIQfR3q0H/Cbp4JNfg1TioGqRTQI6Bg9V4HWr2NAQyDWT7Hwn/jGkAt07nYYLeIi8AfASQ5QCWR/8Wazme9x7ktViTm98eMqyAdDDY0rD3hmA3AHuADP9t4EeeBPAgBEsB3IFN/Dt5GdYaGKjRISkgkwyPfBAvwQv2eyGYDWI2BLNATjF6VMcMTjwA90bAWHI7XmjdziVYXb08io1YARlDb9kPm2Bq7QCQDQBzAL6k2GEpwJuIgHwACJYiwO1wWrfwSjxVgOdKuVBAhodL+lGDEz46sQ7KXIBbVGokswhW5FcAL4XvDerq0ha05wGR+fZ7IFIH2J/rhjqLCVyYDVkL8EcI5BIM+jcTkMJcG+aoJwGReZiOmv1hgAMAXm/YmJgVjuAJUC6H51/EJXjcrODyj6anAJEBZyYonwNwMMieyj31VBLxAbqwvK9yER5Mba8iBnpikgx/LXsqyD0rMi7mhhlt7nENAn6Jg9495gaaTWRdC4iE+6t67RCAp4CcmY1camW0AnILBAvZ9H/ercp0HSAyGza2qR0BWCeD2KFbB86wvO6FBAsxo3U1FyAwLLZU4XQVINKw94DwIhDbp1JFO3emgOB+BDiai727OzNgXq+uAEQGsC1ofwvkv5kncY9FFO5RwMvge5/lEvxf1bOvNCDR49S29okAzgD40qoPRnfFL6sQ8HTs4F1Q5ceuygIiA/ZusHgRgBndNbG6LJvwsQvyUTb9ZVXMrHKASD9eDcc5B0D4I59+qqBA+9zX5fC8k6v22FUpQKRRmwOhC/JlVZgXGuOGCsgzEMyr0tfClQAkeinpudo3AOsTOukqrkC0icc38KR/Cm+Fb3o2xgMiDbwe4vwExC6mi6nxJVLgXtA7mIvwp0S9Cm5sNCDSqPVDeAnIzQvWRd0VoYDIalAadFs3FOGuEx9GAhK9xfcP5zsgPtxJUtqnagoE52Hz1gm8EOFbj0Z9jAOkfRTduUa/vjVqnuQfjOC3oHcIXTyav7P4HowCRAbs2bBwnf7oF38Au6ulPIuA+3DQ+5UpeRkDiAzU9ofFqwE6poijcZSggMjfARzApn9zCd43cmkEINKoHRm9Cw1aJoiiMZStgHgI5FAOtsJH7VI/pQMidTt8X2NhqSqocwMVkAAiR7PZurTM4EoFRBq1b+uPf2UOfyV8f5qud25ZkZYCSPttP+dSEB8oK3H1WyEFRL7Mpn96GRGXA0jd/hHIuWUkrD6rqkBwAd3Wx4uOvnBApO644fpRdKLqrxsUkC/R9c8oMpNCAZG6fRbIU4tMUH11mQKC49j0zi8qq8IAkbpzLIjvFpWY+ulSBcLTwCKHcbB1VREZFgKINGqHQHiVFmsrYkh7wEdYxI7Yh65/S97Z5g6I1O3dAdwE0s47GbXfSwrI84D/Xrr4TZ5Z5wqI1PFm0F4GcLM8k1DbvaqAPA3478jzgGNugEg/psGx7wb4il4dPs27EAUeR82bldfdJrkAEl1c6Tj3A3hjIRKpkx5XQH4N139XHtc05ANI3VkM4rAeHzVNv1AF5Cy6/mlZu8wcEBmofQSWdWHWgao9VWBCBdrFIPbO+ph8poDIPOyImn1fV97pp/PTfAVE/grH34FX4Omsgs0MEN13ZDUkaiedAvILuv7e6Wy82Ds7QHTfkdWYqJ20Coicyqb/lbRmwv6ZACKN2lGAdXEWAakNVSC1AuEv7QF3zeIahtSADFchWZE6KTWgCmSrwONY4+3CH2NVGrPpAWnYNwPcI00Q2lcVyEmB79P1jk5jOxUgUeVDWD9ME4D2VQVyVSDArDSXjXYMSLv6of0YyFfnmqAaVwXSKCC4n02v47rOnQPSsL8C8LNpYte+qkAhCkjwETZbHX2J1BEgwwcRV2iRt0KGV52kVkBWwfPfwCVYndRUZ4Doxjypztq+dAWC79BtJb5fJjEgujEvfaQ1gE4UCM9qWf4uXITfJemeCBDdmCeRVtuap4DcTdd/R5K4kgGiZUKTaKttTVQgCN6fpOZvbECiewKH7JUgtzIxb41JFYilgMg9bPqzYrVNchZLBpzjYOG8uIa1nSpgrgLyPrr+TXHii7WCSD9qcJw/Anh9HKPaRhUwWgGRW9n0Yx2PigdIo3YEYF1hdNIanCqQTIGZdL17J+sSD5C68yCIHSczpn+vCkQKiNwJYt01av8McAcArzNKHZHr2fQPmCymSQGRRu39gPXjyQzp3/e4AiL3APgUm/6ysZSQOnYAnEGz7rv33jpZ4bkYgDjhMvS2Hh9+TX88BURaIBZipf953gp/IqGGvwkN3/Q73pAytEvoehNW35kQkPats8y9/qnOvqoqIGsQYH8O+rcmyUAG7NNh8YtJ+uTWtuXN4GI8PJ79iQFpOOHG/IjcglPDFVZA1kQFpBf5v+wkCWnYNwHcq5O+mfYR+Tqb/smJAZH9sAm2tFdpCZ9Mh6NLjKWDI9rHH4lXwLOXl/7Ds8hf2PTHfadp3BVEBmoNWNaiLhlRTSMzBdLDsS4UqdtfApl5NcTkqcqe412lMD4gDfsGgPsld6Y9uleB7OCIVpGB2v6wrOtK10twCZveUWPFMSYg0o9XwrafBFkrPXgNwBAFsoUjAuQg9GFz59nyE5QhrPRfPta3cGMD0nA+BaC0u6nLF0wjGK1A9nBEgCyAhYedlhFqB0H/WNe6jQOI/WuAsU88GpGgBpGTAvnAEQFyOGYgcJbnFHgysyI/ZtPf6GryjQBpv2/uPJrMurbuTgXyg8OoPUg0eOJhjb/1hoXmNgakYX8BYKF3UXfn5Kp6VvnCEU3JunM5iCMNUupYut6oqzs2BqTu/Mas8zIGydczoRQAxzxMR81+CKBljKxjHGAcBYg0sCXg/M2YgDWQEhTIH4726mH/BORBJSQ4vkuR59D0t1j/KrfRgNRrB4PW1UYFrcEUqICsgWAOm/5teTqVhr03wJ/n6aNj2xuUKt0AEPubIP+9Y+PasboKiPwdxL50/aV5JiH92A6OfRfA1+Tpp2PbIiez6X99Xf8NANH9R8fCVrpjQY9VA9gWlnOn2a9uy410/TkbAaL7j0rP8BTBFwRHP14HxwlXJ7PrGmywDxlZQUT3HykmWVW7FgiHbd8JcrtKKBXgXRz0oleG1wNE9x+VGLzMglQ4xpVyvTsO1wNE9x+ZzT3jDSkcEw+R/Iyuv+/ICmLOqUrjZ1b1Awy/rQL2y/2r3PDIkm3fAXLb6okmz9D1X/4iIA3n7QDCqhT66WoFdOWIPby2txWvwNPRI5bUa3XQcmN31oYVVEDhSDRogbyHg/6dbUAa9gKA/5HIgDaukAIKR+LBkuDDbLYuHV5BHBdEPbER7VABBRSOzgZJvkrXP2V4BdHicJ2JaHovhaPjERp+gWrdI9azAPs6NlZGR8FDUf1XwV0I5DFYnAEG0yHcGeTuZYRkls+oqNu+HPRvzzMuGcAbwOjbqmr8CBhXDMFDbHo7UQ7HNgiclXH7ld5O8AjoHTZRTVUZqM2FxUsATi093lIC0JUjtexhSdUZ/hRK3d4dZKLSkamdd2pAgvPxXOszvBZrJjMRnRq17UW9t5royjHZ3Ij99y3vjZSGcwyA78XuVFrD4Dy6rU8mcT9cLPkakNGvot3/kbUg9u60HGhcfSQ8eFils1VxE9uwHYMDWZGveB/FM95OvBH/SJpr70AiawHMGa9CYFLdxmsfFfWw7du7bs8xdsLHho9YZ4M8ISsBs7cjAQJ/Jgfx353a7n5ICoVjGchXdToWleoncmL4iBU+XoWPWWZ+RO5g098tbXDdC4nCkXZujN9fFlDqhv9IKMH5bLaOy0KE7oNE4chiXoxrQ+TscA9yLcBJ72rLNZCJjW9UqyhNLN0DicKRZh7E7HthCMjNAGNdiRvTaLbNJJjLZivzOxKlbl8PcuTd42yDLsCayF5s+jfn6UkaeBNg3wZwmzz9GGzbDfcght9BKKfR9c/KWsTqriS6cmQ9FyZ4xLo23IOsADG9MKfJHbl0vfnJu03eo3qQKByTj2qGLURuDR+xVhq9hAruZ9PbJcO0R5mqDiQKR15zYAK794a/gwyB3LwE5/FcigiI2XkWNDMfEoUj3mTJuJXg4XAFWQ1wi4xNZ2xOnsQaf6cNS9Nn6cRcSBSOLMc5kS3BI+EK8udqvFj/YqWJREkmbCx1+0ajzm4V8W1VdJGNvRTg1gnl6vbm91Vhk/7iIIhcA98/hEuQ27Vd5qwkunKUT58srcDXvBvI1BOQKBzlwxEWa5Drw0esWyv3zkRxkPwU5J7FDlZBcIQX2Fj20p45eNjZIA6GgFwHcv/O+pfYqwhI9sMmmGrfUBwkhcLxS5BblTiC5rsWXBw+Yg0CmGd+tGNE2FWQKBzmzUE5JwTkYgBHmRdczIhCSGb4c7kAQcweiZtJ7iuJwpF4UIroIPKF8BHrHJCfLsJfbj5ErsIMf141IVE4cpsXaQ2Ht01Jw/4iwNPT2iq9fyUhUThKnzcTBRDgY+Ej1scAnG90oHGDqxQkCkfcYS2tXRC8nzJg7wWLN5UWRNaOKwGJwpH1sOdiT7wdKfPxGojzRC4OyjJqNCQKR1nTIpHfdYXjwk5St9eC3CSRAdMbGwmJwmH6tBmJLzyo2PSmryteHZbUeUtlgo8baAhJ0z+MgMTtkrRd/K+AFY6k2pbbXq6j6x+4DpDq/lg4uYqL4HpHlAuJwjH5MBnWQuQbbPonDt8PYn8e5JmGhZhlOCVConBkOZAF2oqq6bQBGag1YFmLCnRehqsSIFE4yhjoTHyKzA4vOh0GxJkJC3dnYthsIwVCgl0LqZXbPpWrBw+znneetw2X4H/bgByIzdDnPJ+1DyPtCa5g0/tAnrFJPzZFzXkzB71f5epnPnZGYP8C5Cvz9NN7tmUVXX/LMO8IkAgS4+tjZTpMua8kmUY7hjGZj50g9h0Ao4HUT4YKiNzAph+9AvIiIMZXec9QgLapRXS9wzO3WoBBhSNnkcNDik3/6xsAUjsQtK7J2bVZ5gWXsOlV6qi/wlHAFAowi4PePaMB6cfmcKISQFYBIZjjokKQKBxFTBt5nq4/Uidu5BGrB/chL6pdAUgUjiLgiCiIfkFf5200IL23D6kEJApHUXBElUxOYtM/exxAenAfsr72Bq4kCkeBcLRdzaTrhTceRJ/RK0iv7kMMhUThKBqO0fuPjQDp6X2IYZAoHEXDET1eXcumf9D6nketIG1A7P8AuKCE8MxyWeLjlsJR0lSQ4CNstsIqPyOfjQGZh+1Rc/5QUoiGuQ0uoNv6eJFBKRxFqj3qscFDzd+SV2LUkauNABleRZYBfFdZoZrltzhIFI4SR17kP9n0D90wgnEAcT4B4NslhmuY6/whUThKHvIgOISDravjAXIwpmJT+68gayWHbZD7/CCRedgFNfsWPXhY1nDLM1jpb81b4ccCJHrMqmpR61w1zh6SYTjCy2sMv+UrV2HLNn4hXe/YsYIY8xGrDUitDlpu2ZGb5z87SBQOU0ZXdh/vDszxAfkgXoIX7KcA9pmShjlxpIdE4TBlNOVPdP3XjhfNuIC0VxHnchBHmpKKUXGIfJNN//hOYlI4OlEtpz4iC9n0P9cZIAP2brC4NKfQqm+2A0hknjMLNfkvgFOrL0AXZNDyZnAxHu4IkOHN+t0gZ3aBFPmkIHInfP9wLsFjEzmQBbCw3P4cLJwJ0MknGLWaSAGRq9n0D5moz4SPWBEg82sHQKxrEznutcYiz4E8MayjNFbq0j6dsBjA23tNGqPzDby3cRBhVdFxP5MCEkHScO4HsLPRyZoQnMhqAL8HuByQZwDsCHAnEG8wITyNYT0FRH7Opr/PZJrEA6Q3CstNppX+fVcpIHvS9W+ZLKV4gITvjdSdR/W/hJPJqX9fEQXuo+vFetyNBUj0mDXgfBQWLqiIABqmKjC+AuHNUYOtWBV84gNyDBwM2X/WKn468yqtwPC9H3FziA1ItIrU7ZNBfjWucW2nChingARHsNn6Qdy4kgES1px17D8C3CauA22nChikwO/oem9OEk8iQNp7kdqhsKwlSZxoW1XAEAVGVSyJE1NiQCJIGvZNAPeK40DbqAKGKHAZXe9DSWPpDJB+TINjr9AjE0nl1vblKCBDsP1pvAJPJ/XfESDDG/aFIE9J6lDbqwIlKPBJut55nfjtHBDdsHeit/YpXoHfYbr3Fi5A0InrjgFp70Vq/YD1w04cax9VoCAFEm/M148rFSC6YS9oiNVNZwoILmfT+2Bnndu90gMSXiJZc1akCUL7qgKZKxCerLb96bwST6WxnRqQ4UetowBrVMnGNEFpX1UgvQKyL13/Z2ntZAJIGxKnCWAgbUDaXxVIr4CcQ9c/Ib2dDB6x1gURXX1sOw/qkfgshkVtdKyA4LfwvbdzCVod21ivY2YrSLSKhBUCLfvXIKdkEZzaUAWSKSBDgL8zXfxPsn7jt84UkAiSuvNJEN/KKkC1owrEViDBex5xbWYOSBsS+3qQc+IGoe1UgfQKpC/mN1YM+QDSj5fBsR8A+Jr0iasFVWBSBR7ESm+XsYpPT9pzkga5ADK8H/kX1Oy7AL40bZDaXxUYVwGRv0D8WRzEE3molBsgESQD9l6wcKOe+s1j6NQmIM9D/HeyGZZayueTKyDt/UjtMNAKi6bpRxXITgERH8Q+cUr3pHGaOyDDm/ZTQZ6VJlDtqwqMUiAI+jnYuipvVQoBJIKk4XwPwDF5J6T2e0ABkdPZ9L9cRKbFARIVn7Ov069/ixjWrvbxfbre0UVlWBgg0SrSvpQnvItPb9AtaoS7yY/IT9H05xCQotIqFJAIkn68HLazDMT0opJUP12ggMg98P1/5RL8vchsCgdkPUhuAvHWIpNVXxVVQOQ2+P5+RcMRqlUKIBEkB2Iz9NlXA5y0BH1Fh1XDzkQB+QlW+ofm8St5nPBKA2R4JanBccIykPoeSZzR6rk2+ZyvSiJjqYCsC1QatW8D1ieSBK5tu10BOY2uX/pvZ0YAEq0mDfskCL4G0piYun0KmpmfBAjkCA62XBPiM2oyykBtHsgfgLRNEEdjKFoBWQvBXDb9nxbteTx/RgESrSR1+90AfgTy1aaIpHEUosBjaHkHcTEeKMRbTCfGAdKGBFsB9lUgd4+ZhzarsgIi18D353MJnjMtDSMBiSAJ7xV/2D4TwBkALdOE03iyUEA8gJ+h652bhbU8bBgLyMg3XOE7JURTr37LY/hLtfk4WjiUi727S41iEufGAzL8yPUqwA73JbuaLKbGFlcBuRH0B7gIz8btUVa7SgASQdKPGmx7IYCT9KvgsqZLSr/tl5xOp+tX5p7LygAy8shVt98H8rsA/inlcGn3YhUIiwoexUXeXcW6TeetcoAMryZT4NgnATgN4GbpJNDeuSoQFpEmz8R077xO7+jINb5u2IOMl4MM4LWw7G8CPKRMEdX3GAqICMArAO8kNvHXqmpUyRVkQ7GlYe8B4UUgtq/qQHRV3ILfI/CO5GLcV/W8ugKQkccu2z4BjH430ceuUmamPIOAZ2AH74IqPk6NJVnXADKyie/HK2HbnwHwMZCblzJPes2pyN8AnAvfP5dLsLqb0u86QEZAORhTsal9PIhPAZzaTYNmTC5hVUPgbNj++bwSzxsTV4aBdC0gI6AchD681D4OxPEAt85Qu941JXgCxNcwxbuYl2FtNwvR9YCMgBJVVHGOgcjJILfr5kHNMbc/AMFXsLJ1eVmvwOaY25imewaQ9bOXunMsIB8C+c6iBa+kv7BoAuX7dFtXVjL+FEH3JCDrbeinwbaPADhfyxBtMIsE9wOyCOL/gINYmWKOVbprTwMyalWZ58xCTQ5vF5Do0b1KuLeANBH4l3ExHqr0zM4oeAVkw/9whociHXtvCA8HZW73328iqyC8CiKLMOjfVmTVwozmcK5mFJAJ5JV+TMEU520IJDxmH74K/O4u2OA/BmDZyD+e95usboTNdaaWZFwBSSh8dP6LtXcD3BWMoHmruRcERUUQ7olgEFkGp/VLXomnEqbc080VkJTDL7Nh41V4E6zaDIA7RP9QZgAI/1zMD5Qi4WHA5SBXALIcIivA1nJ4eFRXh3QDrICk02/C3lJH+CbkOmi2g8hU0OqDSB+IPgg2iyAitgCkD+CWbYPyNIRDIIYgsgrEGgiGgPD/kyEIVoHyOMjleMF/oNuOd+Q4JIlN/z8uDC5fplz44QAAAABJRU5ErkJggg==);background-repeat:no-repeat;background-position:0 0;background-size:contain}</style>
+                <style type="text/css">.MathJax_Display{overflow:auto}.poster{position:fixed;left:-10000px;top:-10000px;overflow:hidden;padding:1rem;background:#ececec}.richcontent-pre-copy{font-size:13px;color:#888;position:absolute;right:1em;top:.2em;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.richcontent-pre-copy .iconfont{font-size:12px;margin-right:.2em}</style>
+                <style type="text/css">.comment-item{list-style-position:inside;width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;margin-bottom:1rem}.comment-item a{border-bottom:none}.comment-item .avatar{width:2.625rem;height:2.625rem;-ms-flex-negative:0;flex-shrink:0;border-radius:50%}.comment-item .info{margin-left:.5rem;-webkit-box-flex:1;-ms-flex-positive:1;flex-grow:1}.comment-item .info .hd{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .username{color:#888;font-size:15.25px;font-weight:400;line-height:1.2}.comment-item .info .hd .control{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center}.comment-item .info .hd .control .btn-share{color:#888;font-size:.75rem;margin-right:1rem}.comment-item .info .hd .control .btn-praise{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;font-size:15.25px;text-decoration:none}.comment-item .info .hd .control .btn-praise i{color:#888;display:inline-block;font-size:.75rem;margin-right:.3rem;margin-top:-.01rem}.comment-item .info .hd .control .btn-praise i.on,.comment-item .info .hd .control .btn-praise span{color:#ff5a05}.comment-item .info .bd{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all;line-height:1.6}.comment-item .info .time{color:#888;font-size:9px;line-height:1}.comment-item .info .reply .reply-hd{font-size:15.25px}.comment-item .info .reply .reply-hd span{margin-left:-12px;color:#888;font-weight:400}.comment-item .info .reply .reply-hd i{color:#ff5a05;font-size:15.25px}.comment-item .info .reply .reply-content{color:#353535;font-size:15.25px;font-weight:400;white-space:normal;word-break:break-all}.comment-item .info .reply .reply-time{color:#888;font-size:9px}</style>
+               </head>
+  <body>
+      <div id=app>
+                     <div data-v-87ffcada="" class="article"> 
+                      <div data-v-87ffcada="" class="main main-app"> 
+                       <div data-v-87ffcada="" class="breadcrumb breadcrumb pd"> 
+                       </div> 
+                       <h1 data-v-87ffcada="" class="article-title pd"> 05 | 理论二：封装、抽象、继承、多态分别可以解决哪些编程问题？ </h1> 
+                       <div data-v-87ffcada="" class="article-info pd"> 
+                        <span data-v-87ffcada="">2019-11-13</span> 
+                        <span data-v-87ffcada="">王争</span>
+                       </div> 
+                       <div data-v-87ffcada="" class="article-content typo common-content pd"> 
+                        <img data-v-87ffcada="" src="https://static001.geekbang.org/resource/image/89/cc/89670d0668f9560e29af3a104d4255cc.jpg" /> 
+                        <div data-v-87ffcada="" id="article-content" class="">
+                         <div class="text"> 
+                             <p>上一节课，我简单介绍了面向对象的一些基本概念和知识点，比如，什么是面向对象编程，什么是面向对象编程语言等等。其中，我们还提到，理解面向对象编程及面向对象编程语言的关键就是理解其四大特性：封装、抽象、继承、多态。不过，对于这四大特性，光知道它们的定义是不够的，我们还要知道每个特性存在的意义和目的，以及它们能解决哪些编程问题。所以，今天我就花一节课的时间，针对每种特性，结合实际的代码，带你将这些问题搞清楚。</p><p>这里我要强调一下，对于这四大特性，尽管大部分面向对象编程语言都提供了相应的语法机制来支持，但不同的编程语言实现这四大特性的语法机制可能会有所不同。所以，今天，我们在讲解四大特性的时候，并不与具体某种编程语言的特定语法相挂钩，同时，也希望你不要局限在你自己熟悉的编程语言的语法思维框架里。</p><h2>封装（Encapsulation）</h2><p>首先，我们来看封装特性。封装也叫作信息隐藏或者数据访问保护。类通过暴露有限的访问接口，授权外部仅能通过类提供的方式（或者叫函数）来访问内部信息或者数据。这句话怎么理解呢？我们通过一个简单的例子来解释一下。</p><p>下面这段代码是金融系统中一个简化版的虚拟钱包的代码实现。在金融系统中，我们会给每个用户创建一个虚拟钱包，用来记录用户在我们的系统中的虚拟货币量。对于虚拟钱包的业务背景，这里你只需要简单了解一下即可。在面向对象的实战篇中，我们会有单独两节课，利用OOP的设计思想来详细介绍虚拟钱包的设计实现。</p><!-- [[[read_end]]] --><pre><code>public class Wallet {
+  private String id;
+  private long createTime;
+  private BigDecimal balance;
+  private long balanceLastModifiedTime;
+  // ...省略其他属性...
+
+  public Wallet() {
+     this.id = IdGenerator.getInstance().generate();
+     this.createTime = System.currentTimeMillis();
+     this.balance = BigDecimal.ZERO;
+     this.balanceLastModifiedTime = System.currentTimeMillis();
+  }
+
+  // 注意：下面对get方法做了代码折叠，是为了减少代码所占文章的篇幅
+  public String getId() { return this.id; }
+  public long getCreateTime() { return this.createTime; }
+  public BigDecimal getBalance() { return this.balance; }
+  public long getBalanceLastModifiedTime() { return this.balanceLastModifiedTime;  }
+
+  public void increaseBalance(BigDecimal increasedAmount) {
+    if (increasedAmount.compareTo(BigDecimal.ZERO) &lt; 0) {
+      throw new InvalidAmountException(&quot;...&quot;);
+    }
+    this.balance.add(increasedAmount);
+    this.balanceLastModifiedTime = System.currentTimeMillis();
+  }
+
+  public void decreaseBalance(BigDecimal decreasedAmount) {
+    if (decreasedAmount.compareTo(BigDecimal.ZERO) &lt; 0) {
+      throw new InvalidAmountException(&quot;...&quot;);
+    }
+    if (decreasedAmount.compareTo(this.balance) &gt; 0) {
+      throw new InsufficientAmountException(&quot;...&quot;);
+    }
+    this.balance.subtract(decreasedAmount);
+    this.balanceLastModifiedTime = System.currentTimeMillis();
+  }
+}
+</code></pre><p>从代码中，我们可以发现，Wallet类主要有四个属性（也可以叫作成员变量），也就是我们前面定义中提到的信息或者数据。其中，id表示钱包的唯一编号，createTime表示钱包创建的时间，balance表示钱包中的余额，balanceLastModifiedTime表示上次钱包余额变更的时间。</p><p>我们参照封装特性，对钱包的这四个属性的访问方式进行了限制。调用者只允许通过下面这六个方法来访问或者修改钱包里的数据。</p><ul>
+<li>String getId()</li>
+<li>long getCreateTime()</li>
+<li>BigDecimal getBalance()</li>
+<li>long getBalanceLastModifiedTime()</li>
+<li>void increaseBalance(BigDecimal increasedAmount)</li>
+<li>void decreaseBalance(BigDecimal decreasedAmount)</li>
+</ul><p>之所以这样设计，是因为从业务的角度来说，id、createTime在创建钱包的时候就确定好了，之后不应该再被改动，所以，我们并没有在Wallet类中，暴露id、createTime这两个属性的任何修改方法，比如set方法。而且，这两个属性的初始化设置，对于Wallet类的调用者来说，也应该是透明的，所以，我们在Wallet类的构造函数内部将其初始化设置好，而不是通过构造函数的参数来外部赋值。</p><p>对于钱包余额balance这个属性，从业务的角度来说，只能增或者减，不会被重新设置。所以，我们在Wallet类中，只暴露了increaseBalance()和decreaseBalance()方法，并没有暴露set方法。对于balanceLastModifiedTime这个属性，它完全是跟balance这个属性的修改操作绑定在一起的。只有在balance修改的时候，这个属性才会被修改。所以，我们把balanceLastModifiedTime这个属性的修改操作完全封装在了increaseBalance()和decreaseBalance()两个方法中，不对外暴露任何修改这个属性的方法和业务细节。这样也可以保证balance和balanceLastModifiedTime两个数据的一致性。</p><p>对于封装这个特性，我们需要编程语言本身提供一定的语法机制来支持。这个语法机制就是<strong>访问权限控制。</strong>例子中的private、public等关键字就是Java语言中的访问权限控制语法。private关键字修饰的属性只能类本身访问，可以保护其不被类之外的代码直接访问。如果Java语言没有提供访问权限控制语法，所有的属性默认都是public的，那任意外部代码都可以通过类似wallet.id=123;这样的方式直接访问、修改属性，也就没办法达到隐藏信息和保护数据的目的了，也就无法支持封装特性了。</p><p><strong>封装特性的定义讲完了，我们再来看一下，封装的意义是什么？它能解决什么编程问题？</strong></p><p>如果我们对类中属性的访问不做限制，那任何代码都可以访问、修改类中的属性，虽然这样看起来更加灵活，但从另一方面来说，过度灵活也意味着不可控，属性可以随意被以各种奇葩的方式修改，而且修改逻辑可能散落在代码中的各个角落，势必影响代码的可读性、可维护性。比如某个同事在不了解业务逻辑的情况下，在某段代码中“偷偷地”重设了wallet中的balanceLastModifiedTime属性，这就会导致balance和balanceLastModifiedTime两个数据不一致。</p><p>除此之外，类仅仅通过有限的方法暴露必要的操作，也能提高类的易用性。如果我们把类属性都暴露给类的调用者，调用者想要正确地操作这些属性，就势必要对业务细节有足够的了解。而这对于调用者来说也是一种负担。相反，如果我们将属性封装起来，暴露少许的几个必要的方法给调用者使用，调用者就不需要了解太多背后的业务细节，用错的概率就减少很多。这就好比，如果一个冰箱有很多按钮，你就要研究很长时间，还不一定能操作正确。相反，如果只有几个必要的按钮，比如开、停、调节温度，你一眼就能知道该如何来操作，而且操作出错的概率也会降低很多。</p><h2>抽象（Abstraction）</h2><p>讲完了封装特性，我们再来看抽象特性。 封装主要讲的是如何隐藏信息、保护数据，而抽象讲的是如何隐藏方法的具体实现，让调用者只需要关心方法提供了哪些功能，并不需要知道这些功能是如何实现的。</p><p>在面向对象编程中，我们常借助编程语言提供的接口类（比如Java中的interface关键字语法）或者抽象类（比如Java中的abstract关键字语法）这两种语法机制，来实现抽象这一特性。</p><p>这里我稍微说明一下，在专栏中，我们把编程语言提供的接口语法叫作“接口类”而不是“接口”。之所以这么做，是因为“接口”这个词太泛化，可以指好多概念，比如API接口等，所以，我们用“接口类”特指编程语言提供的接口语法。</p><p>对于抽象这个特性，我举一个例子来进一步解释一下。</p><pre><code>public interface IPictureStorage {
+  void savePicture(Picture picture);
+  Image getPicture(String pictureId);
+  void deletePicture(String pictureId);
+  void modifyMetaInfo(String pictureId, PictureMetaInfo metaInfo);
+}
+
+public class PictureStorage implements IPictureStorage {
+  // ...省略其他属性...
+  @Override
+  public void savePicture(Picture picture) { ... }
+  @Override
+  public Image getPicture(String pictureId) { ... }
+  @Override
+  public void deletePicture(String pictureId) { ... }
+  @Override
+  public void modifyMetaInfo(String pictureId, PictureMetaInfo metaInfo) { ... }
+}
+</code></pre><p>在上面的这段代码中，我们利用Java中的interface接口语法来实现抽象特性。调用者在使用图片存储功能的时候，只需要了解IPictureStorage这个接口类暴露了哪些方法就可以了，不需要去查看PictureStorage类里的具体实现逻辑。</p><p>实际上，抽象这个特性是非常容易实现的，并不需要非得依靠接口类或者抽象类这些特殊语法机制来支持。换句话说，并不是说一定要为实现类（PictureStorage）抽象出接口类（IPictureStorage），才叫作抽象。即便不编写IPictureStorage接口类，单纯的PictureStorage类本身就满足抽象特性。</p><p>之所以这么说，那是因为，类的方法是通过编程语言中的“函数”这一语法机制来实现的。通过函数包裹具体的实现逻辑，这本身就是一种抽象。调用者在使用函数的时候，并不需要去研究函数内部的实现逻辑，只需要通过函数的命名、注释或者文档，了解其提供了什么功能，就可以直接使用了。比如，我们在使用C语言的malloc()函数的时候，并不需要了解它的底层代码是怎么实现的。</p><p>除此之外，在上一节课中，我们还提到，抽象有时候会被排除在面向对象的四大特性之外，当时我卖了一个关子，现在我就来解释一下为什么。</p><p>抽象这个概念是一个非常通用的设计思想，并不单单用在面向对象编程中，也可以用来指导架构设计等。而且这个特性也并不需要编程语言提供特殊的语法机制来支持，只需要提供“函数”这一非常基础的语法机制，就可以实现抽象特性、所以，它没有很强的“特异性”，有时候并不被看作面向对象编程的特性之一。</p><p><strong>抽象特性的定义讲完了，我们再来看一下，抽象的意义是什么？它能解决什么编程问题？</strong></p><p>实际上，如果上升一个思考层面的话，抽象及其前面讲到的封装都是人类处理复杂性的有效手段。在面对复杂系统的时候，人脑能承受的信息复杂程度是有限的，所以我们必须忽略掉一些非关键性的实现细节。而抽象作为一种只关注功能点不关注实现的设计思路，正好帮我们的大脑过滤掉许多非必要的信息。</p><p>除此之外，抽象作为一个非常宽泛的设计思想，在代码设计中，起到非常重要的指导作用。很多设计原则都体现了抽象这种设计思想，比如基于接口而非实现编程、开闭原则（对扩展开放、对修改关闭）、代码解耦（降低代码的耦合性）等。我们在讲到后面的内容的时候，会具体来解释。</p><p>换一个角度来考虑，我们在定义（或者叫命名）类的方法的时候，也要有抽象思维，不要在方法定义中，暴露太多的实现细节，以保证在某个时间点需要改变方法的实现逻辑的时候，不用去修改其定义。举个简单例子，比如getAliyunPictureUrl()就不是一个具有抽象思维的命名，因为某一天如果我们不再把图片存储在阿里云上，而是存储在私有云上，那这个命名也要随之被修改。相反，如果我们定义一个比较抽象的函数，比如叫作getPictureUrl()，那即便内部存储方式修改了，我们也不需要修改命名。</p><h2>继承（Inheritance）</h2><p>学习完了封装和抽象两个特性，我们再来看继承特性。如果你熟悉的是类似Java、C++这样的面向对象的编程语言，那你对继承这一特性，应该不陌生了。继承是用来表示类之间的is-a关系，比如猫是一种哺乳动物。从继承关系上来讲，继承可以分为两种模式，单继承和多继承。单继承表示一个子类只继承一个父类，多继承表示一个子类可以继承多个父类，比如猫既是哺乳动物，又是爬行动物。</p><p>为了实现继承这个特性，编程语言需要提供特殊的语法机制来支持，比如Java使用extends关键字来实现继承，C++使用冒号（class B : public A），Python使用paraentheses()，Ruby使用&lt;。不过，有些编程语言只支持单继承，不支持多重继承，比如Java、PHP、C#、Ruby等，而有些编程语言既支持单重继承，也支持多重继承，比如C++、Python、Perl等。</p><p>为什么有些语言支持多重继承，有些语言不支持呢？这个问题留给你自己去研究，你可以针对你熟悉的编程语言，在留言区写一写具体的原因。</p><p><strong>继承特性的定义讲完了，我们再来看，继承存在的意义是什么？它能解决什么编程问题？</strong></p><p>继承最大的一个好处就是代码复用。假如两个类有一些相同的属性和方法，我们就可以将这些相同的部分，抽取到父类中，让两个子类继承父类。这样，两个子类就可以重用父类中的代码，避免代码重复写多遍。不过，这一点也并不是继承所独有的，我们也可以通过其他方式来解决这个代码复用的问题，比如利用组合关系而不是继承关系。</p><p>如果我们再上升一个思维层面，去思考继承这一特性，可以这么理解：我们代码中有一个猫类，有一个哺乳动物类。猫属于哺乳动物，从人类认知的角度上来说，是一种is-a关系。我们通过继承来关联两个类，反应真实世界中的这种关系，非常符合人类的认知，而且，从设计的角度来说，也有一种结构美感。</p><p>继承的概念很好理解，也很容易使用。不过，过度使用继承，继承层次过深过复杂，就会导致代码可读性、可维护性变差。为了了解一个类的功能，我们不仅需要查看这个类的代码，还需要按照继承关系一层一层地往上查看“父类、父类的父类……”的代码。还有，子类和父类高度耦合，修改父类的代码，会直接影响到子类。</p><p>所以，继承这个特性也是一个非常有争议的特性。很多人觉得继承是一种反模式。我们应该尽量少用，甚至不用。关于这个问题，在后面讲到“多用组合少用继承”这种设计思想的时候，我会非常详细地再讲解，这里暂时就不展开讲解了。</p><h2>多态（Polymorphism）</h2><p>学习完了封装、抽象、继承之后，我们再来看面向对象编程的最后一个特性，多态。多态是指，子类可以替换父类，在实际的代码运行过程中，调用子类的方法实现。对于多态这种特性，纯文字解释不好理解，我们还是看一个具体的例子。</p><pre><code>public class DynamicArray {
+  private static final int DEFAULT_CAPACITY = 10;
+  protected int size = 0;
+  protected int capacity = DEFAULT_CAPACITY;
+  protected Integer[] elements = new Integer[DEFAULT_CAPACITY];
+  
+  public int size() { return this.size; }
+  public Integer get(int index) { return elements[index];}
+  //...省略n多方法...
+  
+  public void add(Integer e) {
+    ensureCapacity();
+    elements[size++] = e;
+  }
+  
+  protected void ensureCapacity() {
+    //...如果数组满了就扩容...代码省略...
+  }
+}
+
+public class SortedDynamicArray extends DynamicArray {
+  @Override
+  public void add(Integer e) {
+    ensureCapacity();
+    int i;
+    for (i = size-1; i&gt;=0; --i) { //保证数组中的数据有序
+      if (elements[i] &gt; e) {
+        elements[i+1] = elements[i];
+      } else {
+        break;
+      }
+    }
+    elements[i+1] = e;
+    ++size;
+  }
+}
+
+public class Example {
+  public static void test(DynamicArray dynamicArray) {
+    dynamicArray.add(5);
+    dynamicArray.add(1);
+    dynamicArray.add(3);
+    for (int i = 0; i &lt; dynamicArray.size(); ++i) {
+      System.out.println(dynamicArray[i]);
+    }
+  }
+  
+  public static void main(String args[]) {
+    DynamicArray dynamicArray = new SortedDynamicArray();
+    test(dynamicArray); // 打印结果：1、3、5
+  }
+}
+</code></pre><p>多态这种特性也需要编程语言提供特殊的语法机制来实现。在上面的例子中，我们用到了三个语法机制来实现多态。</p><ul>
+<li>第一个语法机制是编程语言要支持父类对象可以引用子类对象，也就是可以将SortedDynamicArray传递给DynamicArray。</li>
+<li>第二个语法机制是编程语言要支持继承，也就是SortedDynamicArray继承了DynamicArray，才能将SortedDyamicArray传递给DynamicArray。</li>
+<li>第三个语法机制是编程语言要支持子类可以重写（override）父类中的方法，也就是SortedDyamicArray重写了DynamicArray中的add()方法。</li>
+</ul><p>通过这三种语法机制配合在一起，我们就实现了在test()方法中，子类SortedDyamicArray替换父类DynamicArray，执行子类SortedDyamicArray的add()方法，也就是实现了多态特性。</p><p>对于多态特性的实现方式，除了利用“继承加方法重写”这种实现方式之外，我们还有其他两种比较常见的的实现方式，一个是利用接口类语法，另一个是利用duck-typing语法。不过，并不是每种编程语言都支持接口类或者duck-typing这两种语法机制，比如C++就不支持接口类语法，而duck-typing只有一些动态语言才支持，比如Python、JavaScript等。</p><p><strong>接下来，我们先来看如何利用接口类来实现多态特性。</strong>我们还是先来看一段代码。</p><pre><code>public interface Iterator {
+  String hasNext();
+  String next();
+  String remove();
+}
+
+public class Array implements Iterator {
+  private String[] data;
+  
+  public String hasNext() { ... }
+  public String next() { ... }
+  public String remove() { ... }
+  //...省略其他方法...
+}
+
+public class LinkedList implements Iterator {
+  private LinkedListNode head;
+  
+  public String hasNext() { ... }
+  public String next() { ... }
+  public String remove() { ... }
+  //...省略其他方法... 
+}
+
+public class Demo {
+  private static void print(Iterator iterator) {
+    while (iterator.hasNext()) {
+      System.out.println(iterator.next());
+    }
+  }
+  
+  public static void main(String[] args) {
+    Iterator arrayIterator = new Array();
+    print(arrayIterator);
+    
+    Iterator linkedListIterator = new LinkedList();
+    print(linkedListIterator);
+  }
+}
+</code></pre><p>在这段代码中，Iterator是一个接口类，定义了一个可以遍历集合数据的迭代器。Array和LinkedList都实现了接口类Iterator。我们通过传递不同类型的实现类（Array、LinkedList）到print(Iterator iterator)函数中，支持动态的调用不同的next()、hasNext()实现。</p><p>具体点讲就是，当我们往print(Iterator iterator)函数传递Array类型的对象的时候，print(Iterator iterator)函数就会调用Array的next()、hasNext()的实现逻辑；当我们往print(Iterator iterator)函数传递LinkedList类型的对象的时候，print(Iterator iterator)函数就会调用LinkedList的next()、hasNext()的实现逻辑。</p><p><strong>刚刚讲的是用接口类来实现多态特性。现在，我们再来看下，如何用duck-typing来实现多态特性。</strong>我们还是先来看一段代码。这是一段Python代码。</p><pre><code>class Logger:
+    def record(self):
+        print(“I write a log into file.”)
+        
+class DB:
+    def record(self):
+        print(“I insert data into db. ”)
+        
+def test(recorder):
+    recorder.record()
+
+def demo():
+    logger = Logger()
+    db = DB()
+    test(logger)
+    test(db)
+</code></pre><p>从这段代码中，我们发现，duck-typing实现多态的方式非常灵活。Logger和DB两个类没有任何关系，既不是继承关系，也不是接口和实现的关系，但是只要它们都有定义了record()方法，就可以被传递到test()方法中，在实际运行的时候，执行对应的record()方法。</p><p>也就是说，只要两个类具有相同的方法，就可以实现多态，并不要求两个类之间有任何关系，这就是所谓的duck-typing，是一些动态语言所特有的语法机制。而像Java这样的静态语言，通过继承实现多态特性，必须要求两个类之间有继承关系，通过接口实现多态特性，类必须实现对应的接口。</p><p><strong>多态特性讲完了，我们再来看，多态特性存在的意义是什么？它能解决什么编程问题？</strong></p><p>多态特性能提高代码的可扩展性和复用性。为什么这么说呢？我们回过头去看讲解多态特性的时候，举的第二个代码实例（Iterator的例子）。</p><p>在那个例子中，我们利用多态的特性，仅用一个print()函数就可以实现遍历打印不同类型（Array、LinkedList）集合的数据。当再增加一种要遍历打印的类型的时候，比如HashMap，我们只需让HashMap实现Iterator接口，重新实现自己的hasNext()、next()等方法就可以了，完全不需要改动print()函数的代码。所以说，多态提高了代码的可扩展性。</p><p>如果我们不使用多态特性，我们就无法将不同的集合类型（Array、LinkedList）传递给相同的函数（print(Iterator iterator)函数）。我们需要针对每种要遍历打印的集合，分别实现不同的print()函数，比如针对Array，我们要实现print(Array array)函数，针对LinkedList，我们要实现print(LinkedList linkedList)函数。而利用多态特性，我们只需要实现一个print()函数的打印逻辑，就能应对各种集合数据的打印操作，这显然提高了代码的复用性。</p><p>除此之外，多态也是很多设计模式、设计原则、编程技巧的代码实现基础，比如策略模式、基于接口而非实现编程、依赖倒置原则、里式替换原则、利用多态去掉冗长的if-else语句等等。关于这点，在学习后面的章节中，你慢慢会有更深的体会。</p><h2>重点回顾</h2><p>今天的内容就讲完了，我们来一起总结回顾一下，你需要重点掌握的几个知识点。</p><p><strong>1.关于封装特性</strong></p><p>封装也叫作信息隐藏或者数据访问保护。类通过暴露有限的访问接口，授权外部仅能通过类提供的方式来访问内部信息或者数据。它需要编程语言提供权限访问控制语法来支持，例如Java中的private、protected、public关键字。封装特性存在的意义，一方面是保护数据不被随意修改，提高代码的可维护性；另一方面是仅暴露有限的必要接口，提高类的易用性。</p><p><strong>2.关于抽象特性</strong></p><p>封装主要讲如何隐藏信息、保护数据，那抽象就是讲如何隐藏方法的具体实现，让使用者只需要关心方法提供了哪些功能，不需要知道这些功能是如何实现的。抽象可以通过接口类或者抽象类来实现，但也并不需要特殊的语法机制来支持。抽象存在的意义，一方面是提高代码的可扩展性、维护性，修改实现不需要改变定义，减少代码的改动范围；另一方面，它也是处理复杂系统的有效手段，能有效地过滤掉不必要关注的信息。</p><p><strong>3.关于继承特性</strong></p><p>继承是用来表示类之间的is-a关系，分为两种模式：单继承和多继承。单继承表示一个子类只继承一个父类，多继承表示一个子类可以继承多个父类。为了实现继承这个特性，编程语言需要提供特殊的语法机制来支持。继承主要是用来解决代码复用的问题。</p><p><strong>4.关于多态特性</strong></p><p>多态是指子类可以替换父类，在实际的代码运行过程中，调用子类的方法实现。多态这种特性也需要编程语言提供特殊的语法机制来实现，比如继承、接口类、duck-typing。多态可以提高代码的扩展性和复用性，是很多设计模式、设计原则、编程技巧的代码实现基础。</p><h2>课堂讨论</h2><p>今天我们要讨论的话题有如下两个。</p><ol>
+<li>你熟悉的编程语言是否支持多重继承？如果不支持，请说一下为什么不支持。如果支持，请说一下它是如何避免多重继承的副作用的。</li>
+<li>你熟悉的编程语言对于四大特性是否都有现成的语法支持？对于支持的特性，是通过什么语法机制实现的？对于不支持的特性，又是基于什么原因做的取舍？</li>
+</ol><p>欢迎在留言区写下你的答案，和同学一起交流和分享。如果有收获，也欢迎你把这篇文章分享给你的朋友。</p>
+                         </div>
+                        </div> 
+                       </div> 
+                       <!----> 
+                       <!---->
+                      </div>
+                      
+                      <div data-v-87ffcada="" class="article-comments pd">
+                            <h2 data-v-87ffcada="">
+                                <span data-v-87ffcada="">精选留言</span>
+                              </h2> 
+                              <ul data-v-87ffcada=""> 
+                                    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/6a/7e/a6af4c00.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">№修罗★幻影</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>148</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        Java 不支持多重继承的原因<br>多重继承有副作用：钻石问题(菱形继承)。<br>假设类 B 和类 C 继承自类 A，且都重写了类 A 中的同一个方法，而类 D 同时继承了类 B 和类 C，那么此时类 D 会继承 B、C 的方法，那对于 B、C 重写的 A 中的方法，类 D 会继承哪一个呢？这里就会产生歧义。<br>考虑到这种二义性问题，Java 不支持多重继承。但是 Java 支持多接口实现，因为接口中的方法，是抽象的（从JDK1.8之后，接口中允许给出一些默认方法的实现，这里不考虑这个），就算一个类实现了多个接口，且这些接口中存在某个同名方法，但是我们在实现接口的时候，这个同名方法需要由我们这个实现类自己来实现，所以并不会出现二义性的问题。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/78/51/4790e13e.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Smallfly</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>127</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        争哥对面向对象的总结完美符合 What&#47;How&#47;Why 模型，我按照模型作下梳理。<br><br>## 封装<br>What：隐藏信息，保护数据访问。<br>How：暴露有限接口和属性，需要编程语言提供访问控制的语法。<br>Why：提高代码可维护性；降低接口复杂度，提高类的易用性。<br><br>##抽象<br>What: 隐藏具体实现，使用者只需关心功能，无需关心实现。<br>How: 通过接口类或者抽象类实现，特殊语法机制非必须。<br>Why: 提高代码的扩展性、维护性；降低复杂度，减少细节负担。<br><br>##继承<br>What: 表示 is-a 关系，分为单继承和多继承。<br>How: 需要编程语言提供特殊语法机制。例如 Java 的 “extends”，C++ 的 “:” 。<br>Why: 解决代码复用问题。<br><br>##多态<br>What: 子类替换父类，在运行时调用子类的实现。<br>How: 需要编程语言提供特殊的语法机制。比如继承、接口类、duck-typing。<br>Why: 提高代码扩展性和复用性。<br><br>3W 模型的关键在于 Why，没有 Why，其它两个就没有存在的意义。从四大特性可以看出，面向对象的终极目的只有一个：可维护性。易扩展、易复用，降低复杂度等等都属于可维护性的实现方式。<br>
+        </div> 
+        <span class="time">2019-11-14</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/12/92/ce/9d24cb2c.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">哥本</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>20</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        我理解的四大特性<br>封装：加装备（添加盔甲）<br>继承：师傅掌对掌传输武功（毫无保留）<br>抽象：从道到术，柳叶能伤人<br>多态：奥特曼变身。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/54/d3/46fd4aa3.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">小白</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>16</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        go语言的“隐藏式接口”算是多态中duck-typing的实现方式吧
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/08/df/4e5c2b29.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">拉格朗日的忧桑</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>11</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        这是迄今讲面向对象特性最深刻的，没有之一
+        </div> 
+        <span class="time">2019-11-13</span> 
+                <div class="reply">
+                        <div class="reply-hd">
+                        <i class="iconfont"></i> 
+                        <span>作者回复</span>
+                        </div> 
+                        <p class="reply-content">😄 多谢认可</p> 
+                        <p class="reply-time">2019-11-14</p>
+                    </div>
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/30/8a/b5ca7286.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">业余草</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>9</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        是时候抛出这道难住99%的程序员的设计模式面试题了！<br>https:&#47;&#47;mp.weixin.qq.com&#47;s&#47;9SBV9ZycAQY82BacYICY2w
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/CibnyMEyuo4aKCjEzq3t8CRLbiatiaNCmSsTGlhdHaMseBibB2CK2Dyu4TSa7AVREseibicWUnSicp78kWP2gb66u7ajw/132" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">weiguozhihui</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>8</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        c 语言通过结构体来实现封装，只是c 的结构体没有关键字来控制结构体内部成员的访问权限问题，属于一种比较粗的封装。另外C中通过void*+结构体+函数指针也是可以实现多太的。Linux内核代码好多都是用了面向对象编程思想。C++中引入public protected private 关键字来进行访问控制权管理。C++中没有Java中的interface 关键字来描述接口类，但也是可以通过虚函数基类来进行的Java中的接口类的。C++是直接支持多继承的，但这个特性也被好多人诟病。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/29/f8/561c5be1.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">晨风破晓</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>7</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        PHP不支持多继承，具体为什么还没了解过，四大特性都是有现有语法支持的；看完这堂课，貌似对多态还不是很理解
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="http://thirdwx.qlogo.cn/mmopen/vi_32/2o1Izf2YyJSnnI0ErZ51pYRlnrmibqUTaia3tCU1PjMxuwyXSKOLUYiac2TQ5pd5gNGvS81fVqKWGvDsZLTM8zhWg/132" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">划时代</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>7</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        话题一：<br>C++语言的多重继承，存在三层继承关系时，采用virtual继承方式，形成菱形继承。标准库中的iostream类就存在多重继承关系，见图http:&#47;&#47;www.cplusplus.com&#47;img&#47;iostream.gif。<br>话题二：<br>C++语言的多态实现方式比较丰富，除了类中的virtual函数实现运行期多态以外。还支持编译期多态（模板元编程），不仅能够动态改变对象执行的函数，还能动态改变对象的定义类型。<br>
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/19/5b/08/aed6948b.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">丁丁历险记</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>6</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        好久没复杂这些基础知识了，借今天写笔记的时间过足瘾。我就菜鸟一个，也深知言多必失，肯定有瞎扯的地方，还请指正，我好迭代。<br>1 封装 <br>常见编程语言通过 public protected privite  来支持<br>封装的意义 。<br>关掉直接操作数据的口子，让数据的修改更贴合真实业务。<br>例如：创建时间，就没有修改数据的场景。<br>钱包的钱数，只能通过增加，减少接口进行调整，不开放直接设置金额的接口（口子一开，对账就是个麻烦事）<br>另一个意义，调用类，没有必要知道太多的实施类的具体实现细节。让操作更为简单。<br>个人思考：<br>封装就是让代码遵守开闭原则的重要手段。<br>当调用类，关注过多实施类的继节时，一个需求的变化，可能引发多个依赖模块都发生了级联的改动，而一但调用类过度的知道了太多了实施类的细节（然后各种调用类代码再一散落），这时程序也相应地变得出各种毛病出来，既然这样，把实现的方法封装起来多好，让调用端少操点心。<br>Law of Demeter 有个别名，就叫最少知道原则，争哥说的第二个意义，感觉就是在描述遵守迪米特法则的好处.<br>再乱想一下， 人体，不就是最好的的封装么， 给你物料的入口（吃），出口（拉），还给你调节增强的接口（训练） 有多少人，并不知道其内部细节，不照样过着精彩的一生。 还有，调用类，总想知道更多被调用类的信息，以期更精准的控制，这种代码风格，就是完美主义病，而完美主义的并发症就是拖延症，以及极高的复杂度造成项目越写越混乱。<br>2 抽像。<br>抽像讲的是如何隐藏信息，而抽像讲的是隐藏方法的具体实现，让调用者只关心方法提供了哪些功能即可。<br>通常借 interface 和 abstract class 来实现 抽像这一特性。当implement 某接口时，只要知道接口干了啥，即可，无需要关心实施类的细节实现。<br>抽你的意义，能解决啥问题。<br>1 处理复杂性的有效手段。人脑承受信息有限，抽像做为不关注实现细节的套路，正好管用。<br>2抽像指导了很多的oo原则 ， 凡时对实现进行封装抽离的，都可以叫抽像，例如malloc()<br>3 定义类时，要有抽像思维，不要在方法中，暴露太多细节。（建议一层抽象层，让功能分解得更细，让意图和实现分享）<br>个人理解<br>（抽象处理的复杂度是人月神话里描述 的本质复杂度（Essential Complexity）， 也是尊重人脑的认知学的 ，大脑的特性是很烂的（ 抽像的工具包记重点，归纳特性，忽视细节），（推荐阅读google 整理术）<br>再瞎想一下，抽像是将很多的知道点给封装起来了(encoding 成为一个模型) ， 归纳法便是抽象的重要实现套路，也是支撑及发展文明的利器。 抽像在开发中的意义 ，是让具体的实施类，在合适的场所下编写 （最好满足sru）,然后通过合理的ood ,去调用或运行时create 具体的子类对象，去实现。 拜抽象所赐，一种各有分工，又能有序协同的场景就出来了<br>其三，个人套路包，我沟通时，当和建议相同方向时，就往抽像了说，当想有差异时，就很细节说。 （套路是双韧剑，就看你如何用了），我个人发现很多营销大的套路，抽像来看和传销是一至的，有些技术大牛的工作套路，和某著名贪官一模一样。（例如，把话说明白了再干，明确职责）<br>笔记下（下）<br>3继承<br>继续用来表示类之间是 is -a 关系。<br>猫是动物，于是就拥有的动物的自带属性行为。（移动速度，移动距离） 进一步的，动物属生物（于是） 有了生命的共有属性，年龄<br>有些语言单继续，有些多继承。<br>意义 和解决问题。<br>1 符合认知美感 。<br>2 减少重复coding .<br>问题: 重要隐患，父子类，大量方便藕合。<br>个人理解。<br>继续和不停的复杂粘贴代码是两个极度，复制代码虽散但各管各的，继续父一改，子跟着改，而复制代码这事，是问题是，实现一个细节后，其它的相联代码，都要不停的改。而继随相反，一改全刷了，除非你子类完全重写了，而一些不成熟的开发，前期的父类往往考虑不周，后期一折腾，悲剧从此开场。<br>再者 复制粘贴代码，两段代码关联太轻，基本上就是要一处一处的改，而复制这事，就关联得太重了。 一但重了，就往往产生大量的不必要的负担。 我学设计模式最开心的就是，基于原则，而不是基于规则，不同场景就用不同的套路。<br>基于职责太重这事，我是很反感用多重继续的。 需要啥，再组合一个类多好。 多关联一个类，死不了人的。 搞出菱形继随这种蛋疼的东西，又要不停的去关注细节，活着会很累的<br>4 多态。(个人觉得oo 中最有趣的一块)<br>多态指子类替代父类。<br>三种语法机制。（父可以）<br>实现多态，除继续外，还有利用接口类语法， duck-typing<br>个人理解：理解不深。有感觉描述不出来，就觉得，继续把事搞死了，多态就要死的东西搞活。 于是支持这种把事搞活的套路出来。
+        </div> 
+        <span class="time">2019-11-14</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/c4/f3/97599e4b.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">大漠沙如雪</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>6</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        我们使用Java已经很长时间了，我们有多少次因为缺少多重继承而面临困难呢？<br>我个人的经验是一次都没有。因为多重继承很少有机会被用到，所以更安全的做法是去掉它而保持简单性。<br>就算是碰到需要多重继承的情景，我们也可以找到替代方法。<br>我的观点是，去掉对多重继承的支持不是Java的缺陷，对开发者来说是件好事。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/11/51/b1/dcaca7f5.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">秉心说</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>6</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        多继承会带来菱形继承的问题。例如一个类的两个父类，都继承了同一个祖父类，两个父类都 override 了祖父类的方法，这时候孙子类就不知道如何调用了。<br><br>Java 8 的 interface 可以有方法默认实现，这应该可以算是曲线救国的多继承吧。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/54/9a/76c0af70.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">每天晒白牙</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>5</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        专栏中有个思考题是 java 为何不支持类多继承？却支持接口的多继承？<br>而有些语言如python是支持多继承的？<br>首先java类支持多继承的话，两个父类有同名方法，在子类中调用的时候就不知道调用哪个了，出现决议(钻石问题或菱形问题)问题<br>而接口支持多继承因为接口定义的方法不能有方法体，所以不会出现决议问题。<br>而从jdk1.8开始，接口可以有默认方法(方法要用default标识)，必须要有方法体，这样在接口多继承上不也会有决议问题吗？其实你去试下就知道了，java发现这种情况，会通过让你强制在子接口中重写这个默认方法，这样就不会有决议问题了<br><br>python支持多继承因为它通过MRO解决的，pythoner应该懂，我是不太懂，感兴趣的可以去研究
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/18/b9/78/a5804dae.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">秋惊蛰</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>4</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        试着说一下Python吧<br>- 抽象：抽象是编程语言的共有特点，甚至是计算机科学的特点，从变量，函数，类，模块，包等概念都是不同层次的抽象。抽象和把大象装进冰箱分三步是一个道理，它给出了思路，指明了方向，省略了细节。我们用层层抽象来应对计算机系统的复杂性。Python主要的抽象工具是函数和类，模块和包也算吧，毕竟也是隐藏了细节。<br>- 封装：Python不支持严格意义上的封装，没有private, protected等访问修饰符，这样做是为了保证动态语言最大的灵活性，同时Python里很多理念都是约定大于定义的，私有的属性需要大家守约，不要去随意访问，这也是Python被吐槽的地方吧，大型项目约束力不够。<br>- 继承：Python支持多重继承，主要是因为它没有类似于Java的“接口类”的语法吧，用多重继承可以定义一些纯功能性的类，减少类的层级。<br>- 多态：Python的多态就是鸭子类型了，鸭子类型的背后是所谓“协议”，协议是非正式的接口，是一种特性，表现为一个或多个相关的方法，比如迭代器协议，序列协议。实现了迭代器协议就和Java中实现了Iterator接口一样。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/10/da/c0/9fc31f2d.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">初心</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        多态一句话，现在调用将来
+        </div> 
+        <span class="time">2019-11-16</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/0f/52/36/18f5d218.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">zcdll</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        1. 你熟悉的编程语言是否支持多重继承？如果不支持，请说一下为什么不支持。如果支持，请说一下它是如何避免多重继承的副作用的。<br>    1. JavaScript 不支持多继承，多继承理论上都存在“菱形问题”，也就是说如果 class D 继承了 class B 和 class C，class B 和 class C 都继承了 class A，class A 中有一个方法  add，B 和 C 都重写了 add 方法，当 D 去调用 add 方法时 就会出问题，不知道调用哪个方法了。<br>    2. 理论上是可以通过 Mixin 的方式来实现多继承。<br>    3. 通过一些 合并 算法来“部分”解决“菱形问题”<br>    4. 参考 JavaScript中的“多继承” [https:&#47;&#47;juejin.im&#47;entry&#47;5ac46b6c5188255570063b71](https:&#47;&#47;juejin.im&#47;entry&#47;5ac46b6c5188255570063b71)<br>2. 你熟悉的编程语言对于四大特性是否都有现成的语法支持？对于支持的特性，是通过什么语法机制实现的？对于不支持的特性，又是基于什么原因做的取舍？<br>    1. JavaScript 支持封装，抽象，继承，多态<br>    2. 封装 ES6的话，通过 public protected private 等关键字来实现，ES5 的话通过 “函数作用域”，this，原型链来实现，ES6 的 class 本质上也是 function 的语法糖。<br>    3. 抽象 可以通过 this指针 和 原型链 的形式来实现<br>    4. 继承 通过 原型链 来实现，或者说基于封装的特性来实现<br>    5. 多态 通过原型链 的方式，子类覆写父类的方法来实现
+        </div> 
+        <span class="time">2019-11-15</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/14/97/98/042f319f.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">李湘河</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>3</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        示例代码自己运行了麽，虽说是将设计思想、设计模式，但是代码很多错误呀，像多态示例代码，父类私有属性在子类继承中能直接用吗？
+        </div> 
+        <span class="time">2019-11-13</span> 
+                <div class="reply">
+                        <div class="reply-hd">
+                        <i class="iconfont"></i> 
+                        <span>作者回复</span>
+                        </div> 
+                        <p class="reply-content">已经修改成protected的了。代码自己改改，可以运行的。但代码的作用主要还是辅助解释理论，所以有所删减，也是考虑到文章篇幅的问题。</p> 
+                        <p class="reply-time">2019-11-15</p>
+                    </div>
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/static/time/img/defaultAvatar.e4ab9fe.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">Paul Shan</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        Java对于封装，抽象，继承，多态支持够用了。封装和抽象解决的是信息隐藏的问题，也就是说不同位置需要看到的信息不同。封装是以类为边界，两边需要的信息量不对等。抽象是以调用者和实现者的角度来区分，两者需要的信息量差异也很大。继承和多态是抽象思想的延续，当类被分为接口和实现的时候，所有针对接口实现的操作，也同样使用于实现类。当一个接口有多个实现类，而针对接口实现的操作适用于所有满足这个接口的实现类，这样就让针对接口的代码得到复用。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/18/4f/c9/9f51fd27.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">编程界的小学生</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        JAVA前来报到，不支持多继承是因为考虑到钻石问题，比如A继承B和C，B和C继承了D，那么A类中覆盖的D方法是B重写的还是C重写的呢？导致混乱。<br>有个问题就是: 某种意义上讲，JAVA是不是隐式支持多继承的？因为每个类都默认继承了Object类，都用有Object的toString等方法。
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+    <li data-v-87ffcada="" class="comment-item">
+        <img src="https://static001.geekbang.org/account/avatar/00/13/0c/8f/4ebd303a.jpg" class="avatar" /> 
+        <div class="info">
+        <div class="hd">
+        <span class="username">醉比</span> 
+        <div class="control">
+        <!----> 
+        <a href="javascript:;" class="btn-praise"><i class="iconfont"></i> <span>2</span></a>
+        </div>
+        </div> 
+        <div class="bd">
+        java不支持多继承，大致了解两个原因：1.如果继承打得多个父类有相同的成员变量，子类在引用的时候就无法区分。2.若果继承的多个父类有相通的方法，而子类又没有重新实现该方法，那么在使用该方法时就无法确定该去使用哪个方法。欢迎指正与补充～
+        </div> 
+        <span class="time">2019-11-13</span> 
+        </div></li>
+
+                              
+                              </ul>
+                       </div>
+                     </div>
+      </div>
+   </body>
+   </html>
